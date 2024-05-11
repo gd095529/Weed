@@ -1,0 +1,71 @@
+.body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginBox {
+    width: 30rem;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.logoBox {
+    width: 100%;
+    height: 11rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2.5vmin;
+    font-weight: bold;
+}
+
+.logoBox > img {
+    width: 20rem;
+    height: 8rem;
+}
+
+.inputBox {
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.inputBox > input {
+    width: 80%;
+    height: 2rem;
+    padding: 0.3rem 0.5rem;
+}
+
+.focusInput::placeholder{
+    position: absolute;
+    top: 0;
+}
+
+.buttonBox {
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+}
+
+.planeText {
+    padding: 0.2rem 0.5rem;
+    font-size: 1.5vmin;
+}
+
+.button {
+    padding: 0.3rem 1rem;
+    border: 1px solid gray;
+    border-radius: 2rem;
+}
