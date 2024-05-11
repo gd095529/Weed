@@ -31,23 +31,49 @@
 }
 
 .inputBox {
-    width: 100%;
-    height: 5rem;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-between;
+    width: 80%;
+    height: 3.5rem;
+    border: 1px solid black;
+    margin: 0 auto;
+    position: relative;
 }
 
 .inputBox > input {
-    width: 80%;
-    height: 2rem;
-    padding: 0.3rem 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    height: 3.4rem;
+    padding: 0.7rem 0.5rem 0.3rem 0.5rem;
+    border: 0;
 }
 
-.focusInput::placeholder{
+.inputBox > input:focus {
+    outline: none;
+}
+
+.focusInput::placeholder {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.inputBox > p {
+    height: 0.1rem;
+    font-size: 13px;
     position: absolute;
-    top: 0;
+    left: 0.4rem;
+    color: gray;
+    transition: opacity 0.5s ease;
+}
+
+.inputBox > img {
+    margin-right: 1rem;
+    border-radius: 50%;
+    opacity: 0;
+    border: 1px solid black;
+    padding: 0.5rem;
+    transition: opacity 0.5s ease;
+    position: absolute;
+    right: 0;
+    top: 20%;
 }
 
 .buttonBox {
