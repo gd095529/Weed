@@ -20,8 +20,8 @@
 
 img {
     cursor: pointer;
-    width: 2vmin;
-    height: 2vmin;
+    width: 1rem;
+    height: 1rem;
 }
 
 p {

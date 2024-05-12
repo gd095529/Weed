@@ -44,10 +44,12 @@
     height: 3.4rem;
     padding: 0.7rem 0.5rem 0.3rem 0.5rem;
     border: 0;
+    transition: border 0.5ms ease;
 }
 
 .inputBox > input:focus {
     outline: none;
+    border: 1px solid #0055ff;
 }
 
 .focusInput::placeholder {
@@ -94,4 +96,11 @@
     padding: 0.3rem 1rem;
     border: 1px solid gray;
     border-radius: 2rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.button:hover {
+    border: 1px solid #0057ff;
+    transition: border 0.5s ease;
 }

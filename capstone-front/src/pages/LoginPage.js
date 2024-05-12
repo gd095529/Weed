@@ -2,6 +2,7 @@ import loginCss from '../styles/Login.module.css';
 import logo from '../images/logo.png';
 import { useState } from 'react';
 import enter from '../images/enter.png';
+import {useNavigate} from "react-router-dom";
 
 function LoginPage() {
     const [isFocus, setFocus] = useState(false);
@@ -21,6 +22,10 @@ function LoginPage() {
     const checkLogin = () => {
         return alert('가입되지 않은 정보입니다');
     }
+    const navigate = useNavigate();
+    const goJoin = () => {
+        navigate('/join');
+    }
     return (
         <div className={loginCss.body}>
             <div className={loginCss.loginBox}>
@@ -35,7 +40,7 @@ function LoginPage() {
                 </div>
                 <div className={loginCss.buttonBox}>
                     <div className={loginCss.planeText}>계정이 없으신가요?</div>
-                    <div className={`${loginCss.button}`}>회원가입</div>
+                    <div className={`${loginCss.button}`} onClick={goJoin}>회원가입</div>
                 </div>
             </div>
         </div>
