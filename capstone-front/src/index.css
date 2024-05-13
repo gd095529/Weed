@@ -8,3 +8,16 @@ p, html, body, #root {
 div {
   box-sizing: border-box;
 }
+
+a {
+  text-decoration-line: none;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+}

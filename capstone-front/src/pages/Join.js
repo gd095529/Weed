@@ -46,6 +46,9 @@ function Join() {
         }
     }
     const navigate = useNavigate();
+
+
+
     const checkForm = () => {
         if (checkEmali && checkLength && checkAlphanumeric) {
             alert('성공적으로 완료되었습니다!');

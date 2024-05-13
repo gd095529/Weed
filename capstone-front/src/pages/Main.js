@@ -2,12 +2,15 @@ import mainCss from '../styles/Main.module.css';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import ViewBook from '../components/ViewBook';
+import {useSelector} from "react-redux";
 
 function Main() {
+
+
     return (
         <div className={mainCss.body}>
             <div className={mainCss.header}>
-                <Header />
+                <Header/>
             </div>
             <div className={mainCss.nav}>
                 <Nav />
