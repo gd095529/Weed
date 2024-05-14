@@ -47,12 +47,10 @@ function Join() {
     }
     const navigate = useNavigate();
 
-
-
     const checkForm = () => {
         if (checkEmali && checkLength && checkAlphanumeric) {
-            alert('성공적으로 완료되었습니다!');
-            return navigate('/login');
+            alert('가입되었습니다. 회원 정보를 입력하여 주세요');
+            return navigate('/info');
         } else {
             alert('잘못된 부분이 있습니다. 다시 확인 해 주세요!');
         }

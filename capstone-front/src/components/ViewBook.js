@@ -1,15 +1,15 @@
 import viewBookCss from '../styles/component/ViewBook.module.css';
 import book from '../images/mainImages/book1.jpg';
 
-function ViewBook() {
+function ViewBook(props) {
     return (
         <div className={viewBookCss.body}>
             <div className={viewBookCss.rank}>
-                <p>1위</p>
+                <p>{props.rank + 1}위</p>
             </div>
             <div className={viewBookCss.bookBox}>
-                <img src={book} alt='책 표지'/>
-                <div className={viewBookCss.title}>제목</div>
+                <img src={props.url} alt='책 표지'/>
+                <div className={viewBookCss.title}>{props.title}</div>
             </div>
         </div>
     )

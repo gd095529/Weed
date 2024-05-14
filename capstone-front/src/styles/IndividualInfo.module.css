@@ -1,0 +1,41 @@
+.body {
+    width: 100%;
+    height: 100%;
+    background-color: #a4c1fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.infoBox {
+    width: 30rem;
+    height: 30rem;
+    background-color: #c2ffb9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nameBox {
+    position: relative;
+    width: 20rem;
+    height: 3rem;
+    display: flex;
+}
+
+.nameBox > div {
+    position: absolute;
+    color: gray;
+    font-size: 13px;
+    left: 4px;
+}
+
+.nameBox > input {
+    width: 100%;
+    height: 100%;
+}
+
+.nameBox > input:focus {
+    outline: none;
+}
+

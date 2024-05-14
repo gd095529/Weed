@@ -1,10 +1,10 @@
 .body {
     width: calc(12rem + 2px);
-    height: 16rem;
+    height: 20rem;
     display: flex;
     flex-wrap: wrap;
     font-size: 1.7vmin;
-
+    overflow: hidden;
 }
 
 .rank {
