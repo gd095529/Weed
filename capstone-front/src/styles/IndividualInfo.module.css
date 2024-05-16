@@ -23,19 +23,20 @@
     display: flex;
 }
 
-.nameBox > div {
+.name {
     position: absolute;
+    left: 1rem;
+    line-height: 3rem;
     color: gray;
-    font-size: 13px;
-    left: 4px;
 }
 
-.nameBox > input {
+.editName {
     width: 100%;
     height: 100%;
-}
-
-.nameBox > input:focus {
-    outline: none;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 2rem;
+    padding-left: 3.5rem;
+    line-height: 3rem;
 }
 

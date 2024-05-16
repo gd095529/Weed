@@ -1,12 +1,15 @@
 import indivCss from '../styles/IndividualInfo.module.css';
+import {useState} from "react";
 
 function IndividualInfo() {
     return (
         <div className={indivCss.body}>
             <div className={indivCss.infoBox}>
                 <div className={indivCss.nameBox}>
-                    <div>이름</div>
-                    <input type='text' placeholder='이름 입력'></input>
+                    <div className={indivCss.name}>이름</div>
+                    <div
+                        contentEditable={'true'}
+                        className={indivCss.editName}></div>
                 </div>
                 <div className={indivCss.departmentBox}></div>
                 <div className={indivCss.ageBox}></div>

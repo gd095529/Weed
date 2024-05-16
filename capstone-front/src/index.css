@@ -3,9 +3,10 @@ p, html, body, #root {
   padding: 0;
   height: 100%;
   box-sizing: border-box;
+  user-select: none;
 }
 
-div {
+div, input {
   box-sizing: border-box;
 }
 

@@ -5,20 +5,23 @@ import ViewBook from '../components/ViewBook';
 import {useEffect, useLayoutEffect, useState, useRef} from "react";
 import * as popularAPI from '../api/PopularLoanBooks';
 import * as scrollBottom from '../exportJS/scrollBottom';
+import loading from '../images/mainImages/loading.gif';
 
 function Main() {
     const [bests, setBests] = useState([]);
-    const [startNum, setStartNum] = useState(0);
-    const [endNum, setEndNum] = useState(20);
+    const [index, setIndex] = useState(1);
     const contentRef = useRef(null);
-    const maxPage = 100;
+    const maxPage = 5000;
+    const once = 20;
+    const [endNum, setEndNum] = useState(20);
 
     useEffect(() => {
         // PopularLoanBooks.js의 api를 이용 (3번 api)
         // async 없으면 제대로 작동 안함.
         const fetchData = async () => {
             try {
-                const books = await popularAPI.fetchBooks(startNum, endNum, maxPage);
+                const books = await popularAPI.fetchBooks(once , index);
+                setIndex(index + 1);
                 setBests(prevBests => [...prevBests, ...books]);
             } catch (error) {
                 console.log(error);
@@ -26,14 +29,13 @@ function Main() {
         };
         fetchData();
 
-    }, [startNum]);
+    }, [endNum]);
 
     useEffect(() => {
         // 스크롤에 관한 이벤트 함수
         function scrollHandle() {
             if (scrollBottom.isBottom(contentRef) && endNum < maxPage) {
-                setStartNum(startNum + 20);
-                setEndNum(endNum + 20);
+                setEndNum(endNum + once);
             }
         }
         // 스크롤에 이벤트 담기
@@ -56,9 +58,11 @@ function Main() {
                 <Nav />
             </div>
             <div className={mainCss.content} ref={contentRef}>
+
                 {bests.map((book, index) => (
                     <ViewBook key={index} rank={index} url={book.url} title={book.title}/>
                 ))}
+                {bests.length !== endNum && <img src={loading} alt='로딩'/>}
             </div>
         </div>
     )
