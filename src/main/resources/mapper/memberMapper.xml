@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yju.bookscovery.dao.MemberMapper">
+    <select id="selectAll" resultType="MemberDto">
+        select * from member_info
+        order by member_id desc
+    </select>
+
+    <select id="selectOne" parameterType="Integer" resultType="MemberDto">
+        select * from member_info
+        where member_id = #{member_id}
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from member_info
+    </select>
+
+    <insert id="insert" parameterType="MemberDto">
+        insert into member_info
+        values (null,#{name},#{gender},#{age},#{department_id},#{id},#{password},#{email},#{mode},now())
+    </insert>
+
+    <update id="update" parameterType="MemberDto">
+        update login set name = #{name}, gender = #{gender}, age = #{age}, department_id = #{department_id},
+                         password = #{password}, email = #{email}, mode = #{mode}, update_date = now()
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAll">
+        delete from login
+    </delete>
+
+    <delete id="deleteOne" parameterType="Integer">
+        delete from login
+        where member_id = #{member_id}
+    </delete>
+
+</mapper>

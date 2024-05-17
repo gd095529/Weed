@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yju.bookscovery.dao.FavoriteMapper">
+    <select id="selectOne" parameterType="map" resultType="FDto">
+        select * from favorite
+        where favorite_id = #{favorite_id} and member_id = #{member_id}
+    </select>
+
+    <select id="selectAll" resultType="FDto">
+        select * from favorite
+    </select>
+
+    <insert id="insert" parameterType="FDto">
+        insert into favorite
+        values (null,#{member_id},#{isbn})
+    </insert>
+
+    <update id="update" parameterType="FDto">
+        update favorite set isbn = #{isbn}
+        where favorite_id = #{favorite_id}, member_id = #{member_id}
+    </update>
+
+    <delete id="deleteAll">
+        delete from favorite
+    </delete>
+
+    <delete id="deleteOne" parameterType="map">
+        delete from favorite
+        where favorite_id = #{favorite_id}, member_id = #{member_id}
+    </delete>
+
+
+
+</mapper>

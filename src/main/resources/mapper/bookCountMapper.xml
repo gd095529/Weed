@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yju.bookscovery.dao.bookCountMapper">
+    <select id="selectAll" parameterType="Integer" resultType="BCDto">
+        select * from book_count
+        where department_id = #{department_id}
+    </select>
+
+    <select id="selectOne" parameterType="map" resultType="BCDto">
+        select * from book_count
+        where book_count_id = #{book_count_id} and department_id = #{department_id}
+    </select>
+
+    <insert id="insert" parameterType="BCDto">
+        insert into book_count
+        values (null, #{department_id}, #{bookname}, #{book_count})
+    </insert>
+
+    <update id="update" parameterType="BCDto">
+        update book_count set department_id = #{department_id}, bookname = #{bookname}
+        where book_count_id = #{book_count_id}
+    </update>
+
+    <delete id="deleteAll" >
+        delete from book_count
+    </delete>
+
+    <delete id="deleteOne" parameterType="map">
+        delete from book_count
+        where book_count_id = #{book_count_id} and department_id = #{department_id}
+    </delete>
+
+</mapper>
