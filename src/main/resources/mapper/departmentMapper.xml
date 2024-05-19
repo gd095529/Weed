@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yju.bookscovery.dao.DepartmentMapper">
+    <select id="count" resultType="int">
+        select count(*) from department
+    </select>
+
     <select id="selectAll" resultType="DDto">
         select * from department
     </select>

@@ -16,4 +16,5 @@ public class UsersDao {
     public User selectUser(String id) throws Exception{
         return session.selectOne(namespace+"selectUser",id);
     }
+
 }

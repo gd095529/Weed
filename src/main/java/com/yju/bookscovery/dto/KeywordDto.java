@@ -4,8 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class KeywordDto {

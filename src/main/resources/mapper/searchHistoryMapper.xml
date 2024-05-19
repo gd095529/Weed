@@ -6,7 +6,7 @@
 <mapper namespace="com.yju.bookscovery.dao.SearchHistoryMapper">
     <select id="selectOne" parameterType="map" resultType="SHDto">
         select * from search_history
-        where search_history_id = #{search_history_id} and memberNumber = #{member_id}
+        where search_history_id = #{search_history_id} and member_id = #{member_id}
     </select>
 
     <select id="selectAll" parameterType="Integer" resultType="SHDto">

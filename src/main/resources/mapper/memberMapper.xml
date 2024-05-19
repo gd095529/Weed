@@ -14,6 +14,11 @@
         where member_id = #{member_id}
     </select>
 
+    <select id="selectById" parameterType="String" resultType="MemberDto">
+        select * from member_info
+        where id = #{id}
+    </select>
+
     <select id="count" resultType="int">
         select count(*) from member_info
     </select>
@@ -24,17 +29,17 @@
     </insert>
 
     <update id="update" parameterType="MemberDto">
-        update login set name = #{name}, gender = #{gender}, age = #{age}, department_id = #{department_id},
+        update member_info set name = #{name}, gender = #{gender}, age = #{age}, department_id = #{department_id},
                          password = #{password}, email = #{email}, mode = #{mode}, update_date = now()
         where id = #{id}
     </update>
 
     <delete id="deleteAll">
-        delete from login
+        delete from member_info
     </delete>
 
     <delete id="deleteOne" parameterType="Integer">
-        delete from login
+        delete from member_info
         where member_id = #{member_id}
     </delete>
 
