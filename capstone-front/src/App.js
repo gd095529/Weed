@@ -3,6 +3,7 @@ import Main from "./pages/Main";
 import Login from './pages/LoginPage';
 import Join from './pages/Join';
 import IndividualInfo from "./pages/IndividualInfo";
+import Main1 from './pages/Main1';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path='/join' element={<Join />} />
               <Route path='/info' element={<IndividualInfo />} />
+              <Route path='/main1' element={<Main1 />} />
           </Routes>
       </BrowserRouter>
     </div>
