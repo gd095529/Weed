@@ -17,11 +17,12 @@ export async function fetchBooks(once, index) {
         });
         const result = await parseStringPromise(response.data);
         console.log(result);
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 25; i++) {
             books.push(
                 {
                     url: result.response.docs[0].doc[i].bookImageURL[0],
-                    title: result.response.docs[0].doc[i].bookname[0]
+                    title: result.response.docs[0].doc[i].bookname[0],
+                    author: result.response.docs[0].doc[i].authors[0]
                 }
             )
         }

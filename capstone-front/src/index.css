@@ -1,7 +1,33 @@
-p, html, body, #root {
+@font-face {
+  font-family: "Hak";
+  font-weight: normal;
+  src: url("./fonts/HakgyoansimJiugaeR.ttf");
+}
+
+@font-face {
+  font-family: "TAE";
+  font-weight: normal;
+  src: url("./fonts/TAEBAEK font.ttf");
+}
+
+@font-face {
+  font-family: "SUITE";
+  font-weight: normal;
+  src: url("./fonts/SUITE-Light.ttf");
+}
+
+html, body, #root {
   margin: 0;
   padding: 0;
   height: 100%;
+  box-sizing: border-box;
+  user-select: none;
+
+}
+
+p {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   user-select: none;
 }
