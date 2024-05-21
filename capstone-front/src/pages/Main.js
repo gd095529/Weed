@@ -20,7 +20,7 @@ function Main() {
         // async 없으면 제대로 작동 안함.
         const fetchData = async () => {
             try {
-                const books = await popularAPI.fetchBooks(once , index);
+                const books = await popularAPI.loanBooks(once , index);
                 setIndex(index + 1);
                 setBests(prevBests => [...prevBests, ...books]);
             } catch (error) {

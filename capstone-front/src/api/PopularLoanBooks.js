@@ -1,38 +1,19 @@
 import axios from "axios";
-import {parseStringPromise} from "xml2js";
 
-export async function fetchBooks(once, index) {
+export async function loanBooks(config) {
     try {
         const books = [];
-        const response = await axios.get('/api2/api/loanItemSrch', {
-            params: {
-                authKey: 'cc355482ccb755beacd4ba6f7134c20c6b59a237e1ee656a155a6ed3a2003941',
-                pageNo: `${index}`,
-                pageSize: `${once}`,
-                startDt: '2023-01-01',
-                endDt: '2024-05-01',
-                from_age: '20',
-                to_age: '30'
-            }
-        });
-        const result = await parseStringPromise(response.data);
-        console.log(result);
+        const response = await axios.get('/api2/api/loanItemSrch', config);
+
         for (let i = 0; i < 25; i++) {
             books.push(
                 {
-                    url: result.response.docs[0].doc[i].bookImageURL[0],
-                    title: result.response.docs[0].doc[i].bookname[0],
-                    author: result.response.docs[0].doc[i].authors[0]
+                    url: response.data.response.docs[i].doc.bookImageURL,
+                    title: response.data.response.docs[i].doc.bookname,
+                    author: response.data.response.docs[i].doc.authors
                 }
             )
         }
-
-        /**
-        const books = result.response.docs[0].doc.map(doc => ({
-            url: doc.bookImageURL[0],
-            title: doc.bookname[0]
-        }));
-        */
         return books;
     } catch (error) {
         console.log(error);
@@ -40,3 +21,23 @@ export async function fetchBooks(once, index) {
     }
 }
 
+export async function trendBooks(config) {
+    try {
+        const books = [];
+        const response = await axios.get('/api2/api/hotTrend', config);
+        console.log(response.data.response);
+        for (let i = 0; i < 15; i++) {
+            books.push(
+                {
+                    url: response.data.response.docs[i].doc.bookImageURL,
+                    title: response.data.response.docs[i].doc.bookname,
+                    author: response.data.response.docs[i].doc.authors
+                }
+            )
+        }
+        return books;
+    } catch (error) {
+        console.log(error);
+        return []; // 에러가 발생하면 빈 배열 반환
+    }
+}
