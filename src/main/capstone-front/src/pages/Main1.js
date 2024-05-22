@@ -70,7 +70,7 @@ function Main1() {
     useEffect(() => {
         const config = {
             params: {
-                authKey: 'cc355482ccb755beacd4ba6f7134c20c6b59a237e1ee656a155a6ed3a2003941',
+                authKey: '6bc1f702d629a833008a2b52204865ff779c763cf3daca4790b8ffe3e043c0eb',
                 format: 'json',
                 startDt: lastWeek,
                 endDt: today,
@@ -94,7 +94,7 @@ function Main1() {
     useEffect(() => {
         const config = {
             params: {
-                authKey: 'cc355482ccb755beacd4ba6f7134c20c6b59a237e1ee656a155a6ed3a2003941',
+                authKey: '6bc1f702d629a833008a2b52204865ff779c763cf3daca4790b8ffe3e043c0eb',
                 format: 'json',
                 startDt: lastMonth,
                 endDt: today,
@@ -119,7 +119,7 @@ function Main1() {
     useEffect(() => {
         const config = {
             params: {
-                authKey: 'cc355482ccb755beacd4ba6f7134c20c6b59a237e1ee656a155a6ed3a2003941',
+                authKey: '6bc1f702d629a833008a2b52204865ff779c763cf3daca4790b8ffe3e043c0eb',
                 format: 'json',
                 searchDt: today
             }
