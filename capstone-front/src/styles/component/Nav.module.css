@@ -18,12 +18,6 @@
     background-color: rgb(233, 233, 233);
 }
 
-
-
-p {
-    cursor: pointer;
-}
-
 .optionsBox {
     position: absolute;
     bottom: 0;

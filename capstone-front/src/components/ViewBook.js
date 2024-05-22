@@ -1,5 +1,4 @@
 import viewBookCss from '../styles/component/ViewBook.module.css';
-import book from '../images/mainImages/book1.jpg';
 
 function ViewBook(props) {
     return (
