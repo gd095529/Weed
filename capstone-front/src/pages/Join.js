@@ -8,8 +8,8 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 function Join() {
-    const [checkEmali, setCheckEmail] = useState(true);
-    const [isHide, setHide] = useState(true);
+    const [checkEmali, setCheckEmail] = useState(true); // 이메일 형식이 맞는지 체크
+    const [isHide, setHide] = useState(true); // 이메일
     const [checkLength, setCheckLength] = useState(false);
     const [checkAlphanumeric, setCheckAlphanumeric] = useState(false);
     const [isPwdFocus, setPwdFocus] = useState(false);

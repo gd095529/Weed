@@ -1,8 +1,14 @@
 import { ReactComponent as Logo} from "../images/logo2.svg";
 import { ReactComponent as Search} from "../images/mainImages/search.svg";
 import { ReactComponent as Login} from "../images/mainImages/login.svg";
+import { useNavigate } from "react-router-dom";
 
 function Header1() {
+    const navigate = useNavigate();
+    const onClickLogin = () => {
+        navigate('/login');
+    }
+
     return (
         <div style={bodyStyle}>
             <div>
@@ -13,7 +19,7 @@ function Header1() {
                     <Search width={'1.5rem'} height={"1.5rem"}/>
                     <p>검색</p>
                 </div>
-                <div style={jungangStyle}>
+                <div style={jungangStyle} onClick={onClickLogin}>
                     <Login width={'1.5rem'} height={"1.5rem"}/>
                     <p>로그인</p>
                 </div>
@@ -43,8 +49,8 @@ const namugeStyle = {
 const jungangStyle = {
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'column'
-
+    flexDirection: 'column',
+    cursor: 'pointer'
 }
 
 export default Header1;
