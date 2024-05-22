@@ -11,7 +11,7 @@ class MemberDtoTest {
     @Test
     @DisplayName("멤버 생성확인")
     void createMember(){
-        MemberDto memberDto =  new MemberDto(null, "차","남",12,null,"gd","asdf","gd@gd","white",now);
+        MemberDto memberDto =  new MemberDto(null, "차","남",12,null,"gd","asdf","asdf","gd@gd","white",now);
 
         Assertions.assertThat(memberDto.getName()).isEqualTo("차");
         Assertions.assertThat(memberDto.getGender()).isEqualTo("남");

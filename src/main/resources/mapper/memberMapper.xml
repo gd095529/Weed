@@ -25,12 +25,12 @@
 
     <insert id="insert" parameterType="MemberDto">
         insert into member_info
-        values (null,#{name},#{gender},#{age},#{department_id},#{id},#{password},#{email},#{mode},now())
+        values (null,#{name},#{gender},#{age},#{department_id},#{id},#{password},#{password_key},#{email},#{mode},now())
     </insert>
 
     <update id="update" parameterType="MemberDto">
         update member_info set name = #{name}, gender = #{gender}, age = #{age}, department_id = #{department_id},
-                         password = #{password}, email = #{email}, mode = #{mode}, update_date = now()
+                         password = #{password}, password_key = #{password_key}, email = #{email}, mode = #{mode}, update_date = now()
         where id = #{id}
     </update>
 

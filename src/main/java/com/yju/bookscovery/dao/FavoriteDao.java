@@ -34,8 +34,8 @@ public class FavoriteDao {
     public int updateFavorite(FavoriteDto dto)throws Exception{
         return session.update(namespace+"update",dto);
     }
-    public int deleteAllFavorite()throws Exception{
-        return session.delete(namespace+"deleteAll");
+    public int deleteAllFavorite(Integer member_id)throws Exception{
+        return session.delete(namespace+"deleteAll", member_id);
     }
     public int deleteFavorite(Integer favorite_id, Integer member_id)throws Exception{
         Map map = new HashMap();

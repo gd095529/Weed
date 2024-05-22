@@ -31,8 +31,8 @@ public class RecommandBookDao {
     public int insertRecommand(RecommandBookDto dto) throws Exception{
         return session.insert(namespace+"insert",dto);
     }
-    public int deleteAllRecommand() throws Exception{
-        return session.delete(namespace+"deleteAll");
+    public int deleteAllRecommand(Integer member_id) throws Exception{
+        return session.delete(namespace+"deleteAll",member_id);
     }
     public int deleteRecommand(Integer recommand_id, Integer member_id)throws Exception{
         Map map = new HashMap();

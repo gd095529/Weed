@@ -28,8 +28,9 @@
         where favorite_id = #{favorite_id}, member_id = #{member_id}
     </update>
 
-    <delete id="deleteAll">
+    <delete id="deleteAll" parameterType="Integer">
         delete from favorite
+        where member_id = #{member_id}
     </delete>
 
     <delete id="deleteOne" parameterType="map">

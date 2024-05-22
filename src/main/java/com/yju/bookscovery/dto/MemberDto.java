@@ -18,6 +18,7 @@ public class MemberDto {
     private Integer department_id;
     private String id;
     private String password;
+    private String password_key;
     private String email;
     private String mode;
     private LocalDateTime update_date;

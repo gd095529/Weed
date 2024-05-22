@@ -22,8 +22,9 @@
         values (null, #{member_id}, #{field2}, #{updateDate})
     </insert>
 
-    <delete id="deleteAll">
+    <delete id="deleteAll" parameterType="Integer">
         delete from recommand_book
+        where member_id = #{member_id}
     </delete>
 
     <delete id="deleteOne" parameterType="map">

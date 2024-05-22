@@ -34,8 +34,8 @@ public class BookCountDao {
     public int updateBook(BookCountDto dto)throws Exception{
         return session.update(namespace+"update",dto);
     }
-    public int deleteAllBook()throws Exception{
-        return session.delete(namespace+"deleteAll");
+    public int deleteAllBook(Integer department_id)throws Exception{
+        return session.delete(namespace+"deleteAll", department_id);
     }
     public int deleteBook(Integer book_count_id, Integer department_id)throws Exception{
         Map map = new HashMap();

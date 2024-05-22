@@ -28,8 +28,9 @@
         where book_count_id = #{book_count_id}
     </update>
 
-    <delete id="deleteAll" >
+    <delete id="deleteAll" parameterType="Integer">
         delete from book_count
+        where department_id = #{department_id}
     </delete>
 
     <delete id="deleteOne" parameterType="map">
