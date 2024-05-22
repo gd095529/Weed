@@ -1,9 +1,26 @@
 import joinCss1 from '../styles/Join1.module.css';
 import logo from '../images/logo2.png'
+import axios from "axios";
 
 function Join1() {
+
+    const a = () => {
+        const url = '/api3/login'
+        axios.post(url, {
+            id: 'id',
+            password: 'pwd'
+        })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
     return (
         <div className={joinCss1.body}>
+            <div onClick={a}> 일단 클릭</div>
             <div className={joinCss1.head}>
                 <img src={logo} alt={'a'}/>
                 <p>회원가입</p>
