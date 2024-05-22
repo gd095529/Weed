@@ -1,0 +1,39 @@
+.body {
+    width: 70rem;
+    height: 20rem;
+    margin: 0 auto;
+    border: 1px solid green;
+}
+
+.header {
+    width: 100%;
+    height: 6rem;
+    font-family: "Hak", serif;
+}
+
+.search {
+    width: 80%;
+    border: 1px solid silver;
+    margin: 0 auto;
+    padding-bottom: 1rem;
+}
+
+.search > div {
+    display: flex;
+    gap: 1rem;
+    margin-left: 5rem;
+    margin-top: 1rem;
+}
+
+.search input {
+    width: 80%;
+}
+
+.btnBox {
+    justify-content: center;
+}
+
+.btnBox > div {
+    border: 1px solid black;
+    padding: 0.3rem 1rem;
+}
