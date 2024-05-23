@@ -11,7 +11,24 @@
 }
 
 .context {
+    width: 90%;
+    margin: 1rem auto;
 
+}
+
+.context > p {
+    margin-bottom: 1rem;
+    position: relative;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.context > p > img {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .context > div {
@@ -19,7 +36,7 @@
     gap: 3rem;
 }
 
-.context  img {
+.context > div > img {
     width: 10rem;
     height: 15rem;
 }
@@ -30,4 +47,25 @@
 
 .context td:nth-child(odd) {
     background-color: gray;
+}
+
+.loan {
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.manyLoan, .keyword {
+    width: 90%;
+    margin: 1rem auto;
+    border: 1px solid black;
+}
+
+.loan > div > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30rem;
+    width: 800px;
+    margin: 0 auto;
 }

@@ -12,35 +12,35 @@ function MemberModify() {
                 <div>내 정보 수정</div>
                 <div>
                     <p>이메일</p>
-                    <input type={'text'} value={'email@naver.com'} disabled={true}/>
+                    <input type={'text'} defaultValue={'email@naver.com'} disabled={true}/>
                 </div>
                 <div>
                     <p>아이디</p>
-                    <input type={'text'} value={'id'} disabled={true}/>
+                    <input type={'text'} defaultValue={'id'} disabled={true}/>
                 </div>
                 <div>
                     <p>비밀번호</p>
-                    <input type={'password'} value={'password'}/>
+                    <input type={'password'} defaultValue={'password'}/>
                 </div>
                 <div>
                     <p>비밀번호 확인</p>
-                    <input type={'password'} value={'password'}/>
+                    <input type={'password'} defaultValue={'password'}/>
                 </div>
                 <div>
                     <p>이름</p>
-                    <input type={'text'} value={'이름'}/>
+                    <input type={'text'} defaultValue={'이름'}/>
                 </div>
                 <div>
                     <p>성별</p>
-                    <input type={'text'} value={'남'}/>
+                    <input type={'text'} defaultValue={'남'}/>
                 </div>
                 <div>
                     <p>연령</p>
-                    <input type={'text'} value={'20'}/>
+                    <input type={'text'} defaultValue={'20'}/>
                 </div>
                 <div>
                     <p>학과</p>
-                    <select value={5}> {/**DB 써서 해당 유저의 과 값 가져올 것.*/}
+                    <select defaultValue={0}> {/**DB 써서 해당 유저의 과 값 가져올 것.*/}
                         {
                             departmentList().map((department, index) => (
                                 <option key={index} value={department.id}>{department.name}</option>

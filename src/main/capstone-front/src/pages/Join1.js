@@ -1,18 +1,21 @@
 import joinCss1 from '../styles/Join1.module.css';
 import logo from '../images/logo2.png'
 import axios from "axios";
+import {departmentList} from "../exportJS/departmentList";
 
 function Join1() {
 
     const a = () => {
         const url = '/api3/api/test'
-        axios.post(url)
+        axios.get(url)
             .then((response) => {
                 console.log(response);
+                alert('연결 성공! 받아온 데이터: ' + response.data);
             })
             .catch((error) => {
                 console.log(error);
             })
+
     }
 
     return (
@@ -42,19 +45,25 @@ function Join1() {
                 </div>
                 <div>
                     <p>이름</p>
-                    <input type={'email'}/>
+                    <input type={'text'}/>
                 </div>
                 <div>
                     <p>성별</p>
-                    <input type={'email'}/>
+                    <input type={'text'}/>
                 </div>
                 <div>
                     <p>연령</p>
-                    <input type={'email'}/>
+                    <input type={'text'}/>
                 </div>
                 <div>
                     <p>학과</p>
-                    <input type={'email'}/>
+                    <select defaultValue={0}> {/**DB 써서 해당 유저의 과 값 가져올 것.*/}
+                        {
+                            departmentList().map((department, index) => (
+                                <option key={index} value={department.id}>{department.name}</option>
+                            ))
+                        }
+                    </select>
                 </div>
                 <input type={'submit'} style={{margin: '0 auto', width: '100%'}}/>
             </form>

@@ -9,6 +9,7 @@ import {useState} from "react";
 import {setLogout} from "../redux/slice/loginSlice";
 import logout from "../images/mainImages/logout.png";
 import modify from '../images/mainImages/modify.png';
+import star from '../images/mainImages/star.png';
 
 function Header1() {
     const [isProfile, setIsProfile] = useState(false); // 프로파일을 클릭했는지 여부
@@ -42,6 +43,13 @@ function Header1() {
                     <img src={modify} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
                     <p>정보 수정</p>
                 </div>
+                <div style={blockStyle} onClick={goLogout}>
+                    <img src={star} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
+                    <p>즐겨찾기</p>
+                    {/**굳이 즐겨찾기 페이지가 필요할까? 라는 고민
+                     그냥 메인에 "즐겨찾기"용으로 만들어 두고 거기로 이동시킬 지 고민
+                     일단 나중에*/}
+                </div>
             </>
         )
     }
@@ -66,7 +74,7 @@ function Header1() {
                     getLogin.value &&
                     <div style={jungangStyle} onClick={setProfile}>
                         <img src={profile} alt={'pr'} style={{width: '1.5rem', height: '1.5rem'}}/>
-                        <p>아이디</p>
+                        <p>YourID</p>
                     </div>
                 }
                 {
