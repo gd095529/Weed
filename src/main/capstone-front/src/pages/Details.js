@@ -5,6 +5,7 @@ import noMark from '../images/mainImages/noMark.png';
 import yesMark from '../images/mainImages/yesMark.png';
 import {useState} from "react";
 import LineChart from "../exportJS/lineChart";
+import WordCloudComponent from "../exportJS/WordCloud";
 
 function Details() {
     const [isMark, setMark] = useState(false);
@@ -19,6 +20,39 @@ function Details() {
     }
 
     const data = [12, 5, 6, 8, 0, 15, 7, 10, 23, 10];
+    const data1 = [
+        { text: 'React', value: 50 },
+        { text: 'D3', value: 49 },
+        { text: 'JavaScript', value: 48 },
+        { text: 'HTML', value: 47 },
+        { text: 'CSS', value: 46 },
+        { text: 'Web Development', value: 45 },
+        { text: 'Frontend', value: 44 },
+        { text: 'Backend', value: 43 },
+        { text: 'Fullstack', value: 42 },
+        { text: 'Programming', value: 41 },
+        { text: 'React', value: 40 },
+        { text: 'D3', value: 39 },
+        { text: 'JavaScript', value: 38 },
+        { text: 'HTML', value: 37 },
+        { text: 'CSS', value: 36 },
+        { text: 'Web Development', value: 35 },
+        { text: 'Frontend', value: 34 },
+        { text: 'Backend', value: 33 },
+        { text: 'Fullstack', value: 32 },
+        { text: 'Programming', value: 31 },
+        { text: 'React', value: 30 },
+        { text: 'D3', value: 29 },
+        { text: 'JavaScript', value: 28 },
+        { text: 'HTML', value: 27 },
+        { text: 'CSS', value: 26 },
+        { text: 'Web Development', value: 25 },
+        { text: 'Frontend', value: 24 },
+        { text: 'Backend', value: 23 },
+        { text: 'Fullstack', value: 22 },
+        { text: 'Programming', value: 21 },
+    ];
+
 
     return (
         <div className={detalisCss.body}>
@@ -81,6 +115,7 @@ function Details() {
 
             <div className={detalisCss.keyword}>
                 <p>주요 키워드</p>
+                <WordCloudComponent data={data1} />
             </div>
             
             <div>
