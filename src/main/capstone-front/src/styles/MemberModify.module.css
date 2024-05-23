@@ -1,0 +1,47 @@
+.body {
+    width: 70rem;
+    border: 1px solid black;
+    margin: 0 auto;
+}
+
+.header {
+    width: 100%;
+    height: 6rem;
+    font-family: "Hak", serif;
+}
+
+.context {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.context > div:nth-child(1) {
+    font-size: 2rem;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+
+.context > div {
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.context input {
+    width: 100%;
+}
+
+.context > div:nth-last-child(1) {
+    text-align: center;
+    width: 100%;
+}
+
+.context > div:nth-last-child(1) > div {
+    border: 1px solid black;
+    margin-top: 1rem;
+    border-radius: 2rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+}

@@ -8,6 +8,7 @@ import Join1 from './pages/Join1';
 import Details from "./pages/Details";
 import Search from './pages/Search';
 import ShowInfo from "./components/ShowInfo";
+import MemberModify from "./pages/MemberModify";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path={'/detail'} element={<Details />} />
               <Route path={'/search'} element={<Search />} />
               <Route path={'/showInfo'} element={<ShowInfo />} />
+              <Route path={'/member'} element={<MemberModify />} />
           </Routes>
       </BrowserRouter>
     </div>

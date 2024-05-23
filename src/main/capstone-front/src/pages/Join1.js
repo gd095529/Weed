@@ -5,11 +5,8 @@ import axios from "axios";
 function Join1() {
 
     const a = () => {
-        const url = '/api3/login'
-        axios.post(url, {
-            id: 'id',
-            password: 'pwd'
-        })
+        const url = '/api3/api/test'
+        axios.post(url)
             .then((response) => {
                 console.log(response);
             })

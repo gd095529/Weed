@@ -7,6 +7,8 @@ import {useDispatch, useSelector} from "react-redux";
 import ShowInfo from "./ShowInfo";
 import {useState} from "react";
 import {setLogout} from "../redux/slice/loginSlice";
+import logout from "../images/mainImages/logout.png";
+import modify from '../images/mainImages/modify.png';
 
 function Header1() {
     const [isProfile, setIsProfile] = useState(false); // 프로파일을 클릭했는지 여부
@@ -21,11 +23,27 @@ function Header1() {
         setIsProfile(!isProfile);
     }
 
-    const dispatch = useDispatch(); // 리덕스 export한거
+    const dispatch = useDispatch(); // 리덕스 export한거 쓸라고
     // 로그아웃
     const goLogout = () => {
         dispatch(setLogout());
         setGetLogin(false);
+    }
+
+    // Showinfo.js 컴포넌트를 다른 곳에서 재사용하기 위해서 굳이 이렇게 사용.
+    const showInfoTag = () => {
+        return (
+            <>
+                <div style={blockStyle} onClick={goLogout}>
+                    <img src={logout} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
+                    <p>로그아웃</p>
+                </div>
+                <div style={blockStyle} onClick={goLogout}>
+                    <img src={modify} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
+                    <p>정보 수정</p>
+                </div>
+            </>
+        )
     }
 
     return (
@@ -34,7 +52,7 @@ function Header1() {
                 <Logo width={'15rem'} height={'6rem'}/>
             </div>
             <div style={namugeStyle}>
-                <div style={jungangStyle}>
+            <div style={jungangStyle}>
                     <Search width={'1.5rem'} height={"1.5rem"}/>
                     <p>검색</p>
                 </div>
@@ -53,7 +71,7 @@ function Header1() {
                 }
                 {
                     isProfile && getLogin.value &&
-                    <ShowInfo goLogout = {goLogout}/>
+                    <ShowInfo getTag = {showInfoTag}/>
                 }
             </div>
         </div>
@@ -83,6 +101,16 @@ const jungangStyle = {
     alignItems: 'center',
     flexDirection: 'column',
     cursor: 'pointer'
+}
+
+const blockStyle = {
+    cursor: 'pointer',
+    display: 'flex',
+    gap: '1rem',
+    alignItems: 'center',
+    marginTop: '1rem',
+    borderBottom: '1px solid white',
+    paddingBottom: '0.5rem',
 }
 
 export default Header1;

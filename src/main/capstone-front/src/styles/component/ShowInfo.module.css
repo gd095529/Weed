@@ -22,21 +22,6 @@
     top: -2rem;
 }
 
-.block {
-    cursor: pointer;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    margin-top: 1rem;
-    border-bottom: 1px solid white;
-    padding-bottom: 0.5rem;
-}
-
-.block > img {
-    width: 2rem;
-    height: 2rem;
-}
-
 @keyframes show{
     0% {
         opacity: 0;

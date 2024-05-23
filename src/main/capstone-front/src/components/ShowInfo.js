@@ -5,10 +5,7 @@ function ShowInfo(props) {
     return (
         <div className={showInfoCss.body}>
             <div className={showInfoCss.triangle}></div>
-            <div className={showInfoCss.block} onClick={props.goLogout}>
-                <img src={logout} alt={'logout'} />
-                <p>로그아웃</p>
-            </div>
+            {props.getTag()}
         </div>
     )
 }
