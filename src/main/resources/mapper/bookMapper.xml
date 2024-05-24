@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.yju.bookscovery.dao.BookCountMapper">
+<mapper namespace="com.yju.bookscovery.dao.BookMapper">
     <select id="count" resultType="int">
         select count(*) from book_count
     </select>
@@ -16,6 +16,18 @@
 
     <select id="selectAll" resultType="BCDto">
         select * from book_count
+        order by book_count desc
+    </select>
+
+    <select id="selectAllByName" resultType="BCDto">
+        select * from book_count
+        where bookname = #{bookname}
+        order by book_count desc
+    </select>
+
+    <select id="selectAllByName" resultType="BCDto">
+        select * from book_count
+        where bookname = #{bookname}
         order by book_count desc
     </select>
 

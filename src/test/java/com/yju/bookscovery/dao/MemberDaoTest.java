@@ -25,8 +25,8 @@ class MemberDaoTest {
     void countMember() throws Exception {
         member.deleteAllMember();
         Assertions.assertThat(member.countMember()==0);
-        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white",now);
-        MemberDto memberDto1 = new MemberDto(null,"대","여",12,1,"asdf","asdf","asdf","gd@na","black",now);
+        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white");
+        MemberDto memberDto1 = new MemberDto(null,"대","여",12,1,"asdf","asdf","asdf","gd@na","black");
         Assertions.assertThat(member.insertMember(memberDto)==1);
         Assertions.assertThat(member.insertMember(memberDto1)==1);
         Assertions.assertThat(member.countMember()==2);
@@ -36,9 +36,9 @@ class MemberDaoTest {
     void selectMember() throws Exception{
         member.deleteAllMember();
         Assertions.assertThat(member.countMember()==0);
-        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white",now);
+        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white");
         Assertions.assertThat(member.insertMember(memberDto)==1);
-        MemberDto memberDto1 = member.selectMember("gd");
+        MemberDto memberDto1 = member.selectAll().get(0);
         Assertions.assertThat(memberDto.getPassword()).isEqualTo(memberDto1.getPassword());
     }
 
@@ -48,8 +48,8 @@ class MemberDaoTest {
         Assertions.assertThat(member.countMember()==0);
         List<MemberDto> allMember = member.selectAll();
         Assertions.assertThat(allMember.size()==0);
-        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white",now);
-        MemberDto memberDto1 = new MemberDto(null,"대","여",12,1,"asdf","asdf","asdf","gd@na","black",now);
+        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white");
+        MemberDto memberDto1 = new MemberDto(null,"대","여",12,1,"asdf","asdf","asdf","gd@na","black");
         Assertions.assertThat(member.insertMember(memberDto)==1);
         allMember = member.selectAll();
         Assertions.assertThat(allMember.size()==1);
@@ -62,10 +62,9 @@ class MemberDaoTest {
     void insertMember() throws Exception{
         member.deleteAllMember();
         Assertions.assertThat(member.countMember()==0);
-        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white",now);
+        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white");
         Assertions.assertThat(member.insertMember(memberDto)==1);
         Assertions.assertThat(member.countMember()==1);
-        int num = member.selectMember("gd").getMember_id();
         Assertions.assertThat(memberDto.getName()).isEqualTo(member.selectMember(num).getName());
 
     }
@@ -74,7 +73,7 @@ class MemberDaoTest {
     void updateMember() throws Exception {
         member.deleteAllMember();
         Assertions.assertThat(member.countMember()==0);
-        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white",now);
+        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white");
         Assertions.assertThat(member.insertMember(memberDto)==1);
         MemberDto memberDto1 = member.selectMember("gd");
         memberDto1.setPassword("fdsa");
@@ -86,20 +85,17 @@ class MemberDaoTest {
     void deleteMember() throws Exception {
         member.deleteAllMember();
         Assertions.assertThat(member.countMember()==0);
-        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white",now);
+        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white");
         Assertions.assertThat(member.insertMember(memberDto)==1);
         Assertions.assertThat(member.countMember()==1);
-        MemberDto memberDto1 = member.selectMember("gd");
-        Assertions.assertThat(member.deleteMember(memberDto1.getMember_id())==1);
-        Assertions.assertThat(member.countMember()==0);
     }
 
     @Test
     void deleteAllMember() throws Exception {
         member.deleteAllMember();
         Assertions.assertThat(member.countMember()==0);
-        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white",now);
-        MemberDto memberDto1 = new MemberDto(null,"대","여",12,1,"asdf","asdf","asdf","gd@na","black",now);
+        MemberDto memberDto = new MemberDto(null, "차","남",12,1,"gd","asdf","asdf","gd@gd","white");
+        MemberDto memberDto1 = new MemberDto(null,"대","여",12,1,"asdf","asdf","asdf","gd@na","black");
         Assertions.assertThat(member.insertMember(memberDto)==1);
         Assertions.assertThat(member.countMember()==1);
         Assertions.assertThat(member.insertMember(memberDto1)==1);

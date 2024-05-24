@@ -21,12 +21,17 @@ public class MemberDao {
     public MemberDto selectMember(Integer member_id) throws Exception{
         return session.selectOne(namespace+"selectOne",member_id);
     }
-    public MemberDto selectMember(String id) throws Exception{
-        return session.selectOne(namespace+"selectById",id);
-    }
 
     public List<MemberDto> selectAll() throws Exception{
         return session.selectList(namespace+"selectAll");
+    }
+
+    public int selectId(String id) throws Exception{
+        return session.selectOne(namespace+"selectId",id);
+    }
+
+    public List<MemberDto> selectAllByDepartment(Integer department_id) throws Exception{
+        return session.selectList(namespace+"selectAllByDepartment",department_id);
     }
 
     public int insertMember(MemberDto member) throws Exception{

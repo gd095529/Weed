@@ -19,14 +19,14 @@ public class BookCountDao {
     public int countBook()throws Exception{
         return session.selectOne(namespace+"count");
     }
-    public BookCountDto selectBook(Integer book_count_id, Integer department_id)throws Exception{
-        Map map = new HashMap();
-        map.put("book_count_id",book_count_id);
-        map.put("department_id",department_id);
-        return session.selectOne(namespace+"selectOne",map);
+    public BookCountDto selectBook(Integer book_count_id)throws Exception{
+        return session.selectOne(namespace+"selectOne",book_count_id);
     }
     public List<BookCountDto> selectAllBook()throws Exception{
         return session.selectList(namespace+"selectAll");
+    }
+    public List<BookCountDto> selectAllDepartmentBook(Integer book_count_id)throws Exception{
+        return session.selectList(namespace+"selectAll",book_count_id);
     }
     public int insertBook(BookCountDto dto)throws Exception{
         return session.insert(namespace+"insert",dto);
@@ -37,11 +37,8 @@ public class BookCountDao {
     public int deleteAllBook(Integer department_id)throws Exception{
         return session.delete(namespace+"deleteAll", department_id);
     }
-    public int deleteBook(Integer book_count_id, Integer department_id)throws Exception{
-        Map map = new HashMap();
-        map.put("book_count_id",book_count_id);
-        map.put("department_id",department_id);
-        return session.delete(namespace+"deleteOne",map);
+    public int deleteBook(Integer book_count_id)throws Exception{
+        return session.delete(namespace+"deleteOne",book_count_id);
     }
 }
 

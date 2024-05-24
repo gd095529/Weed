@@ -2,7 +2,6 @@ package com.yju.bookscovery.service;
 
 import com.yju.bookscovery.dao.FavoriteDao;
 import com.yju.bookscovery.dao.MemberDao;
-import com.yju.bookscovery.dao.RecommandBookDao;
 import com.yju.bookscovery.dao.SearchHistoryDao;
 import com.yju.bookscovery.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,8 @@ public class MemberService {
     @Autowired
     MemberDao memberDao;
 
-    @Autowired
-    RecommandBookDao recommandBookDao;
+//    @Autowired
+//    RecommandBookDao recommandBookDao;
 
     @Autowired
     FavoriteDao favoriteDao;
@@ -38,7 +37,7 @@ public class MemberService {
     public int remove(Integer member_id) throws Exception{
         favoriteDao.deleteAllFavorite(member_id);
         searchHistoryDao.deleteAllHistory(member_id);
-        recommandBookDao.deleteAllRecommand(member_id);
+//        recommandBookDao.deleteAllRecommand(member_id);
         return memberDao.deleteMember(member_id);
     }
 
