@@ -14,7 +14,7 @@ public class BookCountDao {
     @Autowired
     SqlSession session;
 
-    String namespace="com.yju.bookscovery.dao.bookCountMapper.";
+    String namespace="com.yju.bookscovery.dao.BookCountMapper.";
 
     public int countBook()throws Exception{
         return session.selectOne(namespace+"count");
