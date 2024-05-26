@@ -4,30 +4,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yju.bookscovery.dao.PopularMemberMapper">
-    <select id="count" resultType="int">
-        select count(*) from popular_book_members
-    </select>
 
-    <select id="selectOne" parameterType="Integer" resultType="PopularBookDto">
+    <select id="selectOne" parameterType="Integer" resultType="PBDto">
         select * from popular_book_members
         where popular_book_member_id = #{popular_book_member_id}
     </select>
 
-    <insert id="insert" parameterType="PopularBookDto">
+    <select id="selectAllByMember" parameterType="Integer" resultType="PBDto">
+        select * from popular_book_members
+        where member_id = #{member_id}
+    </select>
+
+    <insert id="insert" parameterType="PBDto">
         insert into popular_book_members
         values (null, #{popular_id}, #{member_id})
     </insert>
 
-    <update id="update" parameterType="PopularBookDto">
-        update popular_book_members set popular_id = #{popular_id}, member_id = #{member_id}
-        where popular_book_member_id = #{popular_book_member_id}
-    </update>
-
     <delete id="deleteAll" parameterType="Integer">
         delete from popular_book_members
+        where member_id = #{member_id}
     </delete>
 
-    <delete id="deleteOne" parameterType="map">
+    <delete id="deleteOne" parameterType="Integer">
         delete from popular_book_members
         where popular_book_member_id = #{popular_book_member_id}
     </delete>

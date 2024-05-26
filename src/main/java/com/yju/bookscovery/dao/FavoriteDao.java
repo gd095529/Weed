@@ -5,9 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class FavoriteDao {
@@ -16,32 +14,23 @@ public class FavoriteDao {
 
     String namespace = "com.yju.bookscovery.dao.FavoriteMapper.";
 
-    public int countFavorite()throws Exception{
-        return session.selectOne(namespace+"count");
+    public int countByMemberFavorite(Integer member_id)throws Exception{
+        return session.selectOne(namespace+"countByMember",member_id);
     }
-    public FavoriteDto selectFavorite(Integer favorite_id, Integer member_id)throws Exception{
-        Map map = new HashMap();
-        map.put("favorite_id",favorite_id);
-        map.put("member_id",member_id);
-        return session.selectOne(namespace+"selectOne",map);
+    public FavoriteDto selectFavorite(Integer favorite_id)throws Exception{
+        return session.selectOne(namespace+"selectOne",favorite_id);
     }
-    public List<FavoriteDto> selectAllFavorite(Integer member_id)throws Exception{
+    public List<FavoriteDto> selectAllByMemberFavorite(Integer member_id)throws Exception{
         return session.selectList(namespace+"selectAll",member_id);
     }
     public int insertFavorite(FavoriteDto dto)throws Exception{
         return session.insert(namespace+"insert",dto);
     }
-    public int updateFavorite(FavoriteDto dto)throws Exception{
-        return session.update(namespace+"update",dto);
-    }
-    public int deleteAllFavorite(Integer member_id)throws Exception{
+    public int deleteAllByMemberFavorite(Integer member_id)throws Exception{
         return session.delete(namespace+"deleteAll", member_id);
     }
-    public int deleteFavorite(Integer favorite_id, Integer member_id)throws Exception{
-        Map map = new HashMap();
-        map.put("favorite_id",favorite_id);
-        map.put("member_id",member_id);
-        return session.delete(namespace+"deleteOne",map);
+    public int deleteFavorite(Integer favorite_id)throws Exception{
+        return session.delete(namespace+"deleteOne",favorite_id);
     }
 
 }

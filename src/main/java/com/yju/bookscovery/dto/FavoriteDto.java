@@ -2,6 +2,8 @@ package com.yju.bookscovery.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -11,5 +13,6 @@ import lombok.*;
 public class FavoriteDto {
     private Integer favorite_id;
     private Integer member_id;
-    private Integer isbn;
+    private Integer book_id;
+    private LocalDateTime favorite_date;
 }

@@ -4,13 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.yju.bookscovery.dao.FavoriteMapper">
-    <select id="count" resultType="int">
+    <select id="countByMember" resultType="int">
         select count(*) from favorite
+        where member_id = #{member_id}
     </select>
 
-    <select id="selectOne" parameterType="map" resultType="FDto">
+    <select id="selectOne" parameterType="Integer" resultType="FDto">
         select * from favorite
-        where favorite_id = #{favorite_id} and member_id = #{member_id}
+        where favorite_id = #{favorite_id}
     </select>
 
     <select id="selectAll" parameterType="Integer" resultType="FDto">
@@ -20,22 +21,17 @@
 
     <insert id="insert" parameterType="FDto">
         insert into favorite
-        values (null,#{member_id},#{isbn})
+        values (null,#{member_id},#{book_id},now())
     </insert>
 
-    <update id="update" parameterType="FDto">
-        update favorite set isbn = #{isbn}
-        where favorite_id = #{favorite_id}, member_id = #{member_id}
-    </update>
-
-    <delete id="deleteAll" parameterType="Integer">
+    <delete id="deleteAllByMember" parameterType="Integer">
         delete from favorite
         where member_id = #{member_id}
     </delete>
 
-    <delete id="deleteOne" parameterType="map">
+    <delete id="deleteOne" parameterType="Integer">
         delete from favorite
-        where favorite_id = #{favorite_id}, member_id = #{member_id}
+        where favorite_id = #{favorite_id}
     </delete>
 
 

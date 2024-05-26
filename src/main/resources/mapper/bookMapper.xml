@@ -5,59 +5,26 @@
 
 <mapper namespace="com.yju.bookscovery.dao.BookMapper">
     <select id="count" resultType="int">
-        select count(*) from book_count
+        select count(*) from book
     </select>
 
-    <select id="selectAllByDepartment" parameterType="Integer" resultType="BCDto">
-        select * from book_count
-        where department_id = #{department_id}
-        order by book_count desc
+    <select id="selectOne" parameterType="Integer" resultType="BookDto">
+        select * from book
+        where book_id = #{book_id}
     </select>
 
-    <select id="selectAll" resultType="BCDto">
-        select * from book_count
-        order by book_count desc
-    </select>
-
-    <select id="selectAllByName" resultType="BCDto">
-        select * from book_count
-        where bookname = #{bookname}
-        order by book_count desc
-    </select>
-
-    <select id="selectAllByName" resultType="BCDto">
-        select * from book_count
-        where bookname = #{bookname}
-        order by book_count desc
-    </select>
-
-    <select id="selectOne" parameterType="Integer" resultType="BCDto">
-        select * from book_count
-        where book_count_id = #{book_count_id}
-    </select>
-
-    <insert id="insert" parameterType="BCDto">
-        insert into book_count
-        values (null, #{department_id}, #{book_id}, #{book_count})
+    <insert id="insert" parameterType="BookDto">
+        insert into book
+        values (null, #{bookname}, #{isbn}, #{authors}, #{publisher}, #{book_image_URL}, #{publication_year}, #{class_no}, #{loan_count})
     </insert>
 
-    <update id="update" parameterType="BCDto">
-        update book_count set book_id = #{book_id} + 1
-        where book_count_id = #{book_count_id}
-    </update>
-
-    <delete id="deleteAllByDepartment" parameterType="Integer">
-        delete from book_count
-        where department_id = #{department_id}
-    </delete>
-
     <delete id="deleteAll" parameterType="Integer">
-        delete from book_count
+        delete from book
     </delete>
 
     <delete id="deleteOne" parameterType="Integer">
-        delete from book_count
-        where book_count_id = #{book_count_id}
+        delete from book
+        where book_id = #{book_id}
     </delete>
 
 </mapper>
