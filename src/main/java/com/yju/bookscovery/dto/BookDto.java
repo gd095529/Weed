@@ -11,7 +11,7 @@ import lombok.*;
 public class BookDto {
     private Integer book_id;
     private String bookname;
-    private long isbn;
+    private String isbn;
     private String author;
     private String publisher;
     private String book_image_URL;
