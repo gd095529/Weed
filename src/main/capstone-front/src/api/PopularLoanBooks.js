@@ -25,15 +25,17 @@ export async function trendBooks(config) {
     try {
         const books = [];
         const response = await axios.get('/api2/api/hotTrend', config);
-        console.log(response.data.response);
-        for (let i = 0; i < 15; i++) {
-            books.push(
-                {
-                    url: response.data.response.docs[i].doc.bookImageURL,
-                    title: response.data.response.docs[i].doc.bookname,
-                    author: response.data.response.docs[i].doc.authors
-                }
-            )
+
+        for (let j = 0; j < 3; j++) {
+            for (let i = 0; i < 5; i++) {
+                books.push(
+                    {
+                        url: response.data.response.results[j].result.docs[i].doc.bookImageURL,
+                        title: response.data.response.results[j].result.docs[i].doc.bookname,
+                        author: response.data.response.results[j].result.docs[i].doc.authors
+                    }
+                )
+            }
         }
         return books;
     } catch (error) {
@@ -41,3 +43,4 @@ export async function trendBooks(config) {
         return []; // 에러가 발생하면 빈 배열 반환
     }
 }
+

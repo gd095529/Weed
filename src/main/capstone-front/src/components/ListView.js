@@ -9,6 +9,7 @@ function ListView(props) {
     const [index, setIndex] = useState(1); // 현재 리스트가 몇 번째를 참조하는지 확인
     const [books, setBooks] = useState([]); // api에서 뽑아온 값을 index에 맞게 보여주기 위한 값
 
+
     const mouseLeave = () => {
         return setOver(false);
     }
@@ -21,9 +22,10 @@ function ListView(props) {
         setIndex(index + 1);
         // 5페이지를 보여줄 예정
         // 만약 5페이지를 넘어가게 된다면 다시 첫 번재 페이지로 이동
-        if (index === 5) {
+        if (index === props.size / 5) {
             setIndex(1);
         }
+        loanDate();
     }
 
     const clickLeft = () => {
@@ -31,8 +33,23 @@ function ListView(props) {
         // 5페이지를 보여줄 예정
         // 만약 1페이지를 넘어가게 된다면 다시 다섯 번재 페이지로 이동
         if (index === 1) {
-            setIndex(5);
+            setIndex(props.size / 5);
         }
+        loanDate();
+    }
+
+    // 대출인기인 경우 인덱스 순서에 따라 날짜가 보이는 걸 조작
+    const loanDate = (forward) => {
+        const today = new Date();
+        const lastDay = new Date(today.setDate(today.getDate() - forward));
+        const year = lastDay.getFullYear();
+        let month = lastDay.getMonth() + 1;
+        let day = lastDay.getDate();
+
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+
+        return `${year}-${month}-${day}`;
     }
     // Main1에서 가져온 api 값을 index에 맞게 배열에서 뽑아냄.
     // index가 변화면 다시 랜더링.
@@ -49,7 +66,14 @@ function ListView(props) {
         <div style={bodyStyle} onMouseLeave={mouseLeave} onMouseOver={mouseOver}>
             <div style={{display: "flex", alignItems: "center"}}>
                 <img src={props.icon} alt={props.icon} style={iconStyle}/>
-                <div style={{fontFamily: "TAE"}}>{props.theme} ({index}/5)</div>
+                {   // 대출이란 글자가 들어가면 index가 나오게 1, 2, 3, 4, 5... 이렇게
+                    props.theme.indexOf('대출') === -1 &&
+                    <div style={{fontFamily: "TAE"}}>{props.theme} ({index}/{props.size / 5})</div>
+                }
+                {
+                    props.theme.indexOf('대출') >= 0 &&
+                    <div style={{fontFamily: "TAE"}}>{props.theme} ({loanDate(index)})</div>
+                }
             </div>
             <div style={booksStyle}>
             {
@@ -59,7 +83,7 @@ function ListView(props) {
                 ))
             }
             </div>
-            <img src={more} alt={'more'} style={moreStyle} onClick={props.func}/>
+            <img src={more} alt={'more'} style={moreStyle} onClick={props.clickMore}/>
             {
                 // 마우스가 ListView 전체에 올라가게 되면 이미지 나오게 하는 코드
                 isOver &&
