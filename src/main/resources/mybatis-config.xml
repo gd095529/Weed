@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias alias="User" type="com.yju.bookscovery.dto.User"/>
+<!--        <typeAlias alias="User" type="com.yju.bookscovery.dto.User"/>-->
 
         <typeAlias alias="MemberDto" type="com.yju.bookscovery.dto.MemberDto"/>
         <typeAlias alias="SHDto" type="com.yju.bookscovery.dto.SearchHistoryDto"/>

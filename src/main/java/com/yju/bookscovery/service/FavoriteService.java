@@ -10,19 +10,19 @@ public class FavoriteService {
     @Autowired
     FavoriteDao favoriteDao;
 
-    public FavoriteDto select(Integer favorite_id, Integer member_id) throws Exception{
-        return favoriteDao.selectFavorite(favorite_id, member_id);
+    public FavoriteDto select(Integer favorite_id) throws Exception{
+        return favoriteDao.selectFavorite(favorite_id);
     }
 
     public int insert(FavoriteDto dto) throws Exception{
         return  favoriteDao.insertFavorite(dto);
     }
 
-    public int delete(Integer favorite_id, Integer member_id) throws Exception{
-        return favoriteDao.deleteFavorite(favorite_id, member_id);
+    public int delete(Integer favorite_id) throws Exception{
+        return favoriteDao.deleteFavorite(favorite_id);
     }
 
     public int deleteAll(Integer member_id) throws Exception{
-        return favoriteDao.deleteAllFavorite(member_id);
+        return favoriteDao.deleteAllByMemberFavorite(member_id);
     }
 }

@@ -23,8 +23,8 @@
         select count(*) from member_info
     </select>
 
-    <select id="selectId" parameterType="String" resultType="String">
-        select id from member_info
+    <select id="selectOneById" parameterType="String" resultType="MemberDto">
+        select * from member_info
         where id = #{id}
     </select>
 
