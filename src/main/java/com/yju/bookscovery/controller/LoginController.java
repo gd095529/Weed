@@ -28,12 +28,11 @@ public class LoginController {
 //    }
 
     @GetMapping("/logout")
-    public String logout() {
+    public ResponseEntity<?> logout(HttpSession session) {
         // 1. 세션을 종료
-//        session.invalidate();HttpSession session
+        session.invalidate();
         // 2. 홈으로 이동
-//        return ResponseEntity.ok().build();
-        return "redirect:http://localhost:3000/";
+        return ResponseEntity.ok().build();
     }
 
     @ResponseBody
