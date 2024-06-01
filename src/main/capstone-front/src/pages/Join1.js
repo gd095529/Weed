@@ -3,9 +3,15 @@ import logo from '../images/logo2.png'
 import axios from "axios";
 import {departmentList} from "../exportJS/departmentList";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 function Join1() {
     const navigate = useNavigate();
+    const [formData, setFromdata] = useState({
+            name: '',
+            gender: '',
+
+        })
     const a = () => {
         const url = '/api3/api/test'
         axios.get(url)
@@ -18,6 +24,18 @@ function Join1() {
                 console.log(error);
             })
 
+    }
+
+    const push = (data) => {
+        const url = '/api3/api/test'
+        axios.post(url)
+            .then((response) => {
+                console.log(response);
+                alert('연결 성공! 받아온 데이터: ' + response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
 
@@ -73,7 +91,7 @@ function Join1() {
                         }
                     </select>
                 </div>
-                <input type={'submit'} style={{margin: '0 auto', width: '100%'}}/>
+                <input type={'button'} style={{margin: '0 auto', width: '100%'}}/>
             </form>
             <div></div>
         </div>

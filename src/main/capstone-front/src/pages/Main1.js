@@ -152,53 +152,34 @@ function Main1() {
             <div className={main1Css.listBox}>
                 <div className={main1Css.list}>
                     {
-<<<<<<< HEAD
                         // api에서 25개를 다 뽑아온 뒤 넘기는 코드.
                         // 렌더링 후 useEffect가 수행되기 때문에 이 조건을 걸지 않으면 weeklyBooks에 값이 없는 채로 넘어가지는 문제 발생.
                         weeklyBooks.length === 25 &&
-                        <ListView theme={'학과별 인기 도서'} isMore={isMore}
-                                  books={weeklyBooks} clickMore={clickMore} icon={school}
-                        />
-=======
                         getListView('학과별 인기 도서', weeklyBooks, school, clickMore, 25)
->>>>>>> cecf5e9a0c2c2c577fb606e1c8fc9ce05f8c8e85
                     }
                 </div>
                 <div className={main1Css.list}>
                     {
-<<<<<<< HEAD
                         weeklyBooks.length === 25 &&
-                        <ListView theme={'남여 인기 도서'} isMore={isMore} books={weeklyBooks} icon={fire} func={clickMore}/>
-=======
                         getListView('연령별 인기 도서', weeklyBooks, fire, clickMore, 25)
->>>>>>> cecf5e9a0c2c2c577fb606e1c8fc9ce05f8c8e85
                     }
                 </div>
                 <div className={main1Css.list}>
                     {
-<<<<<<< HEAD
                         weeklyBooks.length === 25 &&
-                        <ListView theme={'연령별 인기 도서'} isMore={isMore} books={weeklyBooks} icon={fire} func={clickMore}/>
+                        getListView('연령별 인기 도서', weeklyBooks, fire, clickMore, 25)
                     }
                 </div>
                 <div className={main1Css.list}>
                     {
                         monthlyBooks.length === 25 &&
-                        <ListView theme={'이번달 인기 도서'} isMore={isMore} books={monthlyBooks} func={clickMore}
-                                  icon={fire}/>
-=======
                         getListView('이번달 인기 도서', monthlyBooks, fire, clickMore, 25)
->>>>>>> cecf5e9a0c2c2c577fb606e1c8fc9ce05f8c8e85
                     }
                 </div>
                 <div className={main1Css.list}>
                     {
-<<<<<<< HEAD
                         risingBooks.length === 15 &&
-                        <ListView theme={'인기 대출 도서'} isMore={isMore} func={clickMore} icon={book}/>
-=======
                         getListView('대출 인기 도서', risingBooks, book, clickMore, 15)
->>>>>>> cecf5e9a0c2c2c577fb606e1c8fc9ce05f8c8e85
                     }
                 </div>
             </div>
