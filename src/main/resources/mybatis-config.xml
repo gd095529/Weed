@@ -4,14 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias alias="User" type="com.yju.bookscovery.dto.User"/>
+<!--        <typeAlias alias="User" type="com.yju.bookscovery.dto.User"/>-->
 
         <typeAlias alias="MemberDto" type="com.yju.bookscovery.dto.MemberDto"/>
         <typeAlias alias="SHDto" type="com.yju.bookscovery.dto.SearchHistoryDto"/>
         <typeAlias alias="BCDto" type="com.yju.bookscovery.dto.BookCountDto"/>
+        <typeAlias alias="BookDto" type="com.yju.bookscovery.dto.BookDto"/>
+        <typeAlias alias="PBDto" type="com.yju.bookscovery.dto.PopularBookDto"/>
+        <typeAlias alias="PMDto" type="com.yju.bookscovery.dto.PopularMemberDto"/>
         <typeAlias alias="DDto" type="com.yju.bookscovery.dto.DepartmentDto"/>
         <typeAlias alias="FDto" type="com.yju.bookscovery.dto.FavoriteDto"/>
-        <typeAlias alias="RBDto" type="com.yju.bookscovery.dto.RecommandBookDto"/>
-        <typeAlias alias="KeywordDto" type="com.yju.bookscovery.dto.KeywordDto"/>
+<!--        <typeAlias alias="RBDto" type="com.yju.bookscovery.dto.RecommandBookDto"/>-->
+<!--        <typeAlias alias="KeywordDto" type="com.yju.bookscovery.dto.KeywordDto"/>-->
     </typeAliases>
 </configuration>

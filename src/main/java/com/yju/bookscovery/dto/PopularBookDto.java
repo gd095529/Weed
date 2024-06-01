@@ -10,9 +10,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class FavoriteDto {
-    private Integer favorite_id;
-    private Integer member_id;
+public class PopularBookDto {
+    private Integer popular_id;
     private Integer book_id;
-    private LocalDateTime favorite_date;
+    private LocalDateTime popular_date;
 }

@@ -22,7 +22,11 @@
 .list {
     width: 55rem;
     height: 21rem;
-    margin-top: 8rem;
+    margin-top: 1.5rem;
     transition: height 0.5s ease;
     border: 1px solid black;
+}
+
+.listBox:last-child {
+    margin-bottom: 1.5rem;
 }

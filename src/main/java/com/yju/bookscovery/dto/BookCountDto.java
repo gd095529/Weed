@@ -11,6 +11,6 @@ import lombok.*;
 public class BookCountDto {
     private Integer book_count_id;
     private Integer department_id;
-    private String bookname;
+    private Integer book_id;
     private int book_count;
 }

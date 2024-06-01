@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping("/api/test")
     public String test() {
-        return "Test";
+
+        return "redirect:http://localhost:3000/";
     }
+
+
 }

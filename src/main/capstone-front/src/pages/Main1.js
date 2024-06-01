@@ -2,7 +2,7 @@ import Header1 from '../components/Header1';
 import ListView from "../components/ListView";
 import main1Css from '../styles/Main1.module.css';
 import {useEffect, useRef, useState} from "react";
-import {loanBooks, trendBooks} from "../api/PopularLoanBooks";
+import {detailBooks, loanBooks, trendBooks} from "../api/PopularLoanBooks";
 import school from '../images/mainImages/school.png';
 import fire from '../images/mainImages/fire.png';
 import book from '../images/mainImages/book.png';
@@ -41,13 +41,14 @@ function getLastWeek()  {
     return `${year}-${month}-${day}`
 }
 
-// 현재 날짜 구하기 함수
+// 어제 날짜 구하기 함수
 function getToday() {
     const today = new Date();
+    const yesterday = new Date(today.setDate(today.getDate() - 1));
 
-    const year = today.getFullYear();
-    let month = today.getMonth() + 1;
-    let day = today.getDate();
+    const year = yesterday.getFullYear();
+    let month = yesterday.getMonth() + 1;
+    let day = yesterday.getDate();
 
     month = month < 10 ? '0' + month : month;
     day = day < 10 ? '0' + day : day;
@@ -72,10 +73,9 @@ function Main1() {
             params: {
                 authKey: '6bc1f702d629a833008a2b52204865ff779c763cf3daca4790b8ffe3e043c0eb',
                 format: 'json',
-                startDt: lastWeek,
-                endDt: today,
                 from_age: '20',
                 to_age: '30',
+                gender: '1'
             }
         }
 
@@ -114,8 +114,7 @@ function Main1() {
         fetchData();
     }, []);
 
-    // risingBooks를 api에서 가져오기 위한 코드. 딱 한 번만 실행.
-    // 근데 이거 왜 결과 값이 안나옴 ???..
+    // 대출인기도서를 api에서 가져오기 위한 코드. 딱 한 번만 실행.
     useEffect(() => {
         const config = {
             params: {
@@ -136,6 +135,15 @@ function Main1() {
         fetchData();
     }, []);
 
+    // ListView 태그를 한 번에 쓰기 위해서 사용
+    // theme는 제목, books는 api나 DB에서 가져온 목록, icon은 아이콘, clickMore은 더보기 눌렀을 때 상태 변화, size는 책을 총 몇개 넣을 건지
+    const getListView = (theme, books, icon, clickMore, size) => {
+        return (
+            books.length === size &&
+            <ListView theme={theme} books={books} icon={icon} clickMore={clickMore} size={size} />
+        )
+    }
+
     return (
         <div className={main1Css.body}>
             <div className={main1Css.header}>
@@ -144,22 +152,31 @@ function Main1() {
             <div className={main1Css.listBox}>
                 <div className={main1Css.list}>
                     {
+<<<<<<< HEAD
                         // api에서 25개를 다 뽑아온 뒤 넘기는 코드.
                         // 렌더링 후 useEffect가 수행되기 때문에 이 조건을 걸지 않으면 weeklyBooks에 값이 없는 채로 넘어가지는 문제 발생.
                         weeklyBooks.length === 25 &&
                         <ListView theme={'학과별 인기 도서'} isMore={isMore}
                                   books={weeklyBooks} clickMore={clickMore} icon={school}
                         />
+=======
+                        getListView('학과별 인기 도서', weeklyBooks, school, clickMore, 25)
+>>>>>>> cecf5e9a0c2c2c577fb606e1c8fc9ce05f8c8e85
                     }
                 </div>
                 <div className={main1Css.list}>
                     {
+<<<<<<< HEAD
                         weeklyBooks.length === 25 &&
                         <ListView theme={'남여 인기 도서'} isMore={isMore} books={weeklyBooks} icon={fire} func={clickMore}/>
+=======
+                        getListView('연령별 인기 도서', weeklyBooks, fire, clickMore, 25)
+>>>>>>> cecf5e9a0c2c2c577fb606e1c8fc9ce05f8c8e85
                     }
                 </div>
                 <div className={main1Css.list}>
                     {
+<<<<<<< HEAD
                         weeklyBooks.length === 25 &&
                         <ListView theme={'연령별 인기 도서'} isMore={isMore} books={weeklyBooks} icon={fire} func={clickMore}/>
                     }
@@ -169,12 +186,19 @@ function Main1() {
                         monthlyBooks.length === 25 &&
                         <ListView theme={'이번달 인기 도서'} isMore={isMore} books={monthlyBooks} func={clickMore}
                                   icon={fire}/>
+=======
+                        getListView('이번달 인기 도서', monthlyBooks, fire, clickMore, 25)
+>>>>>>> cecf5e9a0c2c2c577fb606e1c8fc9ce05f8c8e85
                     }
                 </div>
                 <div className={main1Css.list}>
                     {
+<<<<<<< HEAD
                         risingBooks.length === 15 &&
                         <ListView theme={'인기 대출 도서'} isMore={isMore} func={clickMore} icon={book}/>
+=======
+                        getListView('대출 인기 도서', risingBooks, book, clickMore, 15)
+>>>>>>> cecf5e9a0c2c2c577fb606e1c8fc9ce05f8c8e85
                     }
                 </div>
             </div>

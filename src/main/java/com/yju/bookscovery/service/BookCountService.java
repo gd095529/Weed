@@ -10,8 +10,8 @@ public class BookCountService {
     @Autowired
     BookCountDao bookCountDao;
 
-    public BookCountDto select(Integer book_count_id, Integer department_id) throws Exception{
-        return bookCountDao.selectBook(book_count_id,department_id);
+    public BookCountDto select(Integer book_count_id) throws Exception{
+        return bookCountDao.selectBook(book_count_id);
     }
 
     public int insert(BookCountDto dto) throws Exception{
@@ -19,7 +19,7 @@ public class BookCountService {
     }
 
     public int delete(Integer book_count_id, Integer department_id) throws Exception{
-        return bookCountDao.deleteBook(book_count_id,department_id);
+        return bookCountDao.deleteBook(book_count_id);
     }
 
     public int deleteAll(Integer department_id) throws Exception{

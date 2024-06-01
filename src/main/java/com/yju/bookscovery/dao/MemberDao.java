@@ -1,47 +1,25 @@
 package com.yju.bookscovery.dao;
 
 import com.yju.bookscovery.dto.MemberDto;
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public class MemberDao {
-    @Autowired
-    SqlSession session;
+public interface MemberDao {
+    int countMember() throws Exception;
 
-    String namespace = "com.yju.bookscovery.dao.MemberMapper.";
+    MemberDto selectMember(Integer member_id) throws Exception;
 
-    public int countMember()throws Exception{
-        return session.selectOne(namespace+"count");
-    }
+    List<MemberDto> selectAll() throws Exception;
 
-    public MemberDto selectMember(Integer member_id) throws Exception{
-        return session.selectOne(namespace+"selectOne",member_id);
-    }
-    public MemberDto selectMember(String id) throws Exception{
-        return session.selectOne(namespace+"selectById",id);
-    }
+    MemberDto selectById(String id) throws Exception;
 
-    public List<MemberDto> selectAll() throws Exception{
-        return session.selectList(namespace+"selectAll");
-    }
+    List<MemberDto> selectAllByDepartment(Integer department_id) throws Exception;
 
-    public int insertMember(MemberDto member) throws Exception{
-        return session.insert(namespace+"insert",member);
-    }
+    int insertMember(MemberDto member) throws Exception;
 
-    public int updateMember(MemberDto member) throws Exception{
-        return session.update(namespace+"update",member);
-    }
+    int updateMember(MemberDto member) throws Exception;
 
-    public int deleteMember(Integer member_id) throws Exception{
-        return session.delete(namespace+"deleteOne",member_id);
-    }
+    int deleteMember(Integer member_id) throws Exception;
 
-    public int deleteAllMember() throws Exception{
-        return session.delete(namespace+"deleteAll");
-    }
+    int deleteAllMember() throws Exception;
 }
