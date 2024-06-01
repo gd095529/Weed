@@ -10,6 +10,7 @@ import Search from './pages/Search';
 import ShowInfo from "./components/ShowInfo";
 import MemberModify from "./pages/MemberModify";
 import Bookmark from "./pages/Bookmark";
+import Find from "./pages/Find";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path={'/showInfo'} element={<ShowInfo />} />
               <Route path={'/member'} element={<MemberModify />} />
               <Route path={'/bookmark'} element={<Bookmark />} />
+              <Route path={'/find/*'} element={<Find />} />
           </Routes>
       </BrowserRouter>
     </div>

@@ -69,15 +69,22 @@ function LoginPage() {
                 </div>
                 <div className={loginCss.inputBox}>
                     <p style={{opacity: isFocus ? '0.6' : '0'}}>비밀번호 입력</p>
-                    <input className={isFocus ? loginCss.focusInput : ''} type={isShowPwd ? 'text' : 'password'} placeholder='비밀번호를 입력하세요.'
+                    <input className={isFocus ? loginCss.focusInput : ''} type={isShowPwd ? 'text' : 'password'}
+                           placeholder='비밀번호를 입력하세요.'
                            onFocus={() => setFocus(true)} onBlur={checkValue} onKeyPress={pressEnter}
                            onChange={(e) => setEmail(e.target.value)}></input>
-                    <img src={isShowPwd ? hide : view} alt='엔터' style={{opacity: isFocus ? '1' : '0'}} onClick={showPwd}/>
+                    <img src={isShowPwd ? hide : view} alt='엔터' style={{opacity: isFocus ? '1' : '0'}}
+                         onClick={showPwd}/>
                 </div>
                 <div className={loginCss.buttonBox}>
                     <div className={loginCss.planeText}>계정이 없으신가요?</div>
                     <div className={`${loginCss.button}`} onClick={goJoin}>회원가입</div>
                 </div>
+                <div className={loginCss.buttonBox}>
+                    <div className={`${loginCss.button}`} onClick={() => window.open('/find/id', '_blank', 'width=700, height=200')}>아이디 찾기</div>
+                    <div className={`${loginCss.button}`} onClick={() => window.open('/find/pwd', '_blank', 'width=700, height=200')}>비밀번호 찾기</div>
+                </div>
+
             </div>
         </div>
     )
