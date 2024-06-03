@@ -17,7 +17,7 @@ public class MemberController {
     MemberService memberService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addMember(MemberDto member) throws Exception {
+    public ResponseEntity<?> addMember(@RequestBody MemberDto member) throws Exception {
         //salt 랜덤 생성
         SecureRandom random = SecureRandom.getInstanceStrong();
         byte[] bytes = new byte[16];

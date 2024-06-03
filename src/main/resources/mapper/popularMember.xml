@@ -5,17 +5,17 @@
 
 <mapper namespace="com.yju.bookscovery.dao.PopularMemberMapper">
 
-    <select id="selectOne" parameterType="Integer" resultType="PBDto">
+    <select id="selectOne" parameterType="Integer" resultType="PMDto">
         select * from popular_book_members
         where popular_book_member_id = #{popular_book_member_id}
     </select>
 
-    <select id="selectAllByMember" parameterType="Integer" resultType="PBDto">
+    <select id="selectAllByMember" parameterType="Integer" resultType="PMDto">
         select * from popular_book_members
         where member_id = #{member_id}
     </select>
 
-    <insert id="insert" parameterType="PBDto">
+    <insert id="insert" parameterType="PMDto">
         insert into popular_book_members
         values (null, #{popular_id}, #{member_id})
     </insert>

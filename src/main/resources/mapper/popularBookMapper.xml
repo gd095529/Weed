@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yju.bookscovery.dao.PopularBookMapper">
+
+    <select id="selectOne" parameterType="Integer" resultType="PBDto">
+        select * from popular_book
+        where favorite_id = #{popular_id}
+    </select>
+
+    <insert id="insert" parameterType="PBDto">
+        insert into popular_book
+        values (null,#{book_id},now())
+    </insert>
+
+    <select id="selectAllByMember" parameterType="Map" resultType="BookDto">
+        select b.book_id,
+               b.bookname,
+               b.isbn,
+               b.authors,
+               b.publisher,
+               b.book_image_URL,
+               b.publication_year,
+               b.class_no,
+               b.loan_count
+        from book b, popular_book pb, popular_book_members pbm
+        where pb.popular_id = pbm.popular_id and b.book_id = pb.book_id
+          and member_id = #{member_id}
+        order by ${loan_count} desc
+    </select>
+</mapper>
