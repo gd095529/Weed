@@ -1,38 +1,55 @@
 .body {
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
 }
 
-.header {
+.section {
+    width: 60rem;
+    margin: 0 auto;
+}
+
+.mainBookBox {
     width: 100%;
-    height: 6rem;
-    border-bottom: 1px solid gray;
-}
-
-.nav {
-    width: 15rem;
-    height: calc(100% - 6rem);
-    border-right: 1px solid gray;
-}
-
-.content {
-    width: calc(100% - 15rem);
-    height: calc(100% - 6rem);
-    background-color: rgb(227, 227, 227);
+    height: 30rem;
+    border: 1px solid gray;
+    margin-top: 1rem;
     display: flex;
-    gap: 1rem 5rem ;
-    padding: 2rem;
-    flex-wrap: wrap;
-    overflow: auto;
+    flex-direction: row;
+}
+
+.typeBox {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid gray;
+    width: 10rem;
+    justify-content: center;
+}
+
+.typeBox > div {
+    padding: 2rem 1rem;
+    width: 100%;
+}
+
+.typeBox > div:hover {
+    background-color: #a4c1fc;
+}
+
+.viewBox {
+    width: calc(100% - 10rem);
+}
+
+.viewBox > div {
+    border: 1px solid black;
+}
+
+.viewBox > .top {
+    height: 2rem;
 
 }
 
-.content > img {
-    width: 10rem;
-    height: 10rem;
-    position: fixed;
-    left: 50%;
-    top: 50%;
+.viewBox > .middle {
+    height: calc(100% - 4rem);
+}
+
+.viewBox > .bottom {
+    height: 2rem;
 }
