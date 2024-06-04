@@ -10,7 +10,7 @@
         where favorite_id = #{popular_id}
     </select>
 
-    <insert id="insert" parameterType="PBDto">
+    <insert id="insert" parameterType="Integer">
         insert into popular_book
         values (null,#{book_id},now())
     </insert>

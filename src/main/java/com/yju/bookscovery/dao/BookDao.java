@@ -16,6 +16,10 @@ public class BookDao {
         return session.selectOne(namespace+"selectOne",book_id);
     }
 
+    public Integer checkByISBN(String isbn) throws Exception{
+        return session.selectOne(namespace+"checkByISBN",isbn);
+    }
+
     public int insertBook(BookDto dto) throws Exception{
         return session.insert(namespace+"insert",dto);
     }
@@ -27,6 +31,5 @@ public class BookDao {
     public int deleteBook(Integer book_id)throws Exception{
         return session.delete(namespace+"deleteOne",book_id);
     }
-
 
 }

@@ -21,8 +21,8 @@ public class PopularBookDao {
         return session.selectOne(namespace+"selectOne", popular_id);
     }
 
-    public int insertPopularBook(PopularBookDto dto) {
-        return session.insert(namespace+"insert", dto);
+    public int insertPopularBook(Integer book_id) {
+        return session.insert(namespace+"insert", book_id);
     }
 
     public List<BookDto> selectAllPopularBookByMember(Integer member_id, int loan_count) {

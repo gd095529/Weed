@@ -19,9 +19,9 @@
         where member_id = #{member_id}
     </select>
 
-    <insert id="insert" parameterType="SHDto">
+    <insert id="insert" parameterType="Map">
         insert into search_history
-        values (null, #{member_id},#{isbn},#{bookname},#{authors},#{publisher})
+        values (null, #{member_id}, #{book_id}, now())
     </insert>
 
     <delete id="deleteAll" parameterType="Integer">

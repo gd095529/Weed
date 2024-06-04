@@ -14,8 +14,8 @@ public class FavoriteService {
         return favoriteDao.selectFavorite(favorite_id);
     }
 
-    public int insert(FavoriteDto dto) throws Exception{
-        return  favoriteDao.insertFavorite(dto);
+    public int insert(Integer member_id, Integer book_id) throws Exception{
+        return  favoriteDao.insertFavorite(member_id, book_id);
     }
 
     public int delete(Integer favorite_id) throws Exception{

@@ -14,8 +14,8 @@ public class SearchHistoryService {
         return searchHistoryDao.selectHistory(search_history_id, member_id);
     }
 
-    public int insert(SearchHistoryDto dto) throws Exception{
-        return searchHistoryDao.insertHistroy(dto);
+    public int insert(Integer member_id , Integer book_id) throws Exception{
+        return searchHistoryDao.insertHistroy(member_id, book_id);
     }
 
     public int delete(Integer search_history_id, Integer member_id) throws Exception{

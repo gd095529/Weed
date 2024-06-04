@@ -13,6 +13,11 @@
         where book_id = #{book_id}
     </select>
 
+    <select id="checkByISBN" parameterMap="String" resultType="Integer">
+        select book_id from book
+        where isbn = #{isbn}
+    </select>
+
     <insert id="insert" parameterType="BookDto">
         insert into book
         values (null, #{bookname}, #{isbn}, #{authors}, #{publisher}, #{book_image_URL}, #{publication_year}, #{class_no}, #{loan_count})
