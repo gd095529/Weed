@@ -16,6 +16,13 @@
   src: url("./fonts/SUITE-Light.ttf");
 }
 
+@font-face {
+  font-family: "Noto";
+  font-weight: bold;
+  src: url("./fonts/NotoSansKR-VariableFont_wght.ttf");
+
+}
+
 html, body, #root {
   margin: 0;
   padding: 0;
