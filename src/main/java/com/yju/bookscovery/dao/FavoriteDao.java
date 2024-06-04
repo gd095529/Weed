@@ -5,7 +5,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class FavoriteDao {
@@ -23,8 +25,11 @@ public class FavoriteDao {
     public List<FavoriteDto> selectAllByMemberFavorite(Integer member_id)throws Exception{
         return session.selectList(namespace+"selectAll",member_id);
     }
-    public int insertFavorite(FavoriteDto dto)throws Exception{
-        return session.insert(namespace+"insert",dto);
+    public int insertFavorite(Integer member_id, Integer book_id)throws Exception{
+        Map map = new HashMap();
+        map.put("member_id", member_id);
+        map.put("book_id", book_id);
+        return session.insert(namespace+"insert",map);
     }
     public int deleteAllByMemberFavorite(Integer member_id)throws Exception{
         return session.delete(namespace+"deleteAll", member_id);

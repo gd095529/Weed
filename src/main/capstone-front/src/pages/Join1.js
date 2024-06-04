@@ -27,7 +27,7 @@ function Join1() {
     }
 
     const push = (data) => {
-        const url = '/api3/api/test'
+        const url = '/api/test'
         axios.post(url)
             .then((response) => {
                 console.log(response);

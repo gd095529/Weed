@@ -24,9 +24,9 @@
         where book_count_id = #{book_count_id}
     </select>
 
-    <insert id="insert" parameterType="BCDto">
+    <insert id="insert" parameterType="Map">
         insert into book_count
-        values (null, #{department_id}, #{book_id}, #{book_count})
+        values (null, #{department_id}, #{book_id}, 1)
     </insert>
 
     <update id="update" parameterType="BCDto">

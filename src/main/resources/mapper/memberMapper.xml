@@ -30,7 +30,7 @@
 
     <insert id="insert" parameterType="MemberDto">
         insert into member_info
-        values (null,#{name},#{gender},#{age},#{department_id},#{id},#{password},#{password_key},#{email},#{mode})
+        values (null,#{name},#{gender},#{age},#{department_id},#{id},#{password},#{password_key},#{email},"w")
     </insert>
 
     <update id="update" parameterType="MemberDto">

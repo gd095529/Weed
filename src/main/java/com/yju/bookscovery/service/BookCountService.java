@@ -14,8 +14,8 @@ public class BookCountService {
         return bookCountDao.selectBook(book_count_id);
     }
 
-    public int insert(BookCountDto dto) throws Exception{
-        return bookCountDao.insertBook(dto);
+    public int insert(Integer member_id , Integer book_id) throws Exception{
+        return bookCountDao.insertBook(member_id, book_id);
     }
 
     public int delete(Integer book_count_id, Integer department_id) throws Exception{

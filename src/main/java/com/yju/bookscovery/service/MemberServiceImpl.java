@@ -2,6 +2,7 @@ package com.yju.bookscovery.service;
 
 import com.yju.bookscovery.dao.FavoriteDao;
 import com.yju.bookscovery.dao.MemberDao;
+import com.yju.bookscovery.dao.PopularMemberDao;
 import com.yju.bookscovery.dao.SearchHistoryDao;
 import com.yju.bookscovery.dto.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     SearchHistoryDao searchHistoryDao;
+
+    @Autowired
+    PopularMemberDao popularMemberDao;
 
     @Override
     public MemberDto readById(String id) throws Exception{
@@ -45,6 +49,7 @@ public class MemberServiceImpl implements MemberService {
     public int remove(Integer member_id) throws Exception{
         favoriteDao.deleteAllByMemberFavorite(member_id);
         searchHistoryDao.deleteAllHistory(member_id);
+        popularMemberDao.deleteAllPopularByMember(member_id);
         return memberDao.deleteMember(member_id);
     }
 

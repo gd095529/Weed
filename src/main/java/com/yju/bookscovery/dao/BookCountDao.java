@@ -28,8 +28,11 @@ public class BookCountDao {
     public List<BookCountDto> selectAllDepartmentBook(Integer book_count_id)throws Exception{
         return session.selectList(namespace+"selectAll",book_count_id);
     }
-    public int insertBook(BookCountDto dto)throws Exception{
-        return session.insert(namespace+"insert",dto);
+    public int insertBook(Integer department_id , Integer book_id)throws Exception{
+        Map map = new HashMap();
+        map.put("department_id", department_id);
+        map.put("book_id", book_id);
+        return session.insert(namespace+"insert",map);
     }
     public int updateBook(BookCountDto dto)throws Exception{
         return session.update(namespace+"update",dto);
