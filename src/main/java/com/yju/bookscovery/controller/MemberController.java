@@ -26,7 +26,6 @@ public class MemberController {
 
         member.setPassword(memberService.getHashPwd(salt,member.getPassword()));
         member.setPassword_key(salt);
-
         try {
             memberService.add(member);
         }catch (Exception e){
@@ -36,14 +35,16 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/remove")
-    public  ResponseEntity<?> removeMember(HttpSession session, String pwd) throws Exception {
-
-        MemberDto member =memberService.read((Integer) session.getAttribute("member_id"));
+    @DeleteMapping("/remove/{member_id}")
+    public  ResponseEntity<?> removeMember(@PathVariable Integer member_id, String password, HttpSession session) throws Exception {
+        session.invalidate();
+        //세션에 멤버아디를 저장해도되는가?
+        MemberDto member =memberService.read(member_id);
 
         String salt = member.getPassword_key();
 
-        if(member.getPassword().equals(memberService.getHashPwd(salt,pwd))){
+        if(member.getPassword().equals(memberService.getHashPwd(salt,password))){
+//            memberService.remove(member_id);
             return ResponseEntity.ok().body("탈퇴되었습니다.");
         }else{
             return ResponseEntity.badRequest().body("비밀번호 오류");
@@ -51,13 +52,13 @@ public class MemberController {
     }
 
     @GetMapping("/modify")
-    public  ResponseEntity<?> modifyMember(HttpSession session, String pwd) throws Exception {
-        Integer member_id = (Integer) session.getAttribute("member_id");;
+    public  ResponseEntity<?> modifyMember(HttpSession session, String password) throws Exception {
+        Integer member_id = (Integer) session.getAttribute("member_id");
         MemberDto member =memberService.read(member_id);
 
         String salt = member.getPassword_key();
 
-        if(memberService.getHashPwd(salt, pwd).equals(member.getPassword())){
+        if(memberService.getHashPwd(salt, password).equals(member.getPassword())){
             return ResponseEntity.ok().build();
             //수정 페이지 보여주기
         }else{
