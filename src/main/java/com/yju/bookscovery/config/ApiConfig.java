@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
@@ -14,6 +15,11 @@ public class ApiConfig {
     @Bean // http 요청 빌더
     public WebClient.Builder webClientApiReq() {
         return WebClient.builder();
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
     @Value("${LIBRARY_API_KEY}")
@@ -36,4 +42,6 @@ public class ApiConfig {
     private String SEARCH_BOOK_URL;
     @Value("${MONTH_KEYWORD_URL}")
     private String MONTH_KEYWORD_URL;
+
+
 }
