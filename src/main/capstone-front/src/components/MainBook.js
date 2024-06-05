@@ -4,6 +4,8 @@ import noBar from '../images/noBar.png';
 import {useState} from "react";
 
 function MainBook(props) {
+    const [isOpen, setIsOpen] = useState(false);
+
     let top, middle;
     const eventImg = [
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUAIyndA7gYDd9HiAzAg3VR73AAUs9E8y4Dg&s',
@@ -13,22 +15,39 @@ function MainBook(props) {
         'http://lib.yjc.ac.kr/WebYJC/data/Images/1view/c93a5135c40f48a8bd90c41c4cbecd2a.png',
     ]
 
-    // select를 입맛에 맞춰서 넣을 수 있도록
-    // options는 배열로 받아와야함!
     const customSelect = (options) => {
+
+        const defaultSelectStyle = {
+            lineHeight: '1rem',
+            height: '1rem',
+            display: 'inline-block',
+            fontSize: '1rem',
+            cursor: 'pointer',
+            position: 'relative'
+        }
+
+        const optionStyles = {
+            display: isOpen ? 'block' : 'none',
+            position: 'absolute',
+            backgroundColor: 'white',
+            border: '1px solid gray',
+            zIndex: '1'
+        }
+
+        const openOption = () => {
+            setIsOpen(true);
+        }
+
+        const closeOption = () => {
+            setIsOpen(false);
+        }
+
         return (
-            <div style={{
-                lineHeight: '1rem',
-                height: '1rem',
-                display: 'inline-block',
-                fontSize: '1rem',
-                cursor: 'pointer',
-                overflow: 'hidden'
-            }}>
-                <div><span style={{fontSize: '0.7rem', fontWeight: 'bold'}}>∨</span></div>
-                <div>
+            <div style={defaultSelectStyle}>
+                <div onClick={openOption}>{options[0]}<span style={{fontSize: '0.7rem', fontWeight: 'bold'}}>∨</span></div>
+                <div style={optionStyles}>
                     {options.map((option, index) => (
-                        <div key={index}>{option}</div>
+                        <div key={index} onClick={closeOption} >{option}</div>
                     ))}
                 </div>
             </div>
@@ -77,7 +96,7 @@ function MainBook(props) {
         top =
             <div className={mainCss.top}>
                 <img src={'https://cdn-icons-png.flaticon.com/512/4994/4994683.png'} alt={'event'}/>
-                <p style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect(age)} <p>인기 도서</p></p>
+                <div style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect(age)} 인기 도서</div>
             </div>
         middle =
             <div className={mainCss.middle}>
@@ -134,7 +153,7 @@ function MainBook(props) {
         top =
             <div className={mainCss.top}>
                 <img src={'https://cdn-icons-png.flaticon.com/512/5027/5027398.png'} alt={'event'}/>
-                <p style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect(department)} <p>인기 도서</p></p>
+                <div style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect(department)}인기 도서</div>
             </div>
         middle =
             <div className={mainCss.middle}>
