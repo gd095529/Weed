@@ -14,15 +14,24 @@ function MainBook(props) {
     ]
 
     // select를 입맛에 맞춰서 넣을 수 있도록
+    // options는 배열로 받아와야함!
     const customSelect = (options) => {
         return (
-            <select>
-                {options.map((option, index) => (
-                     <option key={index}>
-                         {option}
-                     </option>
-                ))}
-            </select>
+            <div style={{
+                lineHeight: '1rem',
+                height: '1rem',
+                display: 'inline-block',
+                fontSize: '1rem',
+                cursor: 'pointer',
+                overflow: 'hidden'
+            }}>
+                <div><span style={{fontSize: '0.7rem', fontWeight: 'bold'}}>∨</span></div>
+                <div>
+                    {options.map((option, index) => (
+                        <div key={index}>{option}</div>
+                    ))}
+                </div>
+            </div>
         )
     }
 
@@ -33,7 +42,9 @@ function MainBook(props) {
             <>
                 {
                     barCount.map((count, index) => (
-                        <img key={index}  src={props.index == count ? hereBar : noBar} alt={'bar'}/>
+                        <img key={index} src={props.index == count ? hereBar : noBar} alt={'bar'}
+                             onClick={() => props.funtion(index + 1)}
+                        />
                     ))
                 }
             </>
@@ -53,9 +64,11 @@ function MainBook(props) {
                 <img src={'https://cdn-icons-png.flaticon.com/512/2558/2558944.png'} alt={'event'}/>
                 <p>영진전문대 도서관 이벤트</p>
             </div>;
-        middle = <img className={mainCss.middle}
-                      src={eventImg[props.index - 1]}
-                      alt={''} style={{margin: '0 auto'}}/>;
+        middle =
+            <img className={mainCss.middle}
+                 src={eventImg[props.index - 1]}
+                 alt={''} style={{margin: '0 auto'}}
+            />;
     } else if (props.type === "age") {
         for (let i = 1; i <= props.initIndex; i++) {
             barCount.push(i);
@@ -64,17 +77,41 @@ function MainBook(props) {
         top =
             <div className={mainCss.top}>
                 <img src={'https://cdn-icons-png.flaticon.com/512/4994/4994683.png'} alt={'event'}/>
-                <p>{customSelect(age)} 인기 도서</p>
+                <p style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect(age)} <p>인기 도서</p></p>
+            </div>
+        middle =
+            <div className={mainCss.middle}>
+
             </div>
     } else if (props.type === "gender") {
         for (let i = 1; i <= props.initIndex; i++) {
             barCount.push(i);
         }
-        const gender = ["남성", "여성"];
         top =
             <div className={mainCss.top}>
                 <img src={'https://cdn-icons-png.flaticon.com/512/3939/3939785.png'} alt={'event'}/>
-                <p>{customSelect(gender)} 인기 도서</p>
+                <p>성별 인기 도서</p>
+            </div>
+        middle =
+            <div className={mainCss.middle} style={{display: 'flex'}}>
+                <div style={{
+                    width: '50%',
+                    borderRight: '1px solid black',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '0.5rem'
+                }}>
+                    <img src={'https://cdn.icon-icons.com/icons2/2248/PNG/512/gender_male_icon_137554.png'} alt={''}
+                         style={{width: '1.5rem', height: '1.5rem'}}
+                    />
+                    <div>남성</div>
+                </div>
+                <div style={{width: '50%', display: 'flex', justifyContent: 'center', gap: '0.5rem'}}>
+                    <img src={'https://cdn.icon-icons.com/icons2/1914/PNG/512/femalesymbol_121533.png'} alt={''}
+                         style={{width: '1.3rem', height: '1.3rem', marginLeft: '1rem'}}
+                    />
+                    <div>여성</div>
+                </div>
             </div>
     } else if (props.type === "loan") {
         for (let i = 1; i <= props.initIndex; i++) {
@@ -85,15 +122,23 @@ function MainBook(props) {
                 <img src={'https://cdn-icons-png.flaticon.com/512/5956/5956911.png'} alt={'event'}/>
                 <p>대출 인기 도서</p>
             </div>
+        middle =
+            <div className={mainCss.middle}>
+
+            </div>
     } else if (props.type === "department") {
         for (let i = 1; i <= props.initIndex; i++) {
             barCount.push(i);
         }
-        const department = ["1", "2"];
+        const department = ["컴퓨터정보계열", "IT"];
         top =
             <div className={mainCss.top}>
                 <img src={'https://cdn-icons-png.flaticon.com/512/5027/5027398.png'} alt={'event'}/>
-                <p>{customSelect(department)} 인기 도서</p>
+                <p style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect(department)} <p>인기 도서</p></p>
+            </div>
+        middle =
+            <div className={mainCss.middle}>
+
             </div>
     } else {
         top = "error!";
