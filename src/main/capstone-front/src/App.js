@@ -17,11 +17,11 @@ function App() {
     <div className="App" style={{height: '100%'}}>
       <BrowserRouter>
           <Routes>
-              <Route path="/main" element={<Main />} />
+              <Route path="/" element={<Main />} />
               <Route path="/login" element={<Login />} />
               <Route path='/join' element={<Join />} />
               <Route path='/info' element={<IndividualInfo />} />
-              <Route path='/' element={<Main1 />} />
+              <Route path='/main1' element={<Main1 />} />
               <Route path='/join1' element={<Join1 />} />
               <Route path={'/detail'} element={<Details />} />
               <Route path={'/search'} element={<Search />} />

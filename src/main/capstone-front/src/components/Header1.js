@@ -10,10 +10,12 @@ import {setLogout} from "../redux/slice/loginSlice";
 import logout from "../images/mainImages/logout.png";
 import modify from '../images/mainImages/modify.png';
 import star from '../images/mainImages/star.png';
+import header1Css from '../styles/component/Header1.module.css';
 
 function Header1() {
     const [isProfile, setIsProfile] = useState(false); // 프로파일을 클릭했는지 여부
     const [getLogin, setGetLogin] = useState(useSelector(state => state.login));
+    const [searchFocus, setSearchFocus] = useState(false); // input text인거 클릭했냐 여부
     const navigate = useNavigate();
     const onClickLogin = () => {
         navigate('/login');
@@ -30,20 +32,28 @@ function Header1() {
         dispatch(setLogout());
         setGetLogin(false);
     }
+    // 검색창 눌렀을 때
+    const focusSearch = () => {
+        setSearchFocus(true);
+    }
+
+    const blurSearch = () => {
+        setSearchFocus(false);
+    }
 
     // Showinfo.js 컴포넌트를 다른 곳에서 재사용하기 위해서 굳이 이렇게 사용.
     const showInfoTag = () => {
         return (
             <>
-                <div style={blockStyle} onClick={goLogout}>
+                <div className={header1Css.blockStyle} onClick={goLogout}>
                     <img src={logout} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
                     <p>로그아웃</p>
                 </div>
-                <div style={blockStyle} onClick={goLogout}>
+                <div className={header1Css.blockStyle} onClick={goLogout}>
                     <img src={modify} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
                     <p>정보 수정</p>
                 </div>
-                <div style={blockStyle} onClick={goLogout}>
+                <div className={header1Css.blockStyle} onClick={goLogout}>
                     <img src={star} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
                     <p>즐겨찾기</p>
                     {/**굳이 즐겨찾기 페이지가 필요할까? 라는 고민
@@ -54,25 +64,38 @@ function Header1() {
         )
     }
 
+    const setSearchStyle =  {
+        border: searchFocus ? '1px solid #738AEB' : '1px solid black',
+    }
+
     return (
-        <div style={bodyStyle}>
+        <div className={header1Css.bodyStyle}>
             <div>
                 <Logo width={'15rem'} height={'6rem'}/>
             </div>
-            <div style={namugeStyle}>
-            <div style={jungangStyle}>
+            <div className={header1Css.searchBox} style={setSearchStyle}>
+                <select>
+                    <option>제목</option>
+                    <option>저자</option>
+                    <option>키워드</option>
+                </select>
+                <input type={'text'} placeholder={'검색'} onFocus={focusSearch} onBlur={blurSearch}/>
+                <Search width={'1.2rem'} height={'1.2rem'} />
+            </div>
+            <div className={header1Css.namugeStyle}>
+                <div className={`${header1Css.jungangStyle}`}>
                     <Search width={'1.5rem'} height={"1.5rem"}/>
-                    <p>검색</p>
+                    <p>상세검색</p>
                 </div>
                 { !getLogin.value &&
-                    <div style={jungangStyle} onClick={onClickLogin}>
+                    <div className={header1Css.jungangStyle} onClick={onClickLogin}>
                         <Login width={'1.5rem'} height={"1.5rem"}/>
                         <p>로그인</p>
                     </div>
                 }
                 {
                     getLogin.value &&
-                    <div style={jungangStyle} onClick={setProfile}>
+                    <div className={header1Css.jungangStyle} onClick={setProfile}>
                         <img src={profile} alt={'pr'} style={{width: '1.5rem', height: '1.5rem'}}/>
                         <p>YourID</p>
                     </div>
@@ -86,39 +109,6 @@ function Header1() {
     )
 }
 
-const bodyStyle = {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderBottom: '1px solid #000000',
-    overflow: 'hidden'
-}
 
-const namugeStyle = {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: '2rem',
-    height: '6rem',
-}
-
-const jungangStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
-    cursor: 'pointer'
-}
-
-const blockStyle = {
-    cursor: 'pointer',
-    display: 'flex',
-    gap: '1rem',
-    alignItems: 'center',
-    marginTop: '1rem',
-    borderBottom: '1px solid white',
-    paddingBottom: '0.5rem',
-}
 
 export default Header1;

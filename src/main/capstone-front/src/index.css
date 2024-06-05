@@ -16,6 +16,13 @@
   src: url("./fonts/SUITE-Light.ttf");
 }
 
+@font-face {
+  font-family: "Noto";
+  font-weight: bold;
+  src: url("./fonts/NotoSansKR-VariableFont_wght.ttf");
+
+}
+
 html, body, #root {
   margin: 0;
   padding: 0;
@@ -23,6 +30,10 @@ html, body, #root {
   box-sizing: border-box;
   user-select: none;
 
+}
+
+body {
+  background-color: #ededed;
 }
 
 p {
@@ -45,6 +56,4 @@ a {
 
 img {
   cursor: pointer;
-  width: 1rem;
-  height: 1rem;
 }
