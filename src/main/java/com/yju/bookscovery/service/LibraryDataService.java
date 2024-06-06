@@ -37,15 +37,19 @@ public class LibraryDataService {
     }
 
     //책상세보기 완
-    public Mono<String> getLoanAnalyze(String isbn, Integer member_id, Integer department_id) {
-        String url = apiConfig.getLOAN_ANALYZE_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY()
-                + "&isbn13=" + isbn;
+    public Mono<JsonNode> getLoanAnalyze(String isbn, Integer member_id, Integer department_id) {
+        String baseUrl = apiConfig.getLOAN_ANALYZE_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&isbn13=" + isbn;;
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(baseUrl);
+
+        String url = uriBuilder.toUriString();
 
         return webClient.get()
                 .uri(url)
                 .retrieve()
                 .bodyToMono(String.class)
                 .flatMap(response -> {
+                    System.out.println("API Response: {}"+ response); //체킹용
                     try {
                         // JSON 응답을 파싱하여 필요한 데이터만 추출
                         JsonNode jsonNode = objectMapper.readTree(response);
@@ -78,14 +82,14 @@ public class LibraryDataService {
                         
                         searchHistoryDao.insertHistroy(member_id, book_id);
 
-                        return Mono.just(response);
+                        return Mono.just(jsonNode);
                     } catch (Exception e) {
                         return Mono.error(e);
                     }
         });
     }
 
-    //인기 대출 도서 조회(일, 주, 월)(기간,성별,연령,대주제,세부주제,) 0이 1등
+    //인기 대출 도서 조회(일, 주, 월)(기간,성별,연령,대주제,세부주제,) 0이 1등 //테스트완
     public Mono<List<BookDto>> getPopularLoan(
             @RequestParam(required = false) String pageNo,
             @RequestParam(required = false) String pageSize,
@@ -96,7 +100,7 @@ public class LibraryDataService {
             @RequestParam(required = false) Integer gender,
             @RequestParam(required = false) String kdc,
             @RequestParam(required = false) String dtl_kdc){
-        String baseUrl = apiConfig.getLOAN_INCREASE_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY();
+        String baseUrl = apiConfig.getPOPULAR_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY();
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(baseUrl);
         //+ "&pageNo=" + pageNo + "&pageSize=" + pageSize + "&startDt="+ startDt +"&endDt="+ endDt
@@ -108,12 +112,12 @@ public class LibraryDataService {
         if(pageSize != null && !pageSize.isEmpty()) {
             uriBuilder.queryParam("pageSize", pageSize);
         }
-        if(startDt != null && !startDt.isEmpty()) {
-            uriBuilder.queryParam("startDt", startDt);
-        }
-        if(endDt != null && !endDt.isEmpty()) {
-            uriBuilder.queryParam("endDt", endDt);
-        }
+//        if(startDt != null && !startDt.isEmpty()) {
+//            uriBuilder.queryParam("startDt", startDt);
+//        }
+//        if(endDt != null && !endDt.isEmpty()) {
+//            uriBuilder.queryParam("endDt", endDt);
+//        }
         if(from_age != null) {
             uriBuilder.queryParam("from_age", from_age);
         }
@@ -130,22 +134,26 @@ public class LibraryDataService {
         }
 
         String url = uriBuilder.toUriString();
+        System.out.println("ORIGIN "+"http://data4library.kr/api/loanItemSrch?format=json&authKey=cc355482ccb755beacd4ba6f7134c20c6b59a237e1ee656a155a6ed3a2003941&pageNo=1&pageSize=10&startDt=2022-01-01&endDt=2022-02-01&dtl_kdc=12;13;14;15;16;17&from_age=40&to_age=45&gender=1");
+        System.out.println("MY URL "+url);
+        System.out.println("날짜"+startDt+endDt);
 
         return webClient.get()
                 .uri(url)
                 .retrieve()
                 .bodyToMono(String.class)
                 .flatMap(response -> {
+                    System.out.println("PopularAPI Response: {}"+ response); //체킹용
                     try {
                         List<BookDto> bookList = new ArrayList<>();
                         // JSON 응답을 파싱하여 필요한 데이터만 추출
                         JsonNode jsonNode = objectMapper.readTree(response);
                         // 예시: 필요한 데이터만 추출
                         JsonNode bookJson = jsonNode.path("response").path("docs");
-
+                        System.out.println("JsonNode "+bookJson);
                         //.get(0).path("doc");
-                        for(int i =0; i<bookList.size(); i++){
-                            JsonNode book = bookJson.get(i).path("doc");
+                        for (JsonNode booknode : bookJson){
+                            JsonNode book = booknode.path("doc");
                             BookDto dto = new BookDto();
                             dto.setBookname(book.path("bookname").asText());
                             dto.setAuthor(book.path("authors").asText());
@@ -156,8 +164,9 @@ public class LibraryDataService {
                             dto.setBook_image_URL(book.path("bookImageURL").asText());
                             dto.setIsbn(book.path("isbn13").asText());
                             bookList.add(dto);
+                            System.out.println("bookListDTO "+dto);
                         }
-
+                        System.out.println("bookList "+bookList);
                         return Mono.just(bookList);
                     } catch (Exception e) {
                         return Mono.error(e);

@@ -1,5 +1,6 @@
 package com.yju.bookscovery.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yju.bookscovery.dto.BookDto;
 import com.yju.bookscovery.service.LibraryDataService;
 import org.springframework.http.HttpStatus;
@@ -21,14 +22,14 @@ public class LibraryDataController {
 
     //책 상세보기 완
     @GetMapping("/books/{isbn}")
-    public Mono<ResponseEntity<String>> loanAnalyze(@PathVariable String isbn, Integer member_id, Integer department_id) {
+    public Mono<ResponseEntity<JsonNode>> loanAnalyze(@PathVariable String isbn, Integer member_id, Integer department_id) {
         return libraryDataService.getLoanAnalyze(isbn, member_id, department_id)
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage())));
     }
 
     //인기도서완
-    @GetMapping("/popularLoan")
+    @GetMapping("/popular")
     public Mono<ResponseEntity<List<BookDto>>> getPopularLoan(
             @RequestParam(required = false) String pageNo,
             @RequestParam(required = false) String pageSize,
