@@ -29,8 +29,13 @@
         values (null, #{department_id}, #{book_id}, 1)
     </insert>
 
+    <select id="check" parameterType="Map" resultType="int">
+        select book_count_id from book_count
+        where book_id = #{book_id} and department_id = #{department_id}
+    </select>
+
     <update id="update" parameterType="BCDto">
-        update book_count set book_id = #{book_id} + 1
+        update book_count set book_count = #{book_count} + 1
         where book_count_id = #{book_count_id}
     </update>
 
