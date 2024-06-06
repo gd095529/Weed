@@ -34,7 +34,7 @@ public class BookCountDao {
         map.put("book_id", book_id);
         return session.insert(namespace+"insert",map);
     }
-    public int check(Integer department_id, Integer book_id)throws Exception{
+    public Integer check(Integer department_id, Integer book_id)throws Exception{
         Map map = new HashMap();
         map.put("department_id", department_id);
         map.put("book_id", book_id);

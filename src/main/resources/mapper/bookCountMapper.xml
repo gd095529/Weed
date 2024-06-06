@@ -29,9 +29,9 @@
         values (null, #{department_id}, #{book_id}, 1)
     </insert>
 
-    <select id="check" parameterType="Map" resultType="int">
+    <select id="check" parameterType="Map" resultType="Integer">
         select book_count_id from book_count
-        where book_id = #{book_id} and department_id = #{department_id}
+        where department_id = #{department_id} and book_id = #{book_id}
     </select>
 
     <update id="update" parameterType="BCDto">

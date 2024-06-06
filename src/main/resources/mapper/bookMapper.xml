@@ -13,7 +13,7 @@
         where book_id = #{book_id}
     </select>
 
-    <select id="checkByISBN" parameterMap="String" resultType="Integer">
+    <select id="checkByISBN" parameterType="String" resultType="Integer">
         select book_id from book
         where isbn = #{isbn}
     </select>

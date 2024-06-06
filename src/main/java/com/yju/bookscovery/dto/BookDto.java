@@ -12,7 +12,7 @@ public class BookDto {
     private Integer book_id;
     private String bookname;
     private String isbn;
-    private String author;
+    private String authors;
     private String publisher;
     private String book_image_URL;
     private int publication_year;

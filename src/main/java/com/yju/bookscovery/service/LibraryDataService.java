@@ -36,7 +36,7 @@ public class LibraryDataService {
         this.bookCountDao = bookCountDao;
     }
 
-    //책상세보기 완
+    //책상세보기 완 http://data4library.kr/api/usageAnalysisList?format=json&
     public Mono<JsonNode> getLoanAnalyze(String isbn, Integer member_id, Integer department_id) {
         String baseUrl = apiConfig.getLOAN_ANALYZE_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&isbn13=" + isbn;;
 
@@ -48,8 +48,7 @@ public class LibraryDataService {
                 .uri(url)
                 .retrieve()
                 .bodyToMono(String.class)
-                .flatMap(response -> {
-                    System.out.println("API Response: {}"+ response); //체킹용
+                .flatMap(response -> { //나오는것 확인
                     try {
                         // JSON 응답을 파싱하여 필요한 데이터만 추출
                         JsonNode jsonNode = objectMapper.readTree(response);
@@ -66,20 +65,20 @@ public class LibraryDataService {
 
                         // DB 저장
                         Integer book_id = bookDao.checkByISBN(isbn);
-                        if(book_id == 0 || book_id == null){
+                        if(book_id == null || book_id == 0 ){
                             BookDto dto = new BookDto(null, bookname, isbn, authors, publisher, bookImageURL, publication_year, class_no, loan_count);
                             bookDao.insertBook(dto);
                             book_id = bookDao.checkByISBN(isbn);
                         }
-
-                        Integer book_count_id = bookCountDao.check(department_id,book_id);
-                        if(book_count_id == 0 || book_count_id == null){
+                        Integer book_count_id = bookCountDao.check(department_id, book_id);
+                        if(book_count_id == null || book_count_id == 0){
                             bookCountDao.insertBook(department_id, book_id);
                         }else {
                             BookCountDto dto = bookCountDao.selectBook(book_count_id);
                             bookCountDao.updateBook(dto);
                         }
-                        
+
+                        searchHistoryDao.countHistory();
                         searchHistoryDao.insertHistroy(member_id, book_id);
 
                         return Mono.just(jsonNode);
@@ -112,12 +111,12 @@ public class LibraryDataService {
         if(pageSize != null && !pageSize.isEmpty()) {
             uriBuilder.queryParam("pageSize", pageSize);
         }
-//        if(startDt != null && !startDt.isEmpty()) {
-//            uriBuilder.queryParam("startDt", startDt);
-//        }
-//        if(endDt != null && !endDt.isEmpty()) {
-//            uriBuilder.queryParam("endDt", endDt);
-//        }
+        if(startDt != null && !startDt.isEmpty()) {
+            uriBuilder.queryParam("startDt", startDt);
+        }
+        if(endDt != null && !endDt.isEmpty()) {
+            uriBuilder.queryParam("endDt", endDt);
+        }
         if(from_age != null) {
             uriBuilder.queryParam("from_age", from_age);
         }
@@ -134,29 +133,24 @@ public class LibraryDataService {
         }
 
         String url = uriBuilder.toUriString();
-        System.out.println("ORIGIN "+"http://data4library.kr/api/loanItemSrch?format=json&authKey=cc355482ccb755beacd4ba6f7134c20c6b59a237e1ee656a155a6ed3a2003941&pageNo=1&pageSize=10&startDt=2022-01-01&endDt=2022-02-01&dtl_kdc=12;13;14;15;16;17&from_age=40&to_age=45&gender=1");
-        System.out.println("MY URL "+url);
-        System.out.println("날짜"+startDt+endDt);
 
         return webClient.get()
                 .uri(url)
                 .retrieve()
                 .bodyToMono(String.class)
                 .flatMap(response -> {
-                    System.out.println("PopularAPI Response: {}"+ response); //체킹용
                     try {
                         List<BookDto> bookList = new ArrayList<>();
                         // JSON 응답을 파싱하여 필요한 데이터만 추출
                         JsonNode jsonNode = objectMapper.readTree(response);
                         // 예시: 필요한 데이터만 추출
                         JsonNode bookJson = jsonNode.path("response").path("docs");
-                        System.out.println("JsonNode "+bookJson);
                         //.get(0).path("doc");
                         for (JsonNode booknode : bookJson){
                             JsonNode book = booknode.path("doc");
                             BookDto dto = new BookDto();
                             dto.setBookname(book.path("bookname").asText());
-                            dto.setAuthor(book.path("authors").asText());
+                            dto.setAuthors(book.path("authors").asText());
                             dto.setPublisher(book.path("publisher").asText());
                             dto.setPublication_year(book.path("publication_year").asInt());
                             dto.setClass_no(book.path("class_nm").asText());
@@ -164,9 +158,7 @@ public class LibraryDataService {
                             dto.setBook_image_URL(book.path("bookImageURL").asText());
                             dto.setIsbn(book.path("isbn13").asText());
                             bookList.add(dto);
-                            System.out.println("bookListDTO "+dto);
                         }
-                        System.out.println("bookList "+bookList);
                         return Mono.just(bookList);
                     } catch (Exception e) {
                         return Mono.error(e);

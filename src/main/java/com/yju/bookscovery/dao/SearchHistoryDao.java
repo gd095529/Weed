@@ -28,10 +28,11 @@ public class SearchHistoryDao {
     public List<SearchHistoryDto> searchAllHistory()throws Exception{
         return session.selectList(namespace+"selectAll");
     }
-    public int insertHistroy(Integer member_id , Integer book_id) throws Exception{
+    public Integer insertHistroy(Integer member_id , Integer book_id) throws Exception{
         Map map = new HashMap();
         map.put("member_id",member_id);
         map.put("book_id",book_id);
+        System.out.println("map = " + map);
         return session.insert(namespace+"insert",map);
     }
     public int deleteAllHistory(Integer member_id) throws Exception{

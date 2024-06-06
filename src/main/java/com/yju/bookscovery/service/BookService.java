@@ -22,7 +22,7 @@ public class BookService {
     @Transactional(rollbackFor = Exception.class)
     public int insertBook(BookDto dto, Integer member_id, Integer department_id) throws Exception {
         Integer book_id = bookDao.checkByISBN(dto.getIsbn());
-        if(book_id == 0 || book_id == null){
+        if(book_id == null || book_id == 0){
              bookDao.insertBook(dto);
         }
         searchHistoryDao.insertHistroy(member_id, book_id);

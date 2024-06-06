@@ -25,7 +25,7 @@ public class LibraryDataController {
     public Mono<ResponseEntity<JsonNode>> loanAnalyze(@PathVariable String isbn, Integer member_id, Integer department_id) {
         return libraryDataService.getLoanAnalyze(isbn, member_id, department_id)
                 .map(ResponseEntity::ok)
-                .onErrorResume(e -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage())));
+                .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));//e.getMessage()
     }
 
     //인기도서완
