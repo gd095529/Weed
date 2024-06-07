@@ -86,7 +86,7 @@ function Main() {
     }
 
     return (
-        <div className={mainCss.body}>
+        <div className={mainCss.body} >
             <div>
                 <Header1/>
             </div>
@@ -107,7 +107,8 @@ function Main() {
                     </div>
                     <div className={mainCss.viewBox}
                          onMouseEnter={viewBoxEnter} onMouseLeave={viewBoxLeave}>
-                        <MainBook type={getType} index={getIndex} initIndex={getInitIndex} funtion={clickMainIndex}/>
+                        <MainBook type={getType} index={getIndex} initIndex={getInitIndex}
+                                  funtion={clickMainIndex} />
                         {isViewBoxEnter &&
                             <>
                                 <img src={left} alt={'left'} className={mainCss.leftImg} onClick={moveLeft}/>

@@ -4,6 +4,8 @@ import noBar from '../images/noBar.png';
 import {useState} from "react";
 
 function MainBook(props) {
+    const [selectAge, setSelectAge] = useState(0);
+    const [selectDept, setSelectDept] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
 
     let top, middle;
@@ -15,8 +17,10 @@ function MainBook(props) {
         'http://lib.yjc.ac.kr/WebYJC/data/Images/1view/c93a5135c40f48a8bd90c41c4cbecd2a.png',
     ]
 
-    const customSelect = (options) => {
-
+    // type의 경우, Age인지 Dept인지 확인하는 용도. 코드를 이상하게 짜버려서 이게 필요해짐.
+    // type이 true면
+    // options는 말 그대로 드롭다운에 들어갈 것들 적으면 됨. 배열 형태로 넣기 필수
+    const customSelect = (type, options) => {
         const defaultSelectStyle = {
             lineHeight: '1rem',
             height: '1rem',
@@ -25,29 +29,56 @@ function MainBook(props) {
             cursor: 'pointer',
             position: 'relative'
         }
-
-        const optionStyles = {
-            display: isOpen ? 'block' : 'none',
+        const optionsStyles = {
+            display: isOpen ? 'flex' : 'none',
             position: 'absolute',
             backgroundColor: 'white',
             border: '1px solid gray',
-            zIndex: '1'
+            zIndex: '1',
+            flexDirection: 'column',
+            borderBottom: 'none',
+            width: '8rem'
+        }
+
+        const optionStyle = {
+            padding: '0.2rem',
+            borderBottom: '1px solid gray',
+
         }
 
         const openOption = () => {
-            setIsOpen(true);
+            setIsOpen(!isOpen);
         }
 
         const closeOption = () => {
             setIsOpen(false);
         }
 
+        const selectOpt = (name) => {
+            if (type === 'age') {
+                setSelectAge(options.indexOf(name));
+            } else {
+                setSelectDept(options.indexOf(name));
+            }
+            closeOption();
+        }
+
+        const unselectOpt = [];
+
+        for (let i = 0; i < options.length; i++) {
+            if (type === 'age' && i !== selectAge) {
+                unselectOpt.push(options[i]);
+            } else if (type === 'dept' && i !== selectDept) {
+                unselectOpt.push(options[i]);
+            }
+        }
+
         return (
             <div style={defaultSelectStyle}>
-                <div onClick={openOption}>{options[0]}<span style={{fontSize: '0.7rem', fontWeight: 'bold'}}>∨</span></div>
-                <div style={optionStyles}>
-                    {options.map((option, index) => (
-                        <div key={index} onClick={closeOption} >{option}</div>
+                <div onClick={openOption}>{options[type === "age" ? selectAge : selectDept]}<span style={{fontSize: '0.7rem', fontWeight: 'bold'}}>∨</span></div>
+                <div style={optionsStyles}>
+                    {unselectOpt.map((option, index) => (
+                        <div key={index} onClick={() => selectOpt(option)} style={optionStyle}>{option}</div>
                     ))}
                 </div>
             </div>
@@ -61,7 +92,7 @@ function MainBook(props) {
             <>
                 {
                     barCount.map((count, index) => (
-                        <img key={index} src={props.index == count ? hereBar : noBar} alt={'bar'}
+                        <img key={index} src={props.index === count ? hereBar : noBar} alt={'bar'}
                              onClick={() => props.funtion(index + 1)}
                         />
                     ))
@@ -96,7 +127,7 @@ function MainBook(props) {
         top =
             <div className={mainCss.top}>
                 <img src={'https://cdn-icons-png.flaticon.com/512/4994/4994683.png'} alt={'event'}/>
-                <div style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect(age)} 인기 도서</div>
+                <div style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect("age", age)} 인기 도서</div>
             </div>
         middle =
             <div className={mainCss.middle}>
@@ -149,11 +180,11 @@ function MainBook(props) {
         for (let i = 1; i <= props.initIndex; i++) {
             barCount.push(i);
         }
-        const department = ["컴퓨터정보계열", "IT"];
+        const department = ["컴퓨터정보계열", "IT", "사회복지과"];
         top =
             <div className={mainCss.top}>
                 <img src={'https://cdn-icons-png.flaticon.com/512/5027/5027398.png'} alt={'event'}/>
-                <div style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect(department)}인기 도서</div>
+                <div style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect("dept", department)}인기 도서</div>
             </div>
         middle =
             <div className={mainCss.middle}>
