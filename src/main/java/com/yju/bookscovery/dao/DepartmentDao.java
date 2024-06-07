@@ -18,7 +18,7 @@ public class DepartmentDao {
         return session.selectOne(namespace+"count");
     }
     public DepartmentDto selectDepartment(Integer department_id)throws Exception{
-        return session.selectOne(namespace+"selectOne", department_id);
+        return session.selectOne(namespace+"selectByDepartment", department_id);
     }
     public List<DepartmentDto> selectAllDepartment()throws Exception{
         return session.selectList(namespace+"selectAll");

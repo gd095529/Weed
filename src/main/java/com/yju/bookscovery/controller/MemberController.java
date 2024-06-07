@@ -35,14 +35,14 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/remove/{member_id}")
-    public  ResponseEntity<?> removeMember(@PathVariable Integer member_id, String password, HttpSession session) throws Exception {
-        session.invalidate();
+    @DeleteMapping("/remove")
+    public  ResponseEntity<?> removeMember(String password, HttpSession session) throws Exception {
+        Integer member_id = (Integer) session.getAttribute("member_id");
         //세션에 멤버아디를 저장해도되는가?
         MemberDto member =memberService.read(member_id);
 
         String salt = member.getPassword_key();
-
+        session.invalidate();
         if(member.getPassword().equals(memberService.getHashPwd(salt,password))){
 //            memberService.remove(member_id);
             return ResponseEntity.ok().body("탈퇴되었습니다.");
@@ -71,7 +71,5 @@ public class MemberController {
         memberService.update(memberDto);
         return ResponseEntity.ok().body("수정되었습니다.");
     }
-    
-    //아이디찾기 추가
-    //비밀번호찾기 추가
+
 }

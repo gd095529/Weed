@@ -4,8 +4,6 @@ import com.yju.bookscovery.dao.BookDao;
 import com.yju.bookscovery.dao.PopularBookDao;
 import com.yju.bookscovery.dao.PopularMemberDao;
 import com.yju.bookscovery.dto.BookDto;
-import com.yju.bookscovery.dto.PopularBookDto;
-import com.yju.bookscovery.dto.PopularMemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +26,7 @@ public class PopularService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int insertPopular(Integer member_id, BookDto bookDto) throws Exception {
+    public int insertPopular(Integer member_id, BookDto bookDto) throws Exception { //나중에 book으로 옮길지 생각
         bookDao.insertBook(bookDto);
         Integer book_id = bookDao.checkByISBN(bookDto.getIsbn());
         popularBookDao.insertPopularBook(book_id);

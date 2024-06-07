@@ -1,8 +1,6 @@
 package com.yju.bookscovery.service;
 
-import com.yju.bookscovery.dao.BookCountDao;
 import com.yju.bookscovery.dao.DepartmentDao;
-import com.yju.bookscovery.dao.MemberDao;
 import com.yju.bookscovery.dto.DepartmentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +12,6 @@ import java.util.List;
 public class DepartmentService {
     @Autowired
     DepartmentDao departmentDao;
-
-    @Autowired
-    MemberDao memberDao;
-
-    @Autowired
-    BookCountDao bookCountDao;
 
     public DepartmentDto select(Integer department_id) throws Exception{
         return departmentDao.selectDepartment(department_id);

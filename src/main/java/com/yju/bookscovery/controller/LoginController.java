@@ -8,16 +8,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URLEncoder;
 
-@Controller
-@RequestMapping("/login")
+@RestController
 public class LoginController {
     @Autowired
     MemberService memberService;
@@ -36,13 +34,13 @@ public class LoginController {
     }
 
     @ResponseBody
-    @PostMapping
-    public ResponseEntity<String> login(String id, String pwd, String toURL, boolean rememberId,
+    @PostMapping("/login")
+    public ResponseEntity<String> login(String id, String password, String toURL, boolean rememberId,
                                    HttpServletRequest request, HttpServletResponse response) throws Exception {
         // 1. id와 pwd를 확인
         MemberDto member = memberService.readById(id);
         // 키로 해싱해서 pwd확인
-        if(!memberService.getHashPwd(member.getPassword_key(),pwd).equals(member.getPassword())) {
+        if(!memberService.getHashPwd(member.getPassword_key(),password).equals(member.getPassword())) {
             // 2-1   일치하지 않으면, loginForm으로 이동
             String msg = URLEncoder.encode("id 또는 pwd가 일치하지 않습니다.", "UTF-8");
 
@@ -73,4 +71,8 @@ public class LoginController {
 
         return ResponseEntity.ok().body(toURL);
     }
+
+    //추가 아이디 찾기
+    //추가 비밀번호 찾기
+
 }

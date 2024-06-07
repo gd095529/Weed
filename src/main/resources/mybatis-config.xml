@@ -18,6 +18,9 @@
         <typeAlias alias="PMDto" type="com.yju.bookscovery.dto.PopularMemberDto"/>
         <typeAlias alias="DDto" type="com.yju.bookscovery.dto.DepartmentDto"/>
         <typeAlias alias="FDto" type="com.yju.bookscovery.dto.FavoriteDto"/>
+        <typeAlias alias="FBJDto" type="com.yju.bookscovery.dto.FavoriteBookJoinDto"/>
+        <typeAlias alias="HBJDto" type="com.yju.bookscovery.dto.HistoryBookJoinDto"/>
+        <typeAlias alias="DCBJDto" type="com.yju.bookscovery.dto.DepartmentCountBookJoinDto"/>
 <!--        <typeAlias alias="RBDto" type="com.yju.bookscovery.dto.RecommandBookDto"/>-->
 <!--        <typeAlias alias="KeywordDto" type="com.yju.bookscovery.dto.KeywordDto"/>-->
     </typeAliases>
