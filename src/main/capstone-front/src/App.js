@@ -11,6 +11,7 @@ import ShowInfo from "./components/ShowInfo";
 import MemberModify from "./pages/MemberModify";
 import Bookmark from "./pages/Bookmark";
 import Find from "./pages/Find";
+import Login1 from './pages/Login';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <Route path={'/member'} element={<MemberModify />} />
               <Route path={'/bookmark'} element={<Bookmark />} />
               <Route path={'/find/*'} element={<Find />} />
+              <Route path={'/login1'} element={<Login1 />} />
           </Routes>
       </BrowserRouter>
     </div>
