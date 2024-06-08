@@ -87,7 +87,7 @@ function Header1() {
                     <img src={'https://cdn-icons-png.flaticon.com/512/104/104113.png'} alt={'맞춤 검색'}
                         style={{width: '1.5rem', height: '1.5rem'}}
                     />
-                    <o>맞춤 검색</o>
+                    <p>맞춤 검색</p>
                 </div>
                 <div className={`${header1Css.jungangStyle}`}>
                     <Search width={'1.5rem'} height={"1.5rem"}/>

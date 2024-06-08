@@ -62,8 +62,14 @@
     box-sizing: border-box;
     height: calc(30rem - 4rem);
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
     padding: 1rem;
+
+}
+
+.viewBox > .middle > div {
+    width: 20%;
 }
 
 .viewBox > .bottom {

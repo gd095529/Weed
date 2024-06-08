@@ -1,12 +1,20 @@
 import mainCss from "../styles/Main.module.css";
 import hereBar from '../images/hereBar.png';
 import noBar from '../images/noBar.png';
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {popularLoanBooks} from "../api/PopularLoanBooks";
+import {departmentAPI} from "../api/department";
+import ViewBook2 from "./ViewBook2";
 
 function MainBook(props) {
     const [selectAge, setSelectAge] = useState(0);
     const [selectDept, setSelectDept] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+    const [popularBooks, setPopularBooks] = useState(null);
+    const [viewBooks, setViewBooks] = useState(null);
+    const [manBooks, setManBooks] = useState(null);
+    const [womanBooks, setWomanBooks] = useState(null);
+    const [department, setDepartment] = useState(null);
 
     let top, middle;
     const eventImg = [
@@ -16,6 +24,109 @@ function MainBook(props) {
         'http://lib.yjc.ac.kr/WebYJC/data/Images/1view/darakwon.jpg',
         'http://lib.yjc.ac.kr/WebYJC/data/Images/1view/c93a5135c40f48a8bd90c41c4cbecd2a.png',
     ]
+
+    // 인기 도서 불러옴
+    useEffect(() => {
+        const fetchBooks = async () => {
+            const books = [];
+            const manBook = [];
+            const womanBook = [];
+            if (props.type === 'department') {
+                // Department books fetching logic here
+            } else if (props.type === 'event') {
+                // Event books fetching logic here
+            } else if (props.type === 'age') {
+                const config = {
+                    age: selectAge === 0 ? '20' : '30'
+                };
+
+                try {
+                    const bookList = await popularLoanBooks(config);
+                    for (let i = 0; i < props.initIndex * 3; i++) {
+                        if (bookList[i]) {
+                            books.push(bookList[i]);
+                        }
+                    }
+                } catch (error) {
+                    console.log(error.message);
+                }
+                // 성별 시작
+            } else if (props.type === 'gender') {
+                const config1 = {
+                    gender: '0'
+                };
+
+                try {
+                    const bookList = await popularLoanBooks(config1);
+                    for (let i = 0; i < props.initIndex; i++) {
+                        if (bookList[i]) {
+                            manBook.push(bookList[i]);
+                        }
+                    }
+                } catch (error) {
+                    console.log(error.message);
+                }
+
+                const config2 = {
+                    gender: '1'
+                };
+
+                try {
+                    const bookList = await popularLoanBooks(config2);
+                    for (let i = 0; i < props.initIndex; i++) {
+                        if (bookList[i]) {
+                            womanBook.push(bookList[i]);
+                        }
+                    }
+                } catch (error) {
+                    console.log(error.message);
+                }
+            } else if (props.type === 'department') {
+
+            }
+            setPopularBooks(books);
+            setManBooks(manBook);
+            setWomanBooks(womanBook);
+        };
+
+        fetchBooks();
+        console.log(popularBooks);
+    }, [props.type, selectAge])
+
+    // Index가 변경될 때 마다 보여주는 책 변경하기.
+    useEffect(() => {
+        const updateViewBooks = () => {
+            const books = [];
+            for (let i = (props.index - 1) * 3; i < props.index * 3; i++) {
+                if (popularBooks && popularBooks[i]) {
+                    books.push(popularBooks[i]);
+                }
+            }
+            setViewBooks(books);
+        };
+
+        updateViewBooks();
+    }, [props.index, popularBooks]);
+
+    useEffect(() => {
+        const updateDept = async() => {
+            const depts = [];
+            try {
+                const dept = await departmentAPI();
+                for (let i = 0; i < dept.length; i++) {
+                    depts.push(dept[i].department);
+                }
+
+            } catch (e) {
+                console.log(e.message);
+            }
+
+            setDepartment(depts);
+        }
+        updateDept();
+
+
+    }, []);
 
     // type의 경우, Age인지 Dept인지 확인하는 용도. 코드를 이상하게 짜버려서 이게 필요해짐.
     // type이 true면
@@ -131,7 +242,16 @@ function MainBook(props) {
             </div>
         middle =
             <div className={mainCss.middle}>
-
+                {
+                    popularBooks.length === props.initIndex * 3 &&
+                    viewBooks.length === 3 &&
+                    viewBooks.map((book, index) => (
+                        <div key={index}>
+                            <ViewBook2 bookname={book.bookname} authors={book.authors}
+                                       bookImgURL={book.book_image_URL}/>
+                        </div>
+                    ))
+                }
             </div>
     } else if (props.type === "gender") {
         for (let i = 1; i <= props.initIndex; i++) {
@@ -143,24 +263,39 @@ function MainBook(props) {
                 <p>성별 인기 도서</p>
             </div>
         middle =
-            <div className={mainCss.middle} style={{display: 'flex'}}>
+            <div className={mainCss.middle} style={{display: 'flex', alignItems: 'flex-start'}}>
                 <div style={{
                     width: '50%',
                     borderRight: '1px solid black',
                     display: 'flex',
                     justifyContent: 'center',
-                    gap: '0.5rem'
+                    gap: '0.5rem',
                 }}>
                     <img src={'https://cdn.icon-icons.com/icons2/2248/PNG/512/gender_male_icon_137554.png'} alt={''}
                          style={{width: '1.5rem', height: '1.5rem'}}
                     />
                     <div>남성</div>
+                    <div style={{position: 'absolute', width: '10rem', top: '20%'}}>
+                        {
+                            manBooks.length === props.initIndex &&
+                            <ViewBook2 bookname={manBooks[props.index - 1].bookname} authors={manBooks[props.index - 1].authors}
+                                   bookImgURL={manBooks[props.index - 1].book_image_URL}/>
+                        }
+                    </div>
                 </div>
                 <div style={{width: '50%', display: 'flex', justifyContent: 'center', gap: '0.5rem'}}>
                     <img src={'https://cdn.icon-icons.com/icons2/1914/PNG/512/femalesymbol_121533.png'} alt={''}
                          style={{width: '1.3rem', height: '1.3rem', marginLeft: '1rem'}}
                     />
                     <div>여성</div>
+                    <div style={{position: 'absolute', width: '10rem', top: '20%'}}>
+                        {
+                            womanBooks.length === props.initIndex &&
+                            <ViewBook2 bookname={womanBooks[props.index - 1].bookname}
+                                       authors={womanBooks[props.index - 1].authors}
+                                       bookImgURL={womanBooks[props.index - 1].book_image_URL}/>
+                        }
+                    </div>
                 </div>
             </div>
     } else if (props.type === "loan") {
@@ -180,12 +315,16 @@ function MainBook(props) {
         for (let i = 1; i <= props.initIndex; i++) {
             barCount.push(i);
         }
-        const department = ["컴퓨터정보계열", "IT", "사회복지과"];
+
         top =
+            department !== null &&
             <div className={mainCss.top}>
                 <img src={'https://cdn-icons-png.flaticon.com/512/5027/5027398.png'} alt={'event'}/>
-                <div style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect("dept", department)}인기 도서</div>
+                <div style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>{customSelect("dept", department)}인기
+                    도서
+                </div>
             </div>
+
         middle =
             <div className={mainCss.middle}>
 
