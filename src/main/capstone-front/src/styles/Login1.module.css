@@ -1,10 +1,16 @@
 .body {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
     width: 30rem;
     border: 1px solid black;
-    margin: 0 auto;
+    gap: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
 }
 
 .titleBox {
@@ -32,6 +38,23 @@
     margin-top: 0.5rem;
 }
 
-.extLoginBox {
+.loginBtnBox {
+    width: 80%;
+    background-color: #6397ff;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+}
 
+.loginBtnBox > .loginBtn {
+    color: white;
+}
+
+.optionBox {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 0.85rem;
 }

@@ -13,25 +13,30 @@ import Input from '../components/Input';
 function Login() {
     return(
         <div className={loginCss.body}>
-            <div className={loginCss.titleBox}>
-                <Logo width={'60%'} height={'30%'}/>
-                <div>LOGIN</div>
-            </div>
-            <div className={loginCss.loginBox}>
-                <div className={loginCss.id}>
-                    <Input type={'text'} placeholder={'로그인을 입력하세요'} viewPlaceholder={'로그인'}
-                           />
+            <div className={loginCss.box}>
+                <div className={loginCss.titleBox}>
+                    <Logo width={'80%'} height={'80%'}/>
+                    <div>LOGIN</div>
                 </div>
-                <div className={loginCss.pwd}>
-                    <Input type={'password'} placeholder={'비밀번호를 입력하세요'} viewPlaceholder={'비밀번호'}
-                           url={'https://cdn-icons-png.flaticon.com/512/6684/6684701.png'}
-                           url2={'https://cdn-icons-png.flaticon.com/512/6405/6405909.png'}/>
+                <div className={loginCss.loginBox}>
+                    <div className={loginCss.id}>
+                        <Input type={'text'} placeholder={'로그인을 입력하세요'} viewPlaceholder={'로그인'}
+                               />
+                    </div>
+                    <div className={loginCss.pwd}>
+                        <Input type={'password'} placeholder={'비밀번호를 입력하세요'} viewPlaceholder={'비밀번호'}
+                               url={'https://cdn-icons-png.flaticon.com/512/6684/6684701.png'}
+                               url2={'https://cdn-icons-png.flaticon.com/512/6405/6405909.png'}/>
+                    </div>
+                </div>
+                <div className={loginCss.loginBtnBox}>
+                    <div className={loginCss.loginBtn}>로그인</div>
+                </div>
+                <div className={loginCss.optionBox}>
+                    <div className={loginCss.joinBtn}>회원가입</div>
+                    <div className={loginCss.findBtn}>아이디/비밀번호 찾기</div>
                 </div>
             </div>
-            <div className={loginCss.extLoginBox}>
-
-            </div>
-
         </div>
     )
 }

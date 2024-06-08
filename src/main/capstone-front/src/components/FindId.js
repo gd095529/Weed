@@ -1,3 +1,5 @@
+import findCss from "../styles/FindIdPwd.module.css";
+
 function FindId() {
     return (
         <div>
@@ -9,7 +11,7 @@ function FindId() {
                 <p>이름</p>
                 <input type={'text'} />
             </div>
-            <div>
+            <div className={findCss.btn}>
                 <p>아이디 찾기</p>
             </div>
         </div>

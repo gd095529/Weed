@@ -1,6 +1,17 @@
 .body {
-    width: 40rem;
+    width: 100%;
+    height: 100%;
     border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.body > div {
+    margin-top: 1rem;
+    border: 1px solid black;
+    width: 40rem;
 }
 
 .header {
@@ -25,4 +36,14 @@
 
 .findBox {
     margin: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    background-color: #a4c1fc;
+    margin-top: 1rem;
+    text-align: center;
+    color: white;
+    padding: 0.25rem;
 }
