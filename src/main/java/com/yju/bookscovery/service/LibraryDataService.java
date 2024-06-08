@@ -166,16 +166,115 @@ public class LibraryDataService {
                 });
     }
 
-    //마니아 추천(양)
+    //도서 검색->리스트(제목,작가,키워드)(정렬)
+    public Mono<JsonNode> searchBook(@RequestParam(required = false) String bookname,
+                                @RequestParam(required = false) String authors,
+                                @RequestParam(required = false) String keyword,
+                                @RequestParam(required = false) String pageNo,
+                                @RequestParam(required = false) String pageSize,
+                                @RequestParam(required = false) String order,
+                                @RequestParam(required = false) String sort
+                                ) {
 
-    //다독자 추천(양)
+        String baseUrl = apiConfig.getSEARCH_BOOK_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&exactMatch=true";
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(baseUrl);
+
+        if (bookname != null && !bookname.isEmpty()) {
+            uriBuilder.queryParam("bookname", bookname);
+        }
+        if (authors != null && !authors.isEmpty()) {
+            uriBuilder.queryParam("authors", authors);
+        }
+        if (keyword != null && !keyword.isEmpty()) {
+            uriBuilder.queryParam("keyword", keyword);
+        }
+        if (pageNo != null && !pageNo.isEmpty()) {
+            uriBuilder.queryParam("pageNo", pageNo);
+        }
+        if (pageSize != null && !pageSize.isEmpty()) {
+            uriBuilder.queryParam("pageSize", pageSize);
+        }
+        if (order != null && !order.isEmpty()) {
+            uriBuilder.queryParam("order", order);
+        }
+        if (sort != null && !sort.isEmpty()) {
+            uriBuilder.queryParam("sort", sort);
+        }
+
+        String url = uriBuilder.toUriString();
+
+//        for(String keyword : keywords){
+//            UriComponentsBuilder keywordUriBuilder = UriComponentsBuilder.fromHttpUrl(sampleUrl);
+//            keywordUriBuilder.queryParam("keyword", keyword);
+//            String url = keywordUriBuilder.toUriString();
+
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(String.class)
+                .flatMap(response -> {
+                    try {
+                        JsonNode jsonNode = objectMapper.readTree(response);
+                        return Mono.just(jsonNode);
+                    } catch (Exception e) {
+                        return Mono.error(e);
+                    }
+                });
+    }
 
     //대출 급상승 도서(양)
+    public Mono<JsonNode> getLoanIncrease(String searchDt){//yyyy-mm-dd
+        String url = apiConfig.getLOAN_INCREASE_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&searchDt=" + searchDt;
 
-    //도서 검색->리스트(제목,작가,키워드)(정렬)
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(String.class)
+                .flatMap(response -> {
+                    try {
+                        JsonNode jsonNode = objectMapper.readTree(response);
+                        return Mono.just(jsonNode);
+                    } catch (Exception e) {
+                        return Mono.error(e);
+                    }
+                });
+    }
 
-    //학과별 책목록
+    //마니아 추천(양)
+    public Mono<JsonNode> getMania(String isbn){
+        String url = apiConfig.getMANIA_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&type=mania" + "&isbn13=" + isbn;
 
-    //
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(String.class)
+                .flatMap(response -> {
+                    try {
+                        JsonNode jsonNode = objectMapper.readTree(response);
+                        return Mono.just(jsonNode);
+                    } catch (Exception e) {
+                        return Mono.error(e);
+                    }
+                });
+    }
+    //다독자 추천(양)
+    public Mono<JsonNode> getExtensiveReader(String isbn){
+        String url = apiConfig.getEXTENSIVE_READ_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&type=reader" + "&isbn13=" + isbn;
 
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(String.class)
+                .flatMap(response -> {
+                    try {
+                        JsonNode jsonNode = objectMapper.readTree(response);
+                        return Mono.just(jsonNode);
+                    } catch (Exception e) {
+                        return Mono.error(e);
+                    }
+                });
+    }
+
+
+    //검색추천기능
 }
