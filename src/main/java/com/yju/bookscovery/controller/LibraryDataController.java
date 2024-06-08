@@ -3,7 +3,6 @@ package com.yju.bookscovery.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.yju.bookscovery.dto.BookDto;
 import com.yju.bookscovery.service.LibraryDataService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -42,6 +41,40 @@ public class LibraryDataController {
             @RequestParam(required = false) String dtl_kdc) {
 
         return libraryDataService.getPopularLoan(pageNo, pageSize, startDt, endDt, from_age, to_age, gender, kdc, dtl_kdc)
+                .map(ResponseEntity::ok)
+                .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
+    }
+
+    @GetMapping("/search")
+    public Mono<ResponseEntity<JsonNode>> searchBook(@RequestParam(required = false) String bookname,
+                                     @RequestParam(required = false) String authors,
+                                     @RequestParam(required = false) String keyword,
+                                     @RequestParam(required = false) String pageNo,
+                                     @RequestParam(required = false) String pageSize,
+                                     @RequestParam(required = false) String order,
+                                     @RequestParam(required = false) String sort){
+        return libraryDataService.searchBook(bookname, authors, keyword, pageNo, pageSize, order, sort)
+                .map(ResponseEntity::ok)
+                .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
+    }
+
+    @GetMapping("/increase")
+    public Mono<ResponseEntity<JsonNode>> getLoanIncrease(String searchDt){
+        return libraryDataService.getLoanIncrease(searchDt)
+                .map(ResponseEntity::ok)
+                .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
+    }
+
+    @GetMapping("/mania")
+    public Mono<ResponseEntity<JsonNode>> getMania(String isbn){
+        return libraryDataService.getMania(isbn)
+                .map(ResponseEntity::ok)
+                .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
+    }
+
+    @GetMapping("/reader")
+    public Mono<ResponseEntity<JsonNode>> getExtensiveReader(String isbn){
+        return libraryDataService.getExtensiveReader(isbn)
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
     }

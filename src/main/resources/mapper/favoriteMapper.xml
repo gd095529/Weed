@@ -9,6 +9,11 @@
         where member_id = #{member_id}
     </select>
 
+    <select id="checkFavorite" parameterType="Map" resultType="Integer">
+        select favorite_id from favorite
+        where member_id = #{member_id} and book_id = #{book_id}
+    </select>
+
     <select id="selectOne" parameterType="Integer" resultType="FDto">
         select * from favorite
         where favorite_id = #{favorite_id}

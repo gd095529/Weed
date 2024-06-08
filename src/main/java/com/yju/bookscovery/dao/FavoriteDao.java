@@ -19,6 +19,12 @@ public class FavoriteDao {
     public int countByMemberFavorite(Integer member_id)throws Exception{
         return session.selectOne(namespace+"countByMember",member_id);
     }
+    public Integer checkFavorite(Integer member_id, Integer book_id)throws Exception{
+        Map map = new HashMap();
+        map.put("member_id", member_id);
+        map.put("book_id", book_id);
+        return session.selectOne(namespace+"checkFavorite",map);
+    }
     public FavoriteDto selectFavorite(Integer favorite_id)throws Exception{
         return session.selectOne(namespace+"selectOne",favorite_id);
     }
