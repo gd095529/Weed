@@ -10,6 +10,7 @@
 
     <select id="selectAll" resultType="DDto">
         select * from department
+        order by department_id asc
     </select>
 
     <select id="selectByDepartment" parameterType="Integer" resultType="DDto">

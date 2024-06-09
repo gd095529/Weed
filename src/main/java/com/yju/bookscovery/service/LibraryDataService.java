@@ -89,10 +89,11 @@ public class LibraryDataService {
     }
 
     //인기 대출 도서 조회(일, 주, 월)(기간,성별,연령,대주제,세부주제,) 0이 1등 //테스트완
+    //나중에 기간체크후 db에서 꺼낼지 말지 선택해야함
     public Mono<List<BookDto>> getPopularLoan(
             @RequestParam(required = false) String pageNo,
             @RequestParam(required = false) String pageSize,
-            @RequestParam(required = false) String startDt,
+            @RequestParam(required = false) String startDt,//yyyy-mm-dd
             @RequestParam(required = false) String endDt,
             @RequestParam(required = false) Integer from_age,
             @RequestParam(required = false) Integer to_age,

@@ -66,14 +66,14 @@ public class LibraryDataController {
     }
 
     @GetMapping("/mania")
-    public Mono<ResponseEntity<JsonNode>> getMania(String isbn){
+    public Mono<ResponseEntity<JsonNode>> getMania(String isbn){//isbn 5개 넣을수 있게 변경 필
         return libraryDataService.getMania(isbn)
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
     }
 
     @GetMapping("/reader")
-    public Mono<ResponseEntity<JsonNode>> getExtensiveReader(String isbn){
+    public Mono<ResponseEntity<JsonNode>> getExtensiveReader(String isbn){//isbn 5개 넣을수 있게 변경 필
         return libraryDataService.getExtensiveReader(isbn)
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
