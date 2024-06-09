@@ -1,12 +1,13 @@
 import mainCss from '../styles/Main.module.css';
 import Header1 from "../components/Header1";
 import {types} from '../constants/typeConstant';
-import {todayBook} from "../constants/bookImgURLConstant";
 import ViewBook2 from "../components/ViewBook2";
 import {useState, useEffect} from "react";
 import MainBook from "../components/MainBook";
 import left from "../images/mainImages/left.png";
 import right from "../images/mainImages/right.png";
+import {todayBooksAPI} from '../api/bookImgURLConstant';
+import {descriptionAPI} from "../api/descriptionAPI";
 
 /**
  * 메인 페이지 구성
@@ -35,12 +36,13 @@ function Main() {
     const [getIndex, setIndex] = useState(1); // (MainBook으로 넘겨줄 값).bottom부분의 Bar 부분 변경을 위함. 기본값은 인덱스 1일 때
     const [getInitIndex, setInitIndex] = useState(5); // type들의 기본 Index 지정. (getType의 초기 Index 값을 가져옴)
     const [getTodayIndex, setTodayIndex] = useState(0); // todayBook의 Index
-
+    const [books, setBooks] = useState([]);
+    const [booksDes, setBooksDes] = useState([]);
     // InitIndex를 넘어가 있는 상태에서 더 적은 InitIndex를 가진 List로 넘어가면 에러 발생하니 방지
     if (getIndex > getInitIndex) {
         setIndex(1);
     }
-    
+
     // mainBookBox의 왼쪽 리스트에 마우스가 올라가면
     const typeMouseEnter = (type, index) => {
         setType(type);
@@ -85,8 +87,35 @@ function Main() {
         setTodayIndex(index);
     }
 
+    useEffect(() => {
+        const fetchBooks = async () => {
+            const fetchedBooks = await todayBooksAPI();
+            const book = [];
+            for (let i = 0; i < 4; i++) {
+                book.push(fetchedBooks[i]);
+                fetchDescription(fetchedBooks[i].isbn);
+            }
+            setBooks(book);
+
+        };
+        const fetchDescription = async (isbn) => {
+            const fetchedDescription = await descriptionAPI(isbn);
+            setBooksDes(prevState => ({
+                ...prevState,
+                fetchedDescription
+            }));
+        }
+        fetchBooks();
+    }, []);
+
+    useEffect(() => {
+        //console.log(booksDes);
+    }, [booksDes])
+
+
+
     return (
-        <div className={mainCss.body} >
+        <div className={mainCss.body}>
             <div>
                 <Header1/>
             </div>
@@ -108,7 +137,7 @@ function Main() {
                     <div className={mainCss.viewBox}
                          onMouseEnter={viewBoxEnter} onMouseLeave={viewBoxLeave}>
                         <MainBook type={getType} index={getIndex} initIndex={getInitIndex}
-                                  funtion={clickMainIndex} />
+                                  funtion={clickMainIndex}/>
                         {isViewBoxEnter &&
                             <>
                                 <img src={left} alt={'left'} className={mainCss.leftImg} onClick={moveLeft}/>
@@ -119,20 +148,27 @@ function Main() {
                 </div>
 
                 <div className={mainCss.todayBookBox}>
-                    <img className={mainCss.todayLeft} src={todayBook()[getTodayIndex].bookImageURL} alt={'커다란 책 이미지 1'}/>
+                    {books.length !== 0 &&
+                    <img className={mainCss.todayLeft} src={books[getTodayIndex].book_image_URL} alt={'커다란 책 이미지 1'}/>}
                     <div className={mainCss.todayRight}>
                         <p>오늘의 책</p>
-                        <div className={mainCss.todayTitle}>{todayBook()[getTodayIndex].bookname}</div>
-                        <div className={mainCss.todayDescription}>{todayBook()[getTodayIndex].description}</div>
+                        {books.length !== 0 &&
+                        <div className={mainCss.todayTitle}>{books[getTodayIndex].bookname}</div>
+                        }
+                        {booksDes.length !== 0 &&
+                        <div className={mainCss.todayDescription}>{booksDes[getTodayIndex]}</div>
+                        }
+                        {books.length !== 0 &&
                         <div className={mainCss.tie}>
-                            <div className={mainCss.todayAuthor}>{todayBook()[getTodayIndex].authors}</div>
-                            <div className={mainCss.todayPublisher}>{todayBook()[getTodayIndex].publisher}</div>
+                            <div className={mainCss.todayAuthor}>{books[getTodayIndex].authors}</div>
+                            <div className={mainCss.todayPublisher}>{books[getTodayIndex].publisher}</div>
                         </div>
+                        }
                         <div className={mainCss.bookTie}>
                             {
-                                todayBook().map((book, index) => (
+                                books.map((book, index) => (
                                     <img key={index} className={mainCss.todayIndex}
-                                         src={todayBook()[index].bookImageURL} alt={'커다란 책 이미지 1'}
+                                         src={books[index].book_image_URL} alt={'커다란 책 이미지 1'}
                                          style={{border: getTodayIndex === index ? '5px solid #a4c1fc' : '1px solid black'}}
                                          onClick={() => clickTodayIndex(index)}
                                     />

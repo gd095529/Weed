@@ -1,6 +1,10 @@
 import loginCss from '../styles/Login1.module.css';
 import { ReactComponent as Logo} from "../images/logo2.svg";
 import Input from '../components/Input';
+import {useNavigate} from "react-router-dom";
+import {useRef, useState} from "react";
+import {loginAPI} from "../api/loginAPI";
+
 /**
  * 아이디, 비밀번호로 로그인
  * 아이디 찾기, 비밀번호 찾기, 회원가입, 로그인 버튼
@@ -11,30 +15,58 @@ import Input from '../components/Input';
  */
 
 function Login() {
+    const [userID, setUserID] = useState(null);
+    const [userPwd, setUserPwd] = useState(null);
+
+    const idValue = useRef(null);
+    const pwdValue = useRef(null);
+
+    const navigate = useNavigate();
+    const clickJoin = () => {
+        navigate("/join1");
+    }
+    const clickFind = () => {
+        navigate("/find/id");
+    }
+    const clickLogo = () => {
+        navigate("/");
+    }
+    const clickLoginBtn = () => {
+        console.log(idValue.current.value);
+        console.log(pwdValue.current.value);
+        loginVert();
+    }
+    const loginVert = () => {
+       loginAPI(idValue.current.value, pwdValue.current.value, false);
+    }
+
     return(
         <div className={loginCss.body}>
             <div className={loginCss.box}>
-                <div className={loginCss.titleBox}>
-                    <Logo width={'80%'} height={'80%'}/>
+                <div className={loginCss.titleBox} onClick={clickLogo}>
+                    <Logo width={'80%'} height={'80%'} />
                     <div>LOGIN</div>
                 </div>
                 <div className={loginCss.loginBox}>
                     <div className={loginCss.id}>
-                        <Input type={'text'} placeholder={'로그인을 입력하세요'} viewPlaceholder={'로그인'}
+                        <Input type={'text'} placeholder={'아이디를 입력하세요'} viewPlaceholder={'아이디'}
+                                useRef={idValue}
                                />
                     </div>
                     <div className={loginCss.pwd}>
                         <Input type={'password'} placeholder={'비밀번호를 입력하세요'} viewPlaceholder={'비밀번호'}
                                url={'https://cdn-icons-png.flaticon.com/512/6684/6684701.png'}
-                               url2={'https://cdn-icons-png.flaticon.com/512/6405/6405909.png'}/>
+                               url2={'https://cdn-icons-png.flaticon.com/512/6405/6405909.png'}
+                            useRef={pwdValue}
+                        />
                     </div>
                 </div>
                 <div className={loginCss.loginBtnBox}>
-                    <div className={loginCss.loginBtn}>로그인</div>
+                    <div className={loginCss.loginBtn} onClick={clickLoginBtn}>로그인</div>
                 </div>
                 <div className={loginCss.optionBox}>
-                    <div className={loginCss.joinBtn}>회원가입</div>
-                    <div className={loginCss.findBtn}>아이디/비밀번호 찾기</div>
+                    <div className={loginCss.joinBtn} onClick={clickJoin}>회원가입</div>
+                    <div className={loginCss.findBtn} onClick={clickFind}>아이디/비밀번호 찾기</div>
                 </div>
             </div>
         </div>

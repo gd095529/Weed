@@ -20,9 +20,12 @@ function Find() {
         setClick('pwd');
     }
 
+    const clickLogo = () => {
+        navigate("/");
+    }
     return (
         <div className={findCss.body}>
-            <Logo width={'60%'} height={'20%'}/>
+            <Logo width={'60%'} height={'20%'} onClick={clickLogo}/>
             <div>
                 <div className={findCss.header}>
                     <p onClick={clickFindId} style={{backgroundColor: click === 'id' ? '#a4c1fc' : ''}}>아이디 찾기</p>

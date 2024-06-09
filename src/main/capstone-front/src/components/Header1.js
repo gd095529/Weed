@@ -12,13 +12,18 @@ import modify from '../images/mainImages/modify.png';
 import star from '../images/mainImages/star.png';
 import header1Css from '../styles/component/Header1.module.css';
 
+
 function Header1() {
     const [isProfile, setIsProfile] = useState(false); // 프로파일을 클릭했는지 여부
     const [getLogin, setGetLogin] = useState(useSelector(state => state.login));
     const [searchFocus, setSearchFocus] = useState(false); // input text인거 클릭했냐 여부
     const navigate = useNavigate();
     const onClickLogin = () => {
-        navigate('/login');
+        navigate('/login1');
+    }
+
+    const onClickLogo = () => {
+        navigate("/");
     }
 
     // profile을 클릭했는지 설정
@@ -70,8 +75,8 @@ function Header1() {
 
     return (
         <div className={header1Css.bodyStyle}>
-            <div>
-                <Logo width={'15rem'} height={'6rem'}/>
+            <div onClick={onClickLogo}>
+                <Logo width={'15rem'} height={'6rem'} />
             </div>
             <div className={header1Css.searchBox} style={setSearchStyle}>
                 <select>

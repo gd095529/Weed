@@ -9,7 +9,7 @@ export async function popularLoanBooks(config) {
             books.push(response.data[i]);
         }
 
-        console.log(config);
+        console.log(response.data);
 
         return books;
     } catch (error) {

@@ -243,8 +243,8 @@ function MainBook(props) {
         middle =
             <div className={mainCss.middle}>
                 {
-                    popularBooks.length === props.initIndex * 3 &&
-                    viewBooks.length === 3 &&
+                    popularBooks.length !== 0 &&
+                    viewBooks.length !== 0 &&
                     viewBooks.map((book, index) => (
                         <div key={index}>
                             <ViewBook2 bookname={book.bookname} authors={book.authors}

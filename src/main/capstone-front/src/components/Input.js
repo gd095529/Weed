@@ -11,7 +11,7 @@ function Input(props) {
     }
 
     const blur = () => {
-        if (inputValue.current.value.length === 0) {
+        if (props.useRef.current.value.length === 0) {
             setIsFocus(false);
         } else {
             setIsFocus(true);
@@ -24,14 +24,14 @@ function Input(props) {
 
     return (
         <div className={inputCss.body}>
-            <input type={props.type} placeholder={isFocus ? '' : props.placeholder}
-                onFocus={focus} onBlur={blur} ref={inputValue}
+            <input type={clickImg ? "text" : props.type} placeholder={isFocus ? '' : props.placeholder}
+                onFocus={focus} onBlur={blur} ref={props.useRef}
             />
             {
                 isFocus && <p>{props.viewPlaceholder}</p>
             }
             {
-                isFocus && <img onClick={clickImgFunc} src={props.url}/>
+                isFocus && <img onClick={clickImgFunc} src={clickImg ? props.url2 : props.url}/>
             }
         </div>
     )
