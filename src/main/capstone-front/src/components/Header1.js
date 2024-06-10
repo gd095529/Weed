@@ -11,12 +11,14 @@ import logout from "../images/mainImages/logout.png";
 import modify from '../images/mainImages/modify.png';
 import star from '../images/mainImages/star.png';
 import header1Css from '../styles/component/Header1.module.css';
-
+import SearchComponent from "../components/Search";
 
 function Header1() {
     const [isProfile, setIsProfile] = useState(false); // 프로파일을 클릭했는지 여부
     const [getLogin, setGetLogin] = useState(useSelector(state => state.login));
     const [searchFocus, setSearchFocus] = useState(false); // input text인거 클릭했냐 여부
+    const [searchClick, setSearchClick] = useState(false);
+
     const navigate = useNavigate();
     const onClickLogin = () => {
         navigate('/login1');
@@ -28,6 +30,10 @@ function Header1() {
 
     const onClickCustomSearch = () => {
         navigate("/customSearch");
+    }
+
+    const clickSearch = () => {
+        setSearchClick(!searchClick);
     }
 
     // profile을 클릭했는지 설정
@@ -78,8 +84,11 @@ function Header1() {
     }
 
     return (
-        <div className={header1Css.bodyStyle}>
-            <div onClick={onClickLogo}>
+        <div className={header1Css.bodyStyle} style={{marginTop: searchClick ? '20rem' : ''}}>
+            {
+                searchClick && <SearchComponent />
+            }
+            <div onClick={onClickLogo} >
                 <Logo width={'15rem'} height={'6rem'} />
             </div>
             <div className={header1Css.searchBox} style={setSearchStyle}>
@@ -98,7 +107,7 @@ function Header1() {
                     />
                     <p>맞춤 검색</p>
                 </div>
-                <div className={`${header1Css.jungangStyle}`}>
+                <div className={`${header1Css.jungangStyle}`} onClick={clickSearch}>
                     <Search width={'1.5rem'} height={"1.5rem"}/>
                     <p>상세검색</p>
                 </div>
