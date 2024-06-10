@@ -26,6 +26,10 @@ function Header1() {
         navigate("/");
     }
 
+    const onClickCustomSearch = () => {
+        navigate("/customSearch");
+    }
+
     // profile을 클릭했는지 설정
     const setProfile = () => {
         setIsProfile(!isProfile);
@@ -88,7 +92,7 @@ function Header1() {
                 <Search width={'1.2rem'} height={'1.2rem'} />
             </div>
             <div className={header1Css.namugeStyle}>
-                <div className={header1Css.jungangStyle}>
+                <div className={header1Css.jungangStyle} onClick={onClickCustomSearch}>
                     <img src={'https://cdn-icons-png.flaticon.com/512/104/104113.png'} alt={'맞춤 검색'}
                         style={{width: '1.5rem', height: '1.5rem'}}
                     />

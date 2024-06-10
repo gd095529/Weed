@@ -1,9 +1,9 @@
-import search1Css from '../styles/Search1.module.css';
+import search1Css from '../styles/CustomSearch.module.css';
 import Header1 from "../components/Header1";
 import {menuTypeConst} from "../constants/menuTypeConst";
 import ListView1 from "../components/ListView1";
 
-function Search1() {
+function CustomSearch() {
     return (
         <div className={search1Css.body}>
             <div>
@@ -33,4 +33,4 @@ function Search1() {
     )
 }
 
-export default Search1;
+export default CustomSearch;
