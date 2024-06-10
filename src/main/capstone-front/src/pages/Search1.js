@@ -1,5 +1,7 @@
 import search1Css from '../styles/Search1.module.css';
 import Header1 from "../components/Header1";
+import {menuTypeConst} from "../constants/menuTypeConst";
+import ListView1 from "../components/ListView1";
 
 function Search1() {
     return (
@@ -7,7 +9,26 @@ function Search1() {
             <div>
                 <Header1 />
             </div>
-
+            <div className={search1Css.menus}>
+                {
+                    menuTypeConst.map((menu, index) => (
+                        <div key={index} className={search1Css.menu}>
+                            {menu.name}
+                        </div>
+                    ))
+                }
+            </div>
+            <div className={search1Css.results}>
+                <div className={search1Css.resultName}>결과</div>
+                <div className={search1Css.resultList}>
+                    <ListView1 />
+                    <ListView1 />
+                    <ListView1 />
+                    <ListView1 />
+                    <ListView1 />
+                    <ListView1 />
+                </div>
+            </div>
         </div>
     )
 }

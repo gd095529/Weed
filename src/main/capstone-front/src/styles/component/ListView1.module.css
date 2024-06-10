@@ -1,0 +1,53 @@
+.body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid gray;
+}
+
+.body > .imgBox {
+    width: 5rem;
+    height: 100%;
+}
+
+.body > .imgBox > .bookImg {
+    width: 100%;
+    height: 100%;
+}
+
+.body > .contentsBox {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: calc(100% - 4rem);
+}
+
+.body > .contentsBox > .titleBox {
+    display: flex;
+    gap: 0.5rem;
+    align-items: end;
+}
+
+.body > .contentsBox > .titleBox > .bookname {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+}
+
+.body > .contentsBox > .titleBox > .author {
+    border-right: 1px solid gray;
+    padding-right: 0.5rem;
+}
+
+.body > .contentsBox > .tilteBox > .publisher {
+
+}
+
+.body > .contentsBox > .contents {
+
+}
+
+.body > .contentsBox > .contents > .description {
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
