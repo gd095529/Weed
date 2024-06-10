@@ -1,13 +1,9 @@
 import axios from "axios";
 
-export async function descriptionAPI(isbn) {
+export async function descriptionAPI(isbn, config) {
     try {
-        const config = {
-            member_id: '1',
-            department_id: '1'
-        }
         const response = await axios.get(`/api/books/${isbn}`, {params: config});
-
+        console.log(response.data.response);
         return response.data.response.book;
 
     } catch (error) {

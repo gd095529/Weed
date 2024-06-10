@@ -12,6 +12,7 @@ import MemberModify from "./pages/MemberModify";
 import Bookmark from "./pages/Bookmark";
 import Find from "./pages/Find";
 import Login1 from './pages/Login';
+import Search1 from "./pages/Search1";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path='/join' element={<Join />} />
               <Route path='/info' element={<IndividualInfo />} />
-
+              <Route path={'/search1'} element={<Search1 />} />
               <Route path='/join1' element={<Join1 />} />
               <Route path={'/detail'} element={<Details />} />
               <Route path={'/search'} element={<Search />} />

@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {popularLoanBooks} from "../api/PopularLoanBooks";
 import {departmentAPI} from "../api/department";
 import ViewBook2 from "./ViewBook2";
+import {increaseLoanAPI} from "../api/increaseLoanAPI";
 
 function MainBook(props) {
     const [selectAge, setSelectAge] = useState(0);
@@ -83,6 +84,20 @@ function MainBook(props) {
                 }
             } else if (props.type === 'department') {
 
+            } else if (props.type === 'loan') {
+                const config = {
+
+                };
+                try {
+                    const bookList = await increaseLoanAPI(config);
+                    for (let i = 0; i < props.initIndex * 3; i++) {
+                        if (bookList[i]) {
+                            books.push(bookList[i]);
+                        }
+                    }
+                } catch (error) {
+                    console.log(error.message);
+                }
             }
             setPopularBooks(books);
             setManBooks(manBook);
@@ -309,7 +324,15 @@ function MainBook(props) {
             </div>
         middle =
             <div className={mainCss.middle}>
-
+                {
+                    viewBooks.length !== 0 &&
+                    viewBooks.map((book, index) => (
+                        <div key={index}>
+                            <ViewBook2 bookname={book.bookname} authors={book.authors}
+                                       bookImgURL={book.book_image_URL}/>
+                        </div>
+                    ))
+                }
             </div>
     } else if (props.type === "department") {
         for (let i = 1; i <= props.initIndex; i++) {

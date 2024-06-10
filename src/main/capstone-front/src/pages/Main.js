@@ -89,24 +89,40 @@ function Main() {
 
     useEffect(() => {
         const fetchBooks = async () => {
-            const fetchedBooks = await todayBooksAPI();
-            const book = [];
-            for (let i = 0; i < 4; i++) {
-                book.push(fetchedBooks[i]);
-                fetchDescription(fetchedBooks[i].isbn);
-            }
-            setBooks(book);
+            try {
+                const fetchedBooks = await todayBooksAPI();
+                const books = [];
 
+                for (let i = 0; i < Math.min(4, fetchedBooks.length); i++) {
+                    books.push(fetchedBooks[i]);
+                    const config = {
+                        member_id: 1,
+                        book_id: 1
+                    }
+                    fetchDescription(fetchedBooks[i].isbn, config);
+                }
+
+                setBooks(books);
+            } catch (error) {
+                console.error("Error fetching books: ", error);
+            }
         };
+
         const fetchDescription = async (isbn) => {
-            const fetchedDescription = await descriptionAPI(isbn);
-            setBooksDes(prevState => ({
-                ...prevState,
-                fetchedDescription
-            }));
-        }
+            try {
+                const fetchedDescription = await descriptionAPI(isbn);
+                setBooksDes(prevState => ({
+                    ...prevState,
+                    [isbn]: fetchedDescription
+                }));
+            } catch (error) {
+                console.error(`Error fetching description for ISBN ${isbn}: `, error);
+            }
+        };
+
         fetchBooks();
     }, []);
+
 
     useEffect(() => {
         //console.log(booksDes);
