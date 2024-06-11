@@ -1,0 +1,16 @@
+.body {
+    width: 60rem;
+    margin: 0 auto;
+}
+
+.body > .resultBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.body > .resultBox > .resultName {
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}

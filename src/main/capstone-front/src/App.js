@@ -13,6 +13,7 @@ import Bookmark from "./pages/Bookmark";
 import Find from "./pages/Find";
 import Login1 from './pages/Login';
 import CustomSearch from "./pages/CustomSearch";
+import Result from "./pages/Result";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route path={'/bookmark'} element={<Bookmark />} />
               <Route path={'/find/*'} element={<Find />} />
               <Route path={'/login1'} element={<Login1 />} />
+              <Route path={'/searchResult'} element={<Result />} />
           </Routes>
       </BrowserRouter>
     </div>
