@@ -7,11 +7,14 @@ import {useState} from "react";
 
 function Join1() {
     const navigate = useNavigate();
+    const onClickLogo = () => {
+        navigate("/");
+    }
 
     return (
         <div className={joinCss1.body}>
             <div className={joinCss1.head}>
-                <img src={logo} alt={'a'}/>
+                <img src={logo} alt={'a'} onClick={onClickLogo}/>
                 <p>회원가입</p>
             </div>
             <form className={joinCss1.context}>

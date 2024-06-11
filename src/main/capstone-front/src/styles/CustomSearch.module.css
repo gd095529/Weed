@@ -1,6 +1,7 @@
 .body {
     width: 60rem;
     margin: 0 auto;
+    z-index:  -1;
 }
 
 .menus {
@@ -33,3 +34,23 @@
     gap: 0.5rem;
 }
 
+.lists {
+    display: flex;
+    flex-direction: column;
+    height: 9rem;
+    line-height: 1rem;
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    border-radius: 1rem;
+    overflow-y: auto;
+}
+
+.lists::-webkit-scrollbar-corner {
+    border-radius: 1rem;
+}
+
+.lists > .list {
+    border-bottom: 1px solid gray;
+    padding: 0.5rem 0.5rem;
+}
