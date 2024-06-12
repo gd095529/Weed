@@ -36,6 +36,21 @@ public class LibraryDataService {
         this.bookCountDao = bookCountDao;
     }
 
+    private Mono<JsonNode> getJsonNodeMono(String url){
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(String.class)
+                .flatMap(response -> {
+                    try {
+                        JsonNode jsonNode = objectMapper.readTree(response);
+                        return Mono.just(jsonNode);
+                    } catch (Exception e) {
+                        return Mono.error(e);
+                    }
+                });
+    }
+
     //책상세보기 완 http://data4library.kr/api/usageAnalysisList?format=json&
     public Mono<JsonNode> getLoanAnalyze(String isbn, Integer member_id, Integer department_id) {
         String baseUrl = apiConfig.getLOAN_ANALYZE_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&isbn13=" + isbn;;
@@ -95,6 +110,7 @@ public class LibraryDataService {
             @RequestParam(required = false) String pageSize,
             @RequestParam(required = false) String startDt,//yyyy-mm-dd
             @RequestParam(required = false) String endDt,
+            @RequestParam(required = false) Integer age,
             @RequestParam(required = false) Integer from_age,
             @RequestParam(required = false) Integer to_age,
             @RequestParam(required = false) Integer gender,
@@ -118,11 +134,15 @@ public class LibraryDataService {
         if(endDt != null && !endDt.isEmpty()) {
             uriBuilder.queryParam("endDt", endDt);
         }
-        if(from_age != null) {
-            uriBuilder.queryParam("from_age", from_age);
-        }
-        if(to_age != null) {
-            uriBuilder.queryParam("to_age", to_age);
+        if(age != null && !endDt.isEmpty()) {
+            uriBuilder.queryParam("age", age);
+        }else{
+            if(from_age != null) {
+                uriBuilder.queryParam("from_age", from_age);
+            }
+            if(to_age != null) {
+                uriBuilder.queryParam("to_age", to_age);
+            }
         }
         if(gender != null) {
             uriBuilder.queryParam("gender", gender);
@@ -209,73 +229,36 @@ public class LibraryDataService {
 //            keywordUriBuilder.queryParam("keyword", keyword);
 //            String url = keywordUriBuilder.toUriString();
 
-        return webClient.get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(String.class)
-                .flatMap(response -> {
-                    try {
-                        JsonNode jsonNode = objectMapper.readTree(response);
-                        return Mono.just(jsonNode);
-                    } catch (Exception e) {
-                        return Mono.error(e);
-                    }
-                });
+        return getJsonNodeMono(url);
     }
 
     //대출 급상승 도서(양)
     public Mono<JsonNode> getLoanIncrease(String searchDt){//yyyy-mm-dd
         String url = apiConfig.getLOAN_INCREASE_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&searchDt=" + searchDt;
 
-        return webClient.get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(String.class)
-                .flatMap(response -> {
-                    try {
-                        JsonNode jsonNode = objectMapper.readTree(response);
-                        return Mono.just(jsonNode);
-                    } catch (Exception e) {
-                        return Mono.error(e);
-                    }
-                });
+        return getJsonNodeMono(url);
     }
 
     //마니아 추천(양)
-    public Mono<JsonNode> getMania(String isbn){
-        String url = apiConfig.getMANIA_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&type=mania" + "&isbn13=" + isbn;
+    public Mono<JsonNode> getMania(String[] isbn){
+        String url = apiConfig.getMANIA_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&type=mania" + "&isbn13=";
+        for(String isbn13 : isbn){
+            url += isbn13 +";";
+        }
 
-        return webClient.get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(String.class)
-                .flatMap(response -> {
-                    try {
-                        JsonNode jsonNode = objectMapper.readTree(response);
-                        return Mono.just(jsonNode);
-                    } catch (Exception e) {
-                        return Mono.error(e);
-                    }
-                });
+        return getJsonNodeMono(url);
     }
     //다독자 추천(양)
-    public Mono<JsonNode> getExtensiveReader(String isbn){
-        String url = apiConfig.getEXTENSIVE_READ_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&type=reader" + "&isbn13=" + isbn;
+    public Mono<JsonNode> getExtensiveReader(String[] isbn){
+        String url = apiConfig.getEXTENSIVE_READ_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&type=reader" + "&isbn13=";
+        for(String isbn13 : isbn){
+            url += isbn13 +";";
+        }
 
-        return webClient.get()
-                .uri(url)
-                .retrieve()
-                .bodyToMono(String.class)
-                .flatMap(response -> {
-                    try {
-                        JsonNode jsonNode = objectMapper.readTree(response);
-                        return Mono.just(jsonNode);
-                    } catch (Exception e) {
-                        return Mono.error(e);
-                    }
-                });
+        return getJsonNodeMono(url);
     }
 
+    //검색 기록
 
     //검색추천기능
 }

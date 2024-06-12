@@ -34,19 +34,21 @@ public class LibraryDataController {
             @RequestParam(required = false) String pageSize,
             @RequestParam(required = false) String startDt,
             @RequestParam(required = false) String endDt,
+            @RequestParam(required = false) Integer age,
             @RequestParam(required = false) Integer from_age,
             @RequestParam(required = false) Integer to_age,
             @RequestParam(required = false) Integer gender,
             @RequestParam(required = false) String kdc,
             @RequestParam(required = false) String dtl_kdc) {
 
-        return libraryDataService.getPopularLoan(pageNo, pageSize, startDt, endDt, from_age, to_age, gender, kdc, dtl_kdc)
+        return libraryDataService.getPopularLoan(pageNo, pageSize, startDt, endDt, age, from_age, to_age, gender, kdc, dtl_kdc)
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
     }
 
     @GetMapping("/search")
-    public Mono<ResponseEntity<JsonNode>> searchBook(@RequestParam(required = false) String bookname,
+    public Mono<ResponseEntity<JsonNode>> searchBook(
+                                     @RequestParam(required = false) String bookname,
                                      @RequestParam(required = false) String authors,
                                      @RequestParam(required = false) String keyword,
                                      @RequestParam(required = false) String pageNo,
@@ -66,14 +68,14 @@ public class LibraryDataController {
     }
 
     @GetMapping("/mania")
-    public Mono<ResponseEntity<JsonNode>> getMania(String isbn){//isbn 5개 넣을수 있게 변경 필
+    public Mono<ResponseEntity<JsonNode>> getMania(String[] isbn){//isbn 5개 넣을수 있게 변경 필
         return libraryDataService.getMania(isbn)
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
     }
 
     @GetMapping("/reader")
-    public Mono<ResponseEntity<JsonNode>> getExtensiveReader(String isbn){//isbn 5개 넣을수 있게 변경 필
+    public Mono<ResponseEntity<JsonNode>> getExtensiveReader(String[] isbn){//isbn 5개 넣을수 있게 변경 필
         return libraryDataService.getExtensiveReader(isbn)
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
