@@ -9,11 +9,11 @@ export async function popularLoanBooks(config) {
             books.push(response.data[i]);
         }
 
-        console.log(response.data);
+        //console.log(response.data);
 
         return books;
     } catch (error) {
-        console.log(error);
+        alert(error);
         return []; // 에러가 발생하면 빈 배열 반환
     }
 }

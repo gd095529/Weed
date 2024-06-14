@@ -36,8 +36,9 @@ function Main() {
     const [getIndex, setIndex] = useState(1); // (MainBook으로 넘겨줄 값).bottom부분의 Bar 부분 변경을 위함. 기본값은 인덱스 1일 때
     const [getInitIndex, setInitIndex] = useState(5); // type들의 기본 Index 지정. (getType의 초기 Index 값을 가져옴)
     const [getTodayIndex, setTodayIndex] = useState(0); // todayBook의 Index
-    const [books, setBooks] = useState([]);
-    const [booksDes, setBooksDes] = useState([]);
+    const [books, setBooks] = useState([]); // 오늘의 책
+    const [booksDes, setBooksDes] = useState([]); // 오늘의 책 설명 가져오기
+
     // InitIndex를 넘어가 있는 상태에서 더 적은 InitIndex를 가진 List로 넘어가면 에러 발생하니 방지
     if (getIndex > getInitIndex) {
         setIndex(1);

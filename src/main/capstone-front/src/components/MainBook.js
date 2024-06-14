@@ -11,13 +11,17 @@ function MainBook(props) {
     const [selectAge, setSelectAge] = useState(0);
     const [selectDept, setSelectDept] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
-    const [popularBooks, setPopularBooks] = useState(null);
-    const [viewBooks, setViewBooks] = useState(null);
-    const [manBooks, setManBooks] = useState(null);
-    const [womanBooks, setWomanBooks] = useState(null);
-    const [department, setDepartment] = useState(null);
+    const [popularBooks, setPopularBooks] = useState([]);
+    const [viewBooks, setViewBooks] = useState([]);
+    const [ageBooks, setAgeBooks] = useState([]);
+    const [manBooks, setManBooks] = useState([]);
+    const [womanBooks, setWomanBooks] = useState([]);
+    const [loanBooks, setLoanBooks] = useState([]);
+    const [department, setDepartment] = useState([]);
+    const [deptBooks, setDeptBooks] = useState([]);
 
     let top, middle;
+
     const eventImg = [
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUAIyndA7gYDd9HiAzAg3VR73AAUs9E8y4Dg&s',
         'http://lib.yjc.ac.kr/WebYJC/data/Images/1view/%EC%98%A8%EB%9D%BC%EC%9D%B8%20%EC%9D%B4%EC%9A%A9%EA%B5%90%EC%9C%A1%20%ED%8F%AC%EC%8A%A4%ED%84%B0.jpg',
@@ -26,87 +30,135 @@ function MainBook(props) {
         'http://lib.yjc.ac.kr/WebYJC/data/Images/1view/c93a5135c40f48a8bd90c41c4cbecd2a.png',
     ]
 
-    // 인기 도서 불러옴
+    // 연령 도서 저장
     useEffect(() => {
         const fetchBooks = async () => {
             const books = [];
-            const manBook = [];
-            const womanBook = [];
-            if (props.type === 'department') {
-                // Department books fetching logic here
-            } else if (props.type === 'event') {
-                // Event books fetching logic here
-            } else if (props.type === 'age') {
-                const config = {
-                    age: selectAge === 0 ? '20' : '30'
-                };
+            const config = {
+                age: selectAge === 0 ? '20' : '30'
+            };
 
-                try {
-                    const bookList = await popularLoanBooks(config);
-                    for (let i = 0; i < props.initIndex * 3; i++) {
-                        if (bookList[i]) {
-                            books.push(bookList[i]);
-                        }
+            try {
+                const bookList = await popularLoanBooks(config);
+
+                for (let i = 0; i < props.initIndex * 3; i++) {
+                    if (bookList[i]) {
+                        books.push(bookList[i]);
                     }
-                } catch (error) {
-                    console.log(error.message);
                 }
-                // 성별 시작
-            } else if (props.type === 'gender') {
-                const config1 = {
-                    gender: '0'
-                };
-
-                try {
-                    const bookList = await popularLoanBooks(config1);
-                    for (let i = 0; i < props.initIndex; i++) {
-                        if (bookList[i]) {
-                            manBook.push(bookList[i]);
-                        }
-                    }
-                } catch (error) {
-                    console.log(error.message);
-                }
-
-                const config2 = {
-                    gender: '1'
-                };
-
-                try {
-                    const bookList = await popularLoanBooks(config2);
-                    for (let i = 0; i < props.initIndex; i++) {
-                        if (bookList[i]) {
-                            womanBook.push(bookList[i]);
-                        }
-                    }
-                } catch (error) {
-                    console.log(error.message);
-                }
-            } else if (props.type === 'department') {
-
-            } else if (props.type === 'loan') {
-                const config = {
-
-                };
-                try {
-                    const bookList = await increaseLoanAPI(config);
-                    for (let i = 0; i < props.initIndex * 3; i++) {
-                        if (bookList[i]) {
-                            books.push(bookList[i]);
-                        }
-                    }
-                } catch (error) {
-                    console.log(error.message);
-                }
+            } catch (err) {
+                console.log(err.message);
             }
-            setPopularBooks(books);
-            setManBooks(manBook);
-            setWomanBooks(womanBook);
-        };
 
+            setAgeBooks(books);
+            console.log("ageBookConsole: " + ageBooks);
+        }
         fetchBooks();
-        console.log(popularBooks);
-    }, [props.type, selectAge])
+    }, [selectAge]);
+
+    // 남성 도서 저장
+    useEffect(() => {
+        const fetchBooks = async () => {
+            const books = [];
+            const config = {
+                gender: '0'
+            };
+
+            try {
+                const bookList = await popularLoanBooks(config);
+
+                for (let i = 0; i < props.initIndex * 3; i++) {
+                    if (bookList[i]) {
+                        books.push(bookList[i]);
+                    }
+                }
+            } catch (err) {
+                console.log(err.message);
+            }
+
+            setManBooks(books);
+        }
+        fetchBooks();
+    }, []);
+
+    // 여성 도서 저장
+    useEffect(() => {
+        const fetchBooks = async () => {
+            const books = [];
+            const config = {
+                gender : '1'
+            };
+
+            try {
+                const bookList = await popularLoanBooks(config);
+
+                for (let i = 0; i < props.initIndex * 3; i++) {
+                    if (bookList[i]) {
+                        books.push(bookList[i]);
+                    }
+                }
+            } catch (err) {
+                console.log(err.message);
+            }
+
+            setWomanBooks(books);
+        }
+        fetchBooks();
+    }, []);
+
+    // 대출 도서 저장
+    useEffect(() => {
+        const fetchBooks = async () => {
+            const books = [];
+            const year = new Date().getFullYear();
+            const month = new Date().getMonth() + 1 < 10 ? "0"+(new Date().getMonth() + 1) : new Date().getMonth() + 1;
+            const date = new Date().getDate()  < 10 ? "0"+(new Date().getDate()) : new Date().getDate();
+            
+            const config = {
+                searchDt : `${year}-${month}-${date - 1}`,
+            };
+
+            try {
+                const bookList = await increaseLoanAPI(config);
+
+                for (let i = 0; i < props.initIndex * 3; i++) {
+                    if (bookList[i]) {
+                        books.push(bookList[i]);
+                    }
+                }
+            } catch (err) {
+                console.log(err.message);
+            }
+
+            setLoanBooks(books);
+        }
+        fetchBooks();
+    }, []);
+
+    // 학과 도서 저장
+    useEffect(() => {
+        const fetchBooks = async () => {
+            const books = [];
+            const config = {
+                
+            };
+
+            try {
+                const bookList = await popularLoanBooks(config);
+
+                for (let i = 0; i < props.initIndex * 3; i++) {
+                    if (bookList[i]) {
+                        books.push(bookList[i]);
+                    }
+                }
+            } catch (err) {
+                console.log(err.message);
+            }
+
+            setDeptBooks(books);
+        }
+        fetchBooks();
+    }, []);
 
     // Index가 변경될 때 마다 보여주는 책 변경하기.
     useEffect(() => {
@@ -123,6 +175,7 @@ function MainBook(props) {
         updateViewBooks();
     }, [props.index, popularBooks]);
 
+    // 학과 가져오기
     useEffect(() => {
         const updateDept = async() => {
             const depts = [];
@@ -139,9 +192,25 @@ function MainBook(props) {
             setDepartment(depts);
         }
         updateDept();
-
-
     }, []);
+
+    // popularBooks에 담기
+    useEffect(() => {
+        switch (props.type) {
+            case 'age' :
+                setPopularBooks(ageBooks);
+                break;
+            case 'gender' :
+
+                break;
+            case 'loan' :
+                setPopularBooks(loanBooks);
+                break;
+            case 'department' :
+                setPopularBooks(deptBooks);
+                break;
+        }
+    }, [props.type]);
 
     // type의 경우, Age인지 Dept인지 확인하는 용도. 코드를 이상하게 짜버려서 이게 필요해짐.
     // type이 true면
@@ -325,6 +394,7 @@ function MainBook(props) {
         middle =
             <div className={mainCss.middle}>
                 {
+                    popularBooks.length !== 0 &&
                     viewBooks.length !== 0 &&
                     viewBooks.map((book, index) => (
                         <div key={index}>
