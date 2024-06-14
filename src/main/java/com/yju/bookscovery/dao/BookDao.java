@@ -21,6 +21,10 @@ public class BookDao {
         return session.selectOne(namespace+"selectOne",book_id);
     }
 
+    public List<BookDto> selectAllBooks() throws Exception{
+        return session.selectList(namespace+"selectAllBooks");
+    }
+
     public Integer check(Integer book_id) throws Exception{
         return session.selectOne(namespace+"check",book_id);
     }

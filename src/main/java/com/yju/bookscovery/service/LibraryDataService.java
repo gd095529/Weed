@@ -37,6 +37,7 @@ public class LibraryDataService {
     }
 
     private Mono<JsonNode> getJsonNodeMono(String url){
+        System.out.println("url = " + url);
         return webClient.get()
                 .uri(url)
                 .retrieve()
@@ -134,7 +135,7 @@ public class LibraryDataService {
         if(endDt != null && !endDt.isEmpty()) {
             uriBuilder.queryParam("endDt", endDt);
         }
-        if(age != null && !endDt.isEmpty()) {
+        if(age != null) {
             uriBuilder.queryParam("age", age);
         }else{
             if(from_age != null) {

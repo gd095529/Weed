@@ -41,6 +41,9 @@ dependencies {
     // Logback Classic
     implementation 'ch.qos.logback:logback-classic:1.4.11'
 
+    implementation 'org.apache.lucene:lucene-core:8.10.1'
+    implementation 'org.apache.lucene:lucene-analyzers-common:8.10.1'
+    implementation 'org.apache.lucene:lucene-queryparser:8.10.1'
 }
 
 tasks.named('bootBuildImage') {

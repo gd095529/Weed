@@ -15,6 +15,7 @@ import Login1 from './pages/Login';
 import CustomSearch from "./pages/CustomSearch";
 import Result from "./pages/Result";
 import Calendar from "./components/Calendar";
+import ChaTest from "./components/ChaTest";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path={'/login1'} element={<Login1 />} />
               <Route path={'/searchResult'} element={<Result />} />
               <Route path={'/calendar'} element={<Calendar />} />
+              <Route path={'/chaTest'} element={<ChaTest />} />
           </Routes>
       </BrowserRouter>
     </div>
