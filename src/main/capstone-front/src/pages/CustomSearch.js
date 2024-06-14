@@ -2,7 +2,7 @@ import customSearchCss from '../styles/CustomSearch.module.css';
 import Header1 from "../components/Header1";
 import {menuTypeConst} from "../constants/menuTypeConst";
 import ListView1 from "../components/ListView1";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import * as lists from '../constants/exampleListOption';
 import Calendar from "../components/Calendar";
 
@@ -11,11 +11,20 @@ function CustomSearch() {
     const [checkIndex, setCheckIndex] = useState(null);
     const [shouldBeVisible, setShouldBeVisible] = useState(true);
     const [clickType, setClickType] = useState(null);
-    const [date, setDate] = useState(new Date().getDate());
-    const [month, setMonth] = useState(new Date().getMonth());
-    const [year, setYear] = useState(new Date().getFullYear());
+    const [date, setDate] = useState(0);
+    const [month, setMonth] = useState(0);
+    const [year, setYear] = useState(0);
     const divRef = useRef({});
-    const getSelectDate = useRef(null);
+
+    useEffect(() => {
+        let todayDate = new Date().getDate();
+        let todayMonth = new Date().getMonth();
+        let todayYear = new Date().getFullYear();
+
+        setDate(todayDate);
+        setMonth(todayMonth);
+        setYear(todayYear);
+    }, [])
 
     const menuMouseEnter = (index) => {
         setStyles((prevStyles) => ({
@@ -108,7 +117,7 @@ function CustomSearch() {
                 style={{top: getDivBottom(index), left: getDivLeft(index)}}
                 className={customSearchCss.calendar}
             >
-                {<Calendar selectRef={getSelectDate} clickDate={onSetDate}
+                {<Calendar clickDate={onSetDate}
                     initDate={date} initMonth={month} initYear={year}
                 />}
             </div>
@@ -119,7 +128,6 @@ function CustomSearch() {
         setDate(selectDate);
         setMonth(selectMonth);
         setYear(selectYear);
-        console.log(selectDate);
         bodyOnClick();
     }
 

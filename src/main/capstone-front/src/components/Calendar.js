@@ -9,12 +9,8 @@ function Calendar(props) {
     const [selectDate, setSelectDate] = useState(props.initDate);
     const [selectYear, setSelectYear] = useState(props.initYear);
     const [selectMonth, setSelectMonth] = useState(props.initMonth);
-    const [day, setDay] = useState("");
-    const dateRef = useRef({selectDate, selectYear, selectMonth});
-
-    if (props.selectRef) {
-        props.selectRef.current = dateRef;
-    }
+    const [isFS, setIsFS] = useState(false);
+    const initialRender = useRef(true);
 
     const stopBubble = (event) => {
         event.stopPropagation();
@@ -59,11 +55,14 @@ function Calendar(props) {
     }, [selectYear, selectMonth, selectDate]);
 
     useEffect(() => {
-        setSelectDate(day);
-        setSelectYear(selectYear);
-        setSelectMonth(selectMonth);
-
-    }, [selectDate])
+        if (initialRender.current) {
+            initialRender.current = false;
+        } else {
+            if (props.clickDate) {
+                props.clickDate(selectDate, selectMonth, selectYear);
+            }
+        }
+    }, [isFS]);
 
     const leftMove = () => {
         if (selectMonth < 1 ) {
@@ -91,14 +90,15 @@ function Calendar(props) {
         setSelectYear(todayYear);
         setSelectMonth(todayMonth);
         setSelectDate(todayDate);
+        setIsFS(!isFS);
     }
 
     const selectDay = (day) => {
         if (day === "") {
             day = 1;
         }
-        setDay(day);
-        props.clickDate(selectDate, selectMonth, selectYear);
+        setSelectDate(day);
+        setIsFS(!isFS);
     }
 
     return(
