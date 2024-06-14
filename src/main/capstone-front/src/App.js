@@ -16,6 +16,7 @@ import CustomSearch from "./pages/CustomSearch";
 import Result from "./pages/Result";
 import Calendar from "./components/Calendar";
 import ChaTest from "./components/ChaTest";
+import ModalPopup from "./components/ModalPopup";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
               <Route path={'/searchResult'} element={<Result />} />
               <Route path={'/calendar'} element={<Calendar />} />
               <Route path={'/chaTest'} element={<ChaTest />} />
+              <Route path={'/a'} element={<ModalPopup />} />
           </Routes>
       </BrowserRouter>
     </div>

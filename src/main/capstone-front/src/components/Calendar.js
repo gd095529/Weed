@@ -59,7 +59,7 @@ function Calendar(props) {
             initialRender.current = false;
         } else {
             if (props.clickDate) {
-                props.clickDate(selectDate, selectMonth, selectYear);
+                props.clickDate(selectDate, selectMonth + 1, selectYear, props.index);
             }
         }
     }, [isFS]);
