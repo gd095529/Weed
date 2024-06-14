@@ -3,7 +3,7 @@ import { ReactComponent as Logo} from "../images/logo2.svg";
 import Input from '../components/Input';
 import {useNavigate} from "react-router-dom";
 import {useRef, useState} from "react";
-import {loginAPI} from "../api/loginAPI";
+import axios from "axios";
 
 /**
  * 아이디, 비밀번호로 로그인
@@ -32,13 +32,26 @@ function Login() {
         navigate("/");
     }
     const clickLoginBtn = () => {
-        console.log(idValue.current.value);
-        console.log(pwdValue.current.value);
-        loginVert();
+        loginAPI();
     }
-    const loginVert = () => {
-       loginAPI(idValue.current.value, pwdValue.current.value, false);
+
+    async function loginAPI() {
+        try {
+            const response = await axios.post('/login', {
+                id: idValue.current.value,
+                password: pwdValue.current.value,
+            },{
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            navigate(response.data);
+        } catch (error) {
+            console.error(error);
+        }
     }
+
 
     return(
         <div className={loginCss.body}>
