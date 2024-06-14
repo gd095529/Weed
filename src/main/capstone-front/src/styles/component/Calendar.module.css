@@ -8,6 +8,8 @@
     justify-content: space-between;
     align-items: center;
     font-size: 1.3rem;
+    background-color: #1b1b9a;
+    color: white;
 }
 
 .body > .viewDateBox > .moveDate {
@@ -33,8 +35,8 @@
     border: 1px solid #a4c1fc;
     padding: 0.4rem;
     font-size: 1rem;
-    background-color: skyblue;
-    color: white;
+    background-color: #fbbbbb;
+    color: black;
 }
 
 .body > .clickDateBox {
@@ -58,5 +60,5 @@
 }
 
 .body > .clickDateBox > div:nth-child(n+8):hover {
-    background-color: #a4c1fc;
+    background-color: gray;
 }

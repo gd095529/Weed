@@ -11,7 +11,11 @@ function CustomSearch() {
     const [checkIndex, setCheckIndex] = useState(null);
     const [shouldBeVisible, setShouldBeVisible] = useState(true);
     const [clickType, setClickType] = useState(null);
+    const [date, setDate] = useState(new Date().getDate());
+    const [month, setMonth] = useState(new Date().getMonth());
+    const [year, setYear] = useState(new Date().getFullYear());
     const divRef = useRef({});
+    const getSelectDate = useRef(null);
 
     const menuMouseEnter = (index) => {
         setStyles((prevStyles) => ({
@@ -96,6 +100,29 @@ function CustomSearch() {
         )
     }
 
+    const listDate = (type) => {
+        const index = type === 'startDt' ? '3': '4';
+
+        return (
+            <div
+                style={{top: getDivBottom(index), left: getDivLeft(index)}}
+                className={customSearchCss.calendar}
+            >
+                {<Calendar selectRef={getSelectDate} clickDate={onSetDate}
+                    initDate={date} initMonth={month} initYear={year}
+                />}
+            </div>
+        )
+    }
+
+    const onSetDate = (selectDate, selectMonth, selectYear) => {
+        setDate(selectDate);
+        setMonth(selectMonth);
+        setYear(selectYear);
+        console.log(selectDate);
+        bodyOnClick();
+    }
+
     const listStruct = (index, listname) => {
         return (
             <div className={customSearchCss.lists}
@@ -141,8 +168,10 @@ function CustomSearch() {
             {clickType === 'age' && listAge()}
             {clickType === 'gender' && listGender()}
             {clickType === 'region' && listRegion()}
+            {clickType === 'startDt' && listDate('startDt')}
+            {clickType === 'endDt' && listDate('endDt')}
             <div className={customSearchCss.results}>
-                <div className={customSearchCss.resultName}>결과</div>
+                <div className={customSearchCss.resultName}>결과{date}</div>
                 <div className={customSearchCss.resultList}>
                     <ListView1 />
                     <ListView1 />
