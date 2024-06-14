@@ -202,10 +202,10 @@ public class LibraryDataService {
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(baseUrl);
 
         if (bookname != null && !bookname.isEmpty()) {
-            uriBuilder.queryParam("bookname", bookname);
+            uriBuilder.queryParam("title", bookname);
         }
         if (authors != null && !authors.isEmpty()) {
-            uriBuilder.queryParam("authors", authors);
+            uriBuilder.queryParam("author", authors);
         }
         if (keyword != null && !keyword.isEmpty()) {
             uriBuilder.queryParam("keyword", keyword);

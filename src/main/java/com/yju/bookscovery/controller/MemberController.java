@@ -16,7 +16,7 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-    @PostMapping(value = "/add", consumes = "application/x-www-form-urlencoded")
+    @PostMapping("/add")
     public ResponseEntity<?> addMember(@RequestBody MemberDto member) throws Exception {
         //salt 랜덤 생성
         SecureRandom random = SecureRandom.getInstanceStrong();
