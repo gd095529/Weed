@@ -17,7 +17,7 @@ function Join1() {
                 <img src={logo} alt={'a'} onClick={onClickLogo}/>
                 <p>회원가입</p>
             </div>
-            <form className={joinCss1.context}>
+            <form className={joinCss1.context} action={'join/add'} method={'post'}>
                 <div>
                     <p>이메일</p>
                     <input type={'email'}/>
@@ -57,7 +57,7 @@ function Join1() {
                         }
                     </select>
                 </div>
-                <input type={'button'} style={{margin: '0 auto', width: '100%'}}/>
+                <input type={'submit'} value={'회원 가입'} style={{margin: '0 auto', width: '100%'}}/>
             </form>
             <div></div>
         </div>

@@ -15,6 +15,9 @@ function CustomSearch() {
     const [month, setMonth] = useState(0);
     const [year, setYear] = useState(0);
     const divRef = useRef({});
+    const [selectAge, setSelectAge] = useState([]);
+    const [selectGender, setSelectGender] = useState([]);
+    const [selectRegion, setSelectRegion] = useState([]);
 
     useEffect(() => {
         let todayDate = new Date().getDate();
@@ -140,16 +143,22 @@ function CustomSearch() {
                      left: getDivLeft(index)
                  }}>
                 {
-                    listname.map((age, index) => (
+                    listname.map((list, index) => (
                         <div className={customSearchCss.list}
                              key={index}
-                             itemID={age.codeValue}>
-                            {age.name}
+                             itemID={list.codeValue}
+                            onClick={() => onClickList(list.codeValue, list.name)}
+                        >
+                            {list.name}
                         </div>
                     ))
                 }
             </div>
         )
+    }
+
+    const onClickList = (itemID, name) => {
+        setSelectAge([itemID, name]);
     }
 
     return (
@@ -167,7 +176,7 @@ function CustomSearch() {
                              style={styles[index]}
                              ref={element => divRef.current[index] = element}
                         >
-                            {menu.name}
+                            {menu.type === 'age' && selectAge.length !== 0 ? <p>{selectAge[1]}</p> : <p>{menu.name}</p> }
                         </div>
                     ))
 

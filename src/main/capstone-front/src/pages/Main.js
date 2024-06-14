@@ -98,9 +98,9 @@ function Main() {
                     books.push(fetchedBooks[i]);
                     const config = {
                         member_id: 1,
-                        book_id: 1
+                        department_id: 1
                     }
-                    fetchDescription(fetchedBooks[i].isbn, config);
+                    fetchDescription(fetchedBooks[i].isbn, config, i);
                 }
 
                 setBooks(books);
@@ -109,13 +109,14 @@ function Main() {
             }
         };
 
-        const fetchDescription = async (isbn) => {
+        const fetchDescription = async (isbn, config, index) => {
             try {
-                const fetchedDescription = await descriptionAPI(isbn);
-                setBooksDes(prevState => ({
-                    ...prevState,
-                    [isbn]: fetchedDescription
-                }));
+                const fetchedDescription = await descriptionAPI(isbn, config);
+                setBooksDes(prevState => {
+                    const newDes = [...prevState];
+                    newDes[index] = fetchedDescription;
+                    return newDes;
+                });
             } catch (error) {
                 console.error(`Error fetching description for ISBN ${isbn}: `, error);
             }

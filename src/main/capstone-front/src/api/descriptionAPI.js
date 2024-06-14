@@ -2,9 +2,11 @@ import axios from "axios";
 
 export async function descriptionAPI(isbn, config) {
     try {
+        const books = [];
         const response = await axios.get(`/api/books/${isbn}`, {params: config});
-        console.log(response.data.response);
-        return response.data.response.book;
+
+        console.log(books);
+        return response.data.response.book.description;
 
     } catch (error) {
         console.log(error);

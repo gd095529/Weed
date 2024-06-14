@@ -6,6 +6,7 @@ import {popularLoanBooks} from "../api/PopularLoanBooks";
 import {departmentAPI} from "../api/department";
 import ViewBook2 from "./ViewBook2";
 import {increaseLoanAPI} from "../api/increaseLoanAPI";
+import {deptBooksAPI} from "../api/deptBooksAPI";
 
 function MainBook(props) {
     const [selectAge, setSelectAge] = useState(0);
@@ -51,7 +52,6 @@ function MainBook(props) {
             }
 
             setAgeBooks(books);
-            console.log("ageBookConsole: " + ageBooks);
         }
         fetchBooks();
     }, [selectAge]);
@@ -92,7 +92,7 @@ function MainBook(props) {
             try {
                 const bookList = await popularLoanBooks(config);
 
-                for (let i = 0; i < props.initIndex * 3; i++) {
+                for (let i = 0; i < props.initIndex; i++) {
                     if (bookList[i]) {
                         books.push(bookList[i]);
                     }
@@ -112,10 +112,10 @@ function MainBook(props) {
             const books = [];
             const year = new Date().getFullYear();
             const month = new Date().getMonth() + 1 < 10 ? "0"+(new Date().getMonth() + 1) : new Date().getMonth() + 1;
-            const date = new Date().getDate()  < 10 ? "0"+(new Date().getDate()) : new Date().getDate();
+            const date = new Date().getDate() - 1  < 10 ? "0"+(new Date().getDate()) - 1 : new Date().getDate() - 1;
             
             const config = {
-                searchDt : `${year}-${month}-${date - 1}`,
+                searchDt : `${year}-${month}-${date}`,
             };
 
             try {
@@ -139,12 +139,9 @@ function MainBook(props) {
     useEffect(() => {
         const fetchBooks = async () => {
             const books = [];
-            const config = {
-                
-            };
-
+            const department_id = 1; // 임시
             try {
-                const bookList = await popularLoanBooks(config);
+                const bookList = await deptBooksAPI(department_id);
 
                 for (let i = 0; i < props.initIndex * 3; i++) {
                     if (bookList[i]) {
@@ -173,7 +170,7 @@ function MainBook(props) {
         };
 
         updateViewBooks();
-    }, [props.index, popularBooks]);
+    }, [props.index, popularBooks, props.type]);
 
     // 학과 가져오기
     useEffect(() => {
@@ -210,6 +207,8 @@ function MainBook(props) {
                 setPopularBooks(deptBooks);
                 break;
         }
+
+        console.log(loanBooks);
     }, [props.type]);
 
     // type의 경우, Age인지 Dept인지 확인하는 용도. 코드를 이상하게 짜버려서 이게 필요해짐.
@@ -361,7 +360,7 @@ function MainBook(props) {
                     <div>남성</div>
                     <div style={{position: 'absolute', width: '10rem', top: '20%'}}>
                         {
-                            manBooks.length === props.initIndex &&
+                            manBooks.length !== 0 &&
                             <ViewBook2 bookname={manBooks[props.index - 1].bookname} authors={manBooks[props.index - 1].authors}
                                    bookImgURL={manBooks[props.index - 1].book_image_URL}/>
                         }
@@ -374,7 +373,7 @@ function MainBook(props) {
                     <div>여성</div>
                     <div style={{position: 'absolute', width: '10rem', top: '20%'}}>
                         {
-                            womanBooks.length === props.initIndex &&
+                            womanBooks.length !== props.initIndex &&
                             <ViewBook2 bookname={womanBooks[props.index - 1].bookname}
                                        authors={womanBooks[props.index - 1].authors}
                                        bookImgURL={womanBooks[props.index - 1].book_image_URL}/>
@@ -399,7 +398,7 @@ function MainBook(props) {
                     viewBooks.map((book, index) => (
                         <div key={index}>
                             <ViewBook2 bookname={book.bookname} authors={book.authors}
-                                       bookImgURL={book.book_image_URL}/>
+                                       bookImgURL={book.bookImageURL}/>
                         </div>
                     ))
                 }
@@ -420,7 +419,16 @@ function MainBook(props) {
 
         middle =
             <div className={mainCss.middle}>
-
+                {
+                    popularBooks.length !== 0 &&
+                    viewBooks.length !== 0 &&
+                    viewBooks.map((book, index) => (
+                        <div key={index}>
+                            <ViewBook2 bookname={book.bookname} authors={book.authors}
+                                       bookImgURL={book.book_image_URL}/>
+                        </div>
+                    ))
+                }
             </div>
     } else {
         top = "error!";

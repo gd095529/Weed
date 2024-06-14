@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export async function popularLoanBooks(config) {
+export async function deptBooksAPI(department_id) {
     try {
         const books = [];
-        const response = await axios.get('/api/popular', {params: config});
+        const response = await axios.get(`/department/${department_id}`);
 
         for (let i = 0; i < response.data.length; i++) {
             books.push(response.data[i]);
