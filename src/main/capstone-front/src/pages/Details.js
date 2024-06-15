@@ -8,10 +8,17 @@ import LineChart from "../exportJS/lineChart";
 import WordCloudComponent from "../exportJS/WordCloud";
 import {useLocation} from "react-router-dom";
 import {detailAPI} from "../api/detailAPI";
+import {maniaAPI} from "../api/maniaAPI";
+import {readerAPI} from "../api/readerAPI";
 
 function Details() {
     const location = useLocation();
     const [isMark, setMark] = useState(false);
+    const [bookData, setBookData] = useState(null);
+    const [bookLoanData, setBookLoanData] = useState([]);
+    const [bookKeyword, setBookKeyword] = useState([]);
+    const [mania, setMania] = useState([]);
+    const [reader, setReader] = useState([]);
 
     useEffect(() => {
         const fetchDetail = async () => {
@@ -19,16 +26,75 @@ function Details() {
             const config = {
                 member_id: 1,
                 department_id: 1
-            }
+            };
             try {
-                const data= await detailAPI(isbn, config);
-
+                const data = await detailAPI(isbn, config);
+                console.log(data);
+                setBookData(data);
             } catch (error) {
-
+                console.error("Error fetching book details:", error);
             }
         };
 
         fetchDetail();
+    }, [location.state.isbn]);
+
+    useEffect(() => {
+        if (bookData) {
+            const fetchLoanData = () => {
+                const loanHistory = bookData.loanHistory.map(item => ({
+                    x: item.loan.month,
+                    y: item.loan.loanCnt
+                }));
+                setBookLoanData(loanHistory);
+            };
+
+            fetchLoanData();
+        }
+    }, [bookData]);
+
+    useEffect(() => {
+        if (bookData) {
+            const fetchKeyword = () => {
+                const keyword = bookData.keywords.map(item => ({
+                    text: item.keyword.word,
+                    value: item.keyword.weight * 10
+                }));
+                setBookKeyword(keyword);
+            };
+
+            fetchKeyword();
+        }
+    }, [bookData]);
+
+    useEffect(() => {
+        const fetchMania = async () => {
+            const isbn = location.state.isbn;
+
+            try {
+                const data = await maniaAPI(isbn);
+                setMania(data);
+            } catch (error) {
+                console.error("Error fetching book details:", error);
+            }
+        };
+
+        fetchMania();
+    }, []);
+
+    useEffect(() => {
+        const fetchReader = async () => {
+            const isbn = location.state.isbn;
+
+            try {
+                const data = await readerAPI(isbn);
+                setReader(data);
+            } catch (error) {
+                console.error("Error fetching book details:", error);
+            }
+        };
+
+        fetchReader();
     }, []);
 
     const clickMark = () => {
@@ -40,120 +106,130 @@ function Details() {
         }
     }
 
-    const data = [12, 5, 6, 8, 0, 15, 7, 10, 23, 10];
-    const data1 = [
-        { text: 'React', value: 50 },
-        { text: 'D3', value: 49 },
-        { text: 'JavaScript', value: 48 },
-        { text: 'HTML', value: 47 },
-        { text: 'CSS', value: 46 },
-        { text: 'Web Development', value: 45 },
-        { text: 'Frontend', value: 44 },
-        { text: 'Backend', value: 43 },
-        { text: 'Fullstack', value: 42 },
-        { text: 'Programming', value: 41 },
-        { text: 'React', value: 40 },
-        { text: 'D3', value: 39 },
-        { text: 'JavaScript', value: 38 },
-        { text: 'HTML', value: 37 },
-        { text: 'CSS', value: 36 },
-        { text: 'Web Development', value: 35 },
-        { text: 'Frontend', value: 34 },
-        { text: 'Backend', value: 33 },
-        { text: 'Fullstack', value: 32 },
-        { text: 'Programming', value: 31 },
-        { text: 'React', value: 30 },
-        { text: 'D3', value: 29 },
-        { text: 'JavaScript', value: 28 },
-        { text: 'HTML', value: 27 },
-        { text: 'CSS', value: 26 },
-        { text: 'Web Development', value: 25 },
-        { text: 'Frontend', value: 24 },
-        { text: 'Backend', value: 23 },
-        { text: 'Fullstack', value: 22 },
-        { text: 'Programming', value: 21 },
-    ];
-
-    useEffect(() => {
-
-    }, []);
-
-
     return (
         <div className={detalisCss.body}>
             <div className={detalisCss.header}>
                 <Header1 />
             </div>
+            {bookData && (
+                <div className={detalisCss.context}>
+                    <p>
+                        {bookData.book.bookname}
+                        <img src={isMark ? noMark : yesMark} alt={'1'} onClick={clickMark} />
+                    </p>
 
-            <div className={detalisCss.context} >
-                <p>불편한 편의점 :김호연 장편소설
-                    <img src={isMark ? noMark : yesMark} alt={'1'} onClick={clickMark}/>
-                </p>
-
-                <div>
-                    <img />
-                    <table border={'1px solid black'}>
+                    <div>
+                        <img src={bookData.book.bookImageURL} alt={''} />
+                        <table border={'1px solid black'}>
+                            <tr>
+                                <td>저자정보</td>
+                                <td colSpan={'5'}>{bookData.book.authors}</td>
+                            </tr>
+                            <tr>
+                                <td>출판사</td>
+                                <td colSpan={'5'}>{bookData.book.publisher}</td>
+                            </tr>
+                            <tr>
+                                <td>책소개</td>
+                                <td colSpan={'5'}>{bookData.book.description}</td>
+                            </tr>
+                            <tr>
+                                <td>출판연월</td>
+                                <td colSpan={'1'}>{bookData.book.publication_year}</td>
+                                <td>ISBN</td>
+                                <td colSpan={'3'}>{bookData.book.isbn13}</td>
+                            </tr>
+                            <tr>
+                                <td>Vol</td>
+                                <td>{bookData.book.vol}</td>
+                                <td>주제분야</td>
+                                <td>{bookData.book.class_nm}</td>
+                                <td>총 대출건수</td>
+                                <td>{bookData.book.loanCnt}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            )}
+            {bookLoanData && (
+                <div className={detalisCss.loan}>
+                    <p>대출 추이</p>
+                    <div>
+                        <p className={detalisCss.chartName}>chart</p>
+                        <div className={detalisCss.chart}><LineChart data={bookLoanData} /></div>
+                    </div>
+                    <div className={detalisCss.dataName}>데이터</div>
+                    <table border={'1'} className={detalisCss.dataTable}>
                         <tr>
-                            <td>저자정보</td>
-                            <td colSpan={'5'}>지은이: 김호연</td>
+                            <td>대출연월</td>
+                            <td>대출건수</td>
+                            <td>대출순위</td>
                         </tr>
-                        <tr>
-                            <td>출판사</td>
-                            <td colSpan={'5'}>나무옆의자</td>
-                        </tr>
-                        <tr>
-                            <td>책소개</td>
-                            <td colSpan={'5'}>소개</td>
-                        </tr>
-                        <tr>
-                            <td>출판연월</td>
-                            <td colSpan={'1'}>2022</td>
-                            <td>ISBN</td>
-                            <td colSpan={'3'}>9719어쩌고</td>
-                        </tr>
-                        <tr>
-                            <td>Vol</td>
-                            <td>2</td>
-                            <td>주제분야</td>
-                            <td>813.7</td>
-                            <td>총 대출건수</td>
-                            <td>70,743</td>
-                        </tr>
+                        {
+                            bookData && (
+                                bookData.loanHistory.map((book, index) => (
+                                    <tr key={index}>
+                                        <td>{book.loan.month}</td>
+                                        <td>{book.loan.loanCnt}</td>
+                                        <td>{book.loan.ranking}</td>
+                                    </tr>
+                                ))
+                            )
+                        }
                     </table>
                 </div>
-            </div>
-
-            <div className={detalisCss.loan}>
-                <p>대출 추이</p>
-                <div>
-                    <p>chart</p>
-                    <div><LineChart data={data} /></div>
+            )}
+            {bookData && (
+                <div className={detalisCss.manyLoan}>
+                    <p>다대출 이용자 그룹</p>
+                    <p>최근 30일동안 대출을 가장 많이 한 연령 및 성별을 제공합니다</p>
+                    <table border={'1'} className={detalisCss.dataTable}>
+                        <tr>
+                            <td>연령</td>
+                            <td>성별</td>
+                            <td>대출건수</td>
+                            <td>순위</td>
+                        </tr>
+                        {
+                            bookData && (
+                                bookData.loanGrps.map((book, index) => (
+                                    <tr key={index}>
+                                        <td>{book.loanGrp.age}</td>
+                                        <td>{book.loanGrp.gender}</td>
+                                        <td>{book.loanGrp.loanCnt}</td>
+                                        <td>{book.loanGrp.ranking}</td>
+                                    </tr>
+                                ))
+                            )
+                        }
+                    </table>
                 </div>
-
-                <div>data</div>
-            </div>
-
-            <div className={detalisCss.manyLoan}>
-                <p>다대출 이용자 그룹</p>
-                <p>최근 30일동안 대출을 가장 많이 한 연령 및 성별을 제공합니다()</p>
-            </div>
-
-            <div className={detalisCss.keyword}>
-                <p>주요 키워드</p>
-                <WordCloudComponent data={data1} />
-            </div>
-            
-            <div>
-                <p>추천 도서</p>
-                { /**여기에 나중에 ListView를 넣으면 됨!
-                 함께 대출된 도서
-                 마니아를 위한 추천 도서
-                 다독자를 위한 추천 도서
-                 api 정상 작동하면 실험 ㄱㄱ*/}
-            </div>
-
+            )}
+            {bookData && (
+                <div className={detalisCss.keyword}>
+                    <p>주요 키워드</p>
+                    <WordCloudComponent data={bookKeyword}/>
+                </div>
+            )}
+            {bookData && (
+                <div className={detalisCss.recommendBox}>
+                    <p>추천 도서</p>
+                    <div>
+                        <p>매니아 도서</p>
+                        {mania.map((book, index) => (
+                            <img key={index} src={book.bookImageURL} alt={''}/>
+                        ))}
+                    </div>
+                    <div>
+                        <p>다독자 도서</p>
+                        {reader.map((book, index) => (
+                            <img src={book.bookImageURL} alt={''} key={index}/>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
-    )
+    );
 }
 
 export default Details;

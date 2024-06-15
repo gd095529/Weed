@@ -1,5 +1,5 @@
 .body {
-    width: 80rem;
+    width: 60rem;
     height: 100%;
     margin: 0 auto;
 }
@@ -53,6 +53,7 @@
     width: 90%;
     margin: 0 auto;
     border: 1px solid black;
+    background-color: white;
 }
 
 .manyLoan, .keyword {
@@ -68,4 +69,33 @@
     height: 30rem;
     width: 800px;
     margin: 0 auto;
+    margin-top: 2rem;
+}
+
+.chartName, .dataName {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.dataName {
+    border-top: 1px solid gray;
+}
+
+.dataTable {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.dataTable > tr > td {
+    text-align: center;
+}
+
+.recommendBox {
+    width: 90%;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+.recommendBox img {
+    border-radius: 100%;
 }

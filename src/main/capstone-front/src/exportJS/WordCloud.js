@@ -8,7 +8,7 @@ const WordCloudComponent = ({ data }) => {
 
     useEffect(() => {
         const layout = cloud()
-            .size([1150, 400])
+            .size([860, 400])
             .words(data.map(d => ({ text: d.text, size: d.value })))
             .padding(5)
             .rotate(() => ~~(Math.random() * 2) * 90)

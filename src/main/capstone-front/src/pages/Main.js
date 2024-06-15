@@ -133,9 +133,11 @@ function Main() {
     }, [booksDes])
 
     const moveDetail = () => {
-        navigate("/detail", { state: {
-            isbn: books[getTodayIndex].isbn
-            }});
+        navigate("/detail", {
+            state: {
+                isbn: books[getTodayIndex].isbn
+            }
+        });
     }
 
     return (
@@ -145,68 +147,64 @@ function Main() {
             </div>
             <div className={mainCss.section}>
 
-                <div className={mainCss.mainBookBox}>
-                    <div className={mainCss.typeBox}>
-                        {
-                            types.map((item, index) => (
-                                <div key={index}
-                                     style={{padding: `calc(100% / ${types.length}) 1rem`}}
-                                     onMouseEnter={() => typeMouseEnter(item.type, item.index)}
-                                >
-                                    {item.name}
-                                </div>
-                            ))
-                        }
-                    </div>
-                    <div className={mainCss.viewBox}
-                         onMouseEnter={viewBoxEnter} onMouseLeave={viewBoxLeave}>
-                        <MainBook type={getType} index={getIndex} initIndex={getInitIndex}
-                                  funtion={clickMainIndex}/>
-                        {isViewBoxEnter &&
-                            <>
-                                <img src={left} alt={'left'} className={mainCss.leftImg} onClick={moveLeft}/>
-                                <img src={right} alt={'right'} className={mainCss.rightImg} onClick={moveRight}/>
-                            </>
-                        }
-                    </div>
-                </div>
-
-                <div className={mainCss.todayBookBox}>
-                    {books.length !== 0 &&
-                    <img className={mainCss.todayLeft} src={books[getTodayIndex].book_image_URL} alt={'커다란 책 이미지 1'}
-                        onClick={moveDetail}
-                    />}
-                    <div className={mainCss.todayRight}>
-                        <p>오늘의 책</p>
-                        {books.length !== 0 &&
-                        <div className={mainCss.todayTitle}>{books[getTodayIndex].bookname}</div>
-                        }
-                        {booksDes.length !== 0 &&
-                        <div className={mainCss.todayDescription}>{booksDes[getTodayIndex]}</div>
-                        }
-                        {books.length !== 0 &&
-                        <div className={mainCss.tie}>
-                            <div className={mainCss.todayAuthor}>{books[getTodayIndex].authors}</div>
-                            <div className={mainCss.todayPublisher}>{books[getTodayIndex].publisher}</div>
-                        </div>
-                        }
-                        <div className={mainCss.bookTie}>
+                {books.length !== 0 && (
+                    <div className={mainCss.mainBookBox}>
+                        <div className={mainCss.typeBox}>
                             {
-                                books.map((book, index) => (
-                                    <img key={index} className={mainCss.todayIndex}
-                                         src={books[index].book_image_URL} alt={'커다란 책 이미지 1'}
-                                         style={{border: getTodayIndex === index ? '5px solid #a4c1fc' : '1px solid black'}}
-                                         onClick={() => clickTodayIndex(index)}
-                                    />
+                                types.map((item, index) => (
+                                    <div key={index}
+                                         style={{padding: `calc(100% / ${types.length}) 1rem`}}
+                                         onMouseEnter={() => typeMouseEnter(item.type, item.index)}
+                                    >
+                                        {item.name}
+                                    </div>
                                 ))
                             }
                         </div>
+                        <div className={mainCss.viewBox}
+                             onMouseEnter={viewBoxEnter} onMouseLeave={viewBoxLeave}>
+                            <MainBook type={getType} index={getIndex} initIndex={getInitIndex}
+                                      funtion={clickMainIndex}/>
+                            {isViewBoxEnter &&
+                                <>
+                                    <img src={left} alt={'left'} className={mainCss.leftImg} onClick={moveLeft}/>
+                                    <img src={right} alt={'right'} className={mainCss.rightImg} onClick={moveRight}/>
+                                </>
+                            }
+                        </div>
                     </div>
+                )}
 
-                </div>
+                {books.length !== 0 && (
+                    <div className={mainCss.todayBookBox}>
+                        <img className={mainCss.todayLeft} src={books[getTodayIndex].book_image_URL} alt={'커다란 책 이미지 1'}
+                             onClick={moveDetail}
+                        />
+                        <div className={mainCss.todayRight}>
+                            <p>오늘의 책</p>
+                            <div className={mainCss.todayTitle}>{books[getTodayIndex].bookname}</div>
+                            <div className={mainCss.todayDescription}>{booksDes[getTodayIndex]}</div>
+                            <div className={mainCss.tie}>
+                                <div className={mainCss.todayAuthor}>{books[getTodayIndex].authors}</div>
+                                <div className={mainCss.todayPublisher}>{books[getTodayIndex].publisher}</div>
+                            </div>
+                            <div className={mainCss.bookTie}>
+                                {
+                                    books.map((book, index) => (
+                                        <img key={index} className={mainCss.todayIndex}
+                                             src={books[index].book_image_URL} alt={'커다란 책 이미지 1'}
+                                             style={{border: getTodayIndex === index ? '5px solid #a4c1fc' : '1px solid black'}}
+                                             onClick={() => clickTodayIndex(index)}
+                                        />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
-    )
+    );
 }
 
 export default Main;

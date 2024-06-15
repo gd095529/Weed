@@ -11,29 +11,8 @@ function Search(props) {
     const keywordR = useRef(null);
 
     const onClickBtn = () => {
-        searchAPI();
         props.searchData(booknameR.current.value, authorsR.current.value, keywordR.current.value);
-    }
-
-    async function searchAPI() {
-        const config = {
-            bookname: booknameR.current.value,
-            authors: authorsR.current.value,
-            keyword: keywordR.current.value,
-        }
-
-        try {
-            const books = [];
-            const response = await axios.get('/api/search', {params: config});
-
-            for (let i = 0; i < response.data.response.docs.length; i++) {
-                books.push(response.data.response.docs[i].doc);
-            }
-            props.bookList(books);
-            navigate('/searchResult');
-        } catch (error) {
-            console.log(error);
-        }
+        navigate('/searchResult');
     }
 
     return (
