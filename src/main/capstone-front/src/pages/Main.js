@@ -133,7 +133,9 @@ function Main() {
     }, [booksDes])
 
     const moveDetail = () => {
-        navigate("/detail");
+        navigate("/detail", { state: {
+            isbn: books[getTodayIndex].isbn
+            }});
     }
 
     return (

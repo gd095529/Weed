@@ -3,12 +3,33 @@ import Header1 from "../components/Header1";
 import ListView from "../components/ListView";
 import noMark from '../images/mainImages/noMark.png';
 import yesMark from '../images/mainImages/yesMark.png';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import LineChart from "../exportJS/lineChart";
 import WordCloudComponent from "../exportJS/WordCloud";
+import {useLocation} from "react-router-dom";
+import {detailAPI} from "../api/detailAPI";
 
 function Details() {
+    const location = useLocation();
     const [isMark, setMark] = useState(false);
+
+    useEffect(() => {
+        const fetchDetail = async () => {
+            const isbn = location.state.isbn;
+            const config = {
+                member_id: 1,
+                department_id: 1
+            }
+            try {
+                const data= await detailAPI(isbn, config);
+
+            } catch (error) {
+
+            }
+        };
+
+        fetchDetail();
+    }, []);
 
     const clickMark = () => {
         setMark(!isMark);
@@ -52,6 +73,10 @@ function Details() {
         { text: 'Fullstack', value: 22 },
         { text: 'Programming', value: 21 },
     ];
+
+    useEffect(() => {
+
+    }, []);
 
 
     return (
