@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -54,7 +55,9 @@ public class LibraryDataController {
                                      @RequestParam(required = false) String pageNo,
                                      @RequestParam(required = false) String pageSize,
                                      @RequestParam(required = false) String order,
-                                     @RequestParam(required = false) String sort){
+                                     @RequestParam(required = false) String sort) throws UnsupportedEncodingException {
+
+
         return libraryDataService.searchBook(bookname, authors, keyword, pageNo, pageSize, order, sort)
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));

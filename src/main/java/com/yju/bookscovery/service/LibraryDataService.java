@@ -197,7 +197,6 @@ public class LibraryDataService {
                                 @RequestParam(required = false) String order,
                                 @RequestParam(required = false) String sort
                                 ) {
-
         String baseUrl = apiConfig.getSEARCH_BOOK_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&exactMatch=true";
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(baseUrl);
 
@@ -223,8 +222,7 @@ public class LibraryDataService {
             uriBuilder.queryParam("sort", sort);
         }
 
-        String url = uriBuilder.toUriString();
-
+        String url = uriBuilder.build().toUriString();
 //        for(String keyword : keywords){
 //            UriComponentsBuilder keywordUriBuilder = UriComponentsBuilder.fromHttpUrl(sampleUrl);
 //            keywordUriBuilder.queryParam("keyword", keyword);
