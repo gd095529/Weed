@@ -1,6 +1,11 @@
 import viewBook2Css from '../styles/component/ViewBook2.module.css';
+import {useNavigate} from "react-router-dom";
 
 function ViewBook2(props) {
+    const naviagate = useNavigate();
+
+
+
     return(
         <div className={viewBook2Css.body}>
             <div className={viewBook2Css.title}>{props.bookname}</div>

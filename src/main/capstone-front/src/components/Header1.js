@@ -13,7 +13,7 @@ import star from '../images/mainImages/star.png';
 import header1Css from '../styles/component/Header1.module.css';
 import SearchComponent from "../components/Search";
 
-function Header1() {
+function Header1(props) {
     const [isProfile, setIsProfile] = useState(false); // 프로파일을 클릭했는지 여부
     const [getLogin, setGetLogin] = useState(useSelector(state => state.login));
     const [searchFocus, setSearchFocus] = useState(false); // input text인거 클릭했냐 여부
@@ -34,6 +34,7 @@ function Header1() {
 
     const clickSearch = () => {
         setSearchClick(!searchClick);
+        navigate("/searchResult");
     }
 
     // profile을 클릭했는지 설정
@@ -86,7 +87,7 @@ function Header1() {
     return (
         <div className={header1Css.bodyStyle} style={{marginTop: searchClick ? '20rem' : ''}}>
             {
-                searchClick && <SearchComponent />
+                searchClick && <SearchComponent searchData = {props.searchData}  bookList = {props.bookList}/>
             }
             <div onClick={onClickLogo} >
                 <Logo width={'15rem'} height={'6rem'} />

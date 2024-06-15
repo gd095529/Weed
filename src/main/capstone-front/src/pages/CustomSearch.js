@@ -179,7 +179,7 @@ function CustomSearch() {
 
     const modalPopup = (type) => {
         return (
-            <ModalPopup type={type} list={listsDtlKdc} onClick={onClickPopupItem} />
+            <ModalPopup type={type} list={type === 'dtl_kdc' ? listsDtlKdc : ''} onClick={onClickPopupItem} />
         )
     }
 
@@ -189,6 +189,8 @@ function CustomSearch() {
         }
         bodyOnClick();
     }
+
+
 
     return (
         <div className={customSearchCss.body} onClick={bodyOnClick}>
@@ -207,11 +209,11 @@ function CustomSearch() {
                             style={styles[index]}
                             ref={element => divRef.current[index] = element}
                         >
-                            {menu.type === 'age' && selectAge.length !== 0 ? (
+                            {menu.type === 'age' && selectAge.length !== 0 && selectAge[1] !== '취소' ? (
                                 <p style={{backgroundColor: selectAge.length !== 0 ? '#a4c1fc' : ''}}>{selectAge[1]}</p>
-                            ) : menu.type === 'gender' && selectGender.length !== 0 ? (
+                            ) : menu.type === 'gender' && selectGender.length !== 0 && selectGender[1] !== '취소' ? (
                                 <p style={{backgroundColor: selectGender.length !== 0 ? '#a4c1fc' : ''}}>{selectGender[1]}</p>
-                            ) : menu.type === 'region' && selectRegion.length !== 0 ? (
+                            ) : menu.type === 'region' && selectRegion.length !== 0 && selectRegion[1] !== '취소' ? (
                                 <p style={{backgroundColor: selectRegion.length !== 0 ? '#a4c1fc' : ''}}>{selectRegion[1]}</p>
                             ) : menu.type === 'startDt' && startDate.length !== 0 ? (
                                 <p style={{backgroundColor: startDate.length !== 0 ? '#a4c1fc' : ''}}>{startDate}</p>
@@ -232,6 +234,7 @@ function CustomSearch() {
             {clickType === 'startDt' && listDate('startDt')}
             {clickType === 'endDt' && listDate('endDt')}
             {clickType === 'dtl_kdc' && modalPopup('dtl_kdc')}
+            {clickType === 'keyword' && modalPopup('keyword')}
             <div className={customSearchCss.results}>
                 <div className={customSearchCss.resultName}>결과</div>
                 <div className={customSearchCss.resultList}>

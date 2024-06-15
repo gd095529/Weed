@@ -8,6 +8,7 @@ import left from "../images/mainImages/left.png";
 import right from "../images/mainImages/right.png";
 import {todayBooksAPI} from '../api/bookImgURLConstant';
 import {descriptionAPI} from "../api/descriptionAPI";
+import {useNavigate} from "react-router-dom";
 
 /**
  * 메인 페이지 구성
@@ -38,6 +39,7 @@ function Main() {
     const [getTodayIndex, setTodayIndex] = useState(0); // todayBook의 Index
     const [books, setBooks] = useState([]); // 오늘의 책
     const [booksDes, setBooksDes] = useState([]); // 오늘의 책 설명 가져오기
+    const navigate = useNavigate();
 
     // InitIndex를 넘어가 있는 상태에서 더 적은 InitIndex를 가진 List로 넘어가면 에러 발생하니 방지
     if (getIndex > getInitIndex) {
@@ -130,7 +132,9 @@ function Main() {
         //console.log(booksDes);
     }, [booksDes])
 
-
+    const moveDetail = () => {
+        navigate("/detail");
+    }
 
     return (
         <div className={mainCss.body}>
@@ -167,7 +171,9 @@ function Main() {
 
                 <div className={mainCss.todayBookBox}>
                     {books.length !== 0 &&
-                    <img className={mainCss.todayLeft} src={books[getTodayIndex].book_image_URL} alt={'커다란 책 이미지 1'}/>}
+                    <img className={mainCss.todayLeft} src={books[getTodayIndex].book_image_URL} alt={'커다란 책 이미지 1'}
+                        onClick={moveDetail}
+                    />}
                     <div className={mainCss.todayRight}>
                         <p>오늘의 책</p>
                         {books.length !== 0 &&

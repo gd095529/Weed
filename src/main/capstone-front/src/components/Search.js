@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useRef} from "react";
 
-function Search() {
+function Search(props) {
     const navigate = useNavigate();
 
     const booknameR = useRef(null);
@@ -12,11 +12,10 @@ function Search() {
 
     const onClickBtn = () => {
         searchAPI();
+        props.searchData(booknameR.current.value, authorsR.current.value, keywordR.current.value);
     }
 
     async function searchAPI() {
-        console.log(booknameR.current.value);
-        console.log(authorsR.current.value);
         const config = {
             bookname: booknameR.current.value,
             authors: authorsR.current.value,
@@ -26,7 +25,11 @@ function Search() {
         try {
             const books = [];
             const response = await axios.get('/api/search', {params: config});
-            console.log(response);
+
+            for (let i = 0; i < response.data.response.docs.length; i++) {
+                books.push(response.data.response.docs[i].doc);
+            }
+            props.bookList(books);
             navigate('/searchResult');
         } catch (error) {
             console.log(error);

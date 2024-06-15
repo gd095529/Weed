@@ -7,12 +7,14 @@ export const listsAge = [
     { codeValue: '30', name: '30대' },
     { codeValue: '40', name: '40대' },
     { codeValue: '50', name: '50대' },
-    { codeValue: '60', name: '60대 이상' }
+    { codeValue: '60', name: '60대 이상' },
+    { codeValue: '-1', name: '취소' },
 ];
 
 export const listsGender = [
     { codeValue: '0', name: '남성'},
     { codeValue: '1', name: '여성'},
+    { codeValue: '-1', name: '취소' },
 ]
 
 export const listsDtlKdc = [
@@ -115,7 +117,8 @@ export const listsDtlKdc = [
     { codeValue: '96', name: '오세아니아(대양주)' },
     { codeValue: '97', name: '양극지방' },
     { codeValue: '98', name: '지리' },
-    { codeValue: '99', name: '전기' }
+    { codeValue: '99', name: '전기' },
+    { codeValue: '-1', name: '취소' },
 ];
 
 export const listsRegion = [
@@ -135,7 +138,8 @@ export const listsRegion = [
     { codeValue: '36', name: '전남' },
     { codeValue: '37', name: '경북' },
     { codeValue: '38', name: '경남' },
-    { codeValue: '39', name: '제주' }
+    { codeValue: '39', name: '제주' },
+    { codeValue: '-1', name: '취소' },
 ];
 
 
