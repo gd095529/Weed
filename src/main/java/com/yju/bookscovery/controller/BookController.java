@@ -64,6 +64,10 @@ public class BookController {
 
     @DeleteMapping("/history/{search_history_id}")
     public ResponseEntity<?> delHistory(@PathVariable Integer search_history_id, HttpSession session) throws Exception{
+//        if(session == null){
+//            return ResponseEntity.status(500).body("로그인 필요");
+//        }
+
         Integer member_id = (Integer) session.getAttribute("member_id");
         try{
             return ResponseEntity.ok().body(searchHistoryService.delete(search_history_id, member_id));

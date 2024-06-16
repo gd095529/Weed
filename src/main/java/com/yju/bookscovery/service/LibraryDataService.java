@@ -256,8 +256,16 @@ public class LibraryDataService {
 
         return getJsonNodeMono(url);
     }
+    //키워드
+    public Mono<JsonNode> getKeyword(){
+        String url = apiConfig.getMONTH_KEYWORD_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY();
+        return getJsonNodeMono(url);
+    }
+
 
     //검색 기록
 
     //검색추천기능
+
+
 }

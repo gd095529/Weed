@@ -83,4 +83,11 @@ public class LibraryDataController {
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
     }
+
+    @GetMapping("/keyword")
+    public Mono<ResponseEntity<JsonNode>> getKeyword(String[] isbn){
+        return libraryDataService.getKeyword()
+                .map(ResponseEntity::ok)
+                .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
+    }
 }
