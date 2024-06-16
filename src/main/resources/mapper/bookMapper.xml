@@ -63,6 +63,7 @@
                publication_year,
                class_no,
                loan_count,
+               favorite_id,
                favorite_date
         from book b,favorite f
         where b.book_id = f.book_id and member_id = #{member_id}

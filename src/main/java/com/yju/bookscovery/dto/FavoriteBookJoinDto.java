@@ -20,6 +20,7 @@ public class FavoriteBookJoinDto {
     private String class_no;
     private String department;
     private int loan_count;
+    private Integer favorite_id;
     private LocalDateTime favorite_date;
 
 }
