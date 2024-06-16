@@ -11,6 +11,9 @@ import {detailAPI} from "../api/detailAPI";
 import {maniaAPI} from "../api/maniaAPI";
 import {readerAPI} from "../api/readerAPI";
 import axios from "axios";
+import {fetchFavoriteAPI} from "../api/favoriteAPI";
+import {fetchFavoriteAddAPI} from "../api/favoriteAddAPI";
+import {fetchFavoriteDelAPI} from "../api/favoriteDelAPI";
 
 function Details() {
     const location = useLocation();
@@ -20,6 +23,8 @@ function Details() {
     const [bookKeyword, setBookKeyword] = useState([]);
     const [mania, setMania] = useState([]);
     const [reader, setReader] = useState([]);
+    const [favorites_id, setFavorites_id] = useState('');
+    const [members_id, setMembers_id] = useState('');
 
     useEffect(() => {
         const fetchDetail = async () => {
@@ -112,34 +117,20 @@ function Details() {
     useEffect(() => {
         const addFavorite = async (bookId) => {
             try {
-                const response = await axios.post(`/favorite/${bookId}`, {}, { withCredentials: true });
+                const data = await fetchFavoriteAddAPI(bookId);
 
-                if (response.status === 200) {
-                    console.log('즐겨찾기 추가 성공');
-                }
             } catch (error) {
-                console.error('즐겨찾기 추가 실패', error);
+                console.error('Error fetching data:', error);
             }
         };
 
 
         const deleteFavorite = async (favoriteId, bookId) => {
             try {
-                const response = await axios.delete(`/favorite/${favoriteId}`, {
-                    data: { book_id: bookId },
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    withCredentials: true
-                });
+                const data = await fetchFavoriteDelAPI(favoriteId, bookId);
 
-                if (response.status === 200) {
-                    console.log('삭제 성공');
-                } else {
-                    console.error(response);
-                }
             } catch (error) {
-                console.error('삭제 요청 중 오류 발생', error);
+                console.error('Error fetching data:', error);
             }
         };
 

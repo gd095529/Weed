@@ -30,13 +30,13 @@ function Result() {
     const updateResultText = () => {
         let result = "";
 
-        const gandanSearch = location.state.type;
-        const gandanSearchValue = location.state.value;
-        console.log(gandanSearch);
-        console.log(gandanSearchValue);
-        if (gandanSearchValue.length === 0) {
 
+        if (location.state.type === null) {
+            console.log("zz로케이션임");
         } else {
+            const gandanSearch = location.state.type;
+            const gandanSearchValue = location.state.value;
+
             result = `${gandanSearch}(으)로 ${gandanSearchValue} 검색`;
             switch (gandanSearch) {
                 case '제목':

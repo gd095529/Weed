@@ -1,5 +1,5 @@
 .body {
-    width: 70rem;
+    width: 60rem;
     margin: 0 auto;
 }
 
@@ -7,4 +7,21 @@
     width: 100%;
     height: 6rem;
     font-family: "Hak", serif;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 items per row */
+    gap: 20px; /* Adjust the gap between items as needed */
+}
+
+.content > p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.bookBox {
+    width: 10rem;
+    height: 15rem;
+
 }

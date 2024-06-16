@@ -21,6 +21,9 @@ function Header1(props) {
     const searchRef = useRef(null);
     const [selectItem, setSelectItem] = useState('제목');
     const [searchValue, setSearchValue] = useState('');
+    const [ID, setID] = useState(useSelector(state => state.loginID.value));
+
+    console.log("ID는 이겁니다." + useSelector(state => state.loginID.value));
 
     const navigate = useNavigate();
     const onClickLogin = () => {
@@ -29,6 +32,10 @@ function Header1(props) {
 
     const onClickLogo = () => {
         navigate("/");
+    }
+
+    const moveBookmark = () => {
+        navigate('/bookmark');
     }
 
     const onClickCustomSearch = () => {
@@ -96,7 +103,7 @@ function Header1(props) {
                     <img src={modify} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
                     <p>정보 수정</p>
                 </div>
-                <div className={header1Css.blockStyle} onClick={goLogout}>
+                <div className={header1Css.blockStyle} onClick={moveBookmark}>
                     <img src={star} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
                     <p>즐겨찾기</p>
                     {/**굳이 즐겨찾기 페이지가 필요할까? 라는 고민
@@ -149,7 +156,7 @@ function Header1(props) {
                     getLogin.value &&
                     <div className={header1Css.jungangStyle} onClick={setProfile}>
                         <img src={profile} alt={'pr'} style={{width: '1.5rem', height: '1.5rem'}}/>
-                        <p>YourID</p>
+                        <p>{ID}</p>
                     </div>
                 }
                 {

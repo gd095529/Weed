@@ -4,6 +4,9 @@ import Input from '../components/Input';
 import {useNavigate} from "react-router-dom";
 import {useRef, useState} from "react";
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import {setLogin} from "../redux/slice/loginSlice";
+import {loginName} from "../redux/slice/loginName"
 
 /**
  * 아이디, 비밀번호로 로그인
@@ -22,6 +25,7 @@ function Login() {
     const pwdValue = useRef(null);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const clickJoin = () => {
         navigate("/join1");
@@ -49,7 +53,9 @@ function Login() {
 
             if (response.status === 200) {
                 alert('로그인 성공');
-
+                dispatch(setLogin());
+                dispatch(loginName(idValue.current.value));
+                console.log(idValue.current.value);
                 navigate(response.data);
             }
         } catch (error) {
