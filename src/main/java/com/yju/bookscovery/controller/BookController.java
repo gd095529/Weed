@@ -30,7 +30,7 @@ public class BookController {
 
     @PostMapping("/favorite/{book_id}")
     public ResponseEntity<?> addFavorite(@PathVariable Integer book_id, HttpSession session) throws Exception{
-        Integer member_id = (Integer) session.getAttribute("memeber_id");
+        Integer member_id = (Integer) session.getAttribute("member_id");
         Integer check_favorite_id = favoriteService.checkFavorite(member_id, book_id);
         if (check_favorite_id == null || check_favorite_id == 0) {
             return ResponseEntity.ok().body(favoriteService.insert(member_id,book_id));
@@ -41,12 +41,12 @@ public class BookController {
 
     @GetMapping("/favorite")
     public ResponseEntity<List<FavoriteBookJoinDto>> getFavorite(HttpSession session) throws Exception{
-        Integer member_id = (Integer) session.getAttribute("memeber_id");
+        Integer member_id = (Integer) session.getAttribute("member_id");
         return ResponseEntity.ok().body(bookService.selectAllFavoriteByMemberId(member_id));
     }
     @DeleteMapping("/favorite/{favorite_id}")
     public ResponseEntity<?> delFavorite(@PathVariable Integer favorite_id, HttpSession session, Integer book_id) throws Exception{
-        Integer member_id = (Integer) session.getAttribute("memeber_id");
+        Integer member_id = (Integer) session.getAttribute("member_id");
         //자기 즐찾인지 확인하는 부분필요 member_id, favorite_id로 찾은다음 맞으면 지우기
         Integer check_favorite_id = favoriteService.checkFavorite(member_id, book_id);
         if(check_favorite_id == favorite_id){
