@@ -22,6 +22,7 @@ function Login() {
     const pwdValue = useRef(null);
 
     const navigate = useNavigate();
+    
     const clickJoin = () => {
         navigate("/join1");
     }
@@ -45,6 +46,8 @@ function Login() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
+
+
 
             navigate(response.data);
         } catch (error) {

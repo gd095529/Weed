@@ -5,7 +5,7 @@ import profile from '../images/mainImages/profile1.png';
 import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import ShowInfo from "./ShowInfo";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {setLogout} from "../redux/slice/loginSlice";
 import logout from "../images/mainImages/logout.png";
 import modify from '../images/mainImages/modify.png';
@@ -19,7 +19,8 @@ function Header1(props) {
     const [searchFocus, setSearchFocus] = useState(false); // input text인거 클릭했냐 여부
     const [searchClick, setSearchClick] = useState(false);
     const searchRef = useRef(null);
-    const [selectItem, setSelectItem] = useState("제목");
+    const [selectItem, setSelectItem] = useState('제목');
+    const [searchValue, setSearchValue] = useState('');
 
     const navigate = useNavigate();
     const onClickLogin = () => {
@@ -59,9 +60,28 @@ function Header1(props) {
         setSearchFocus(false);
     }
 
-    const clickItem = (item) => {
-        setSelectItem(item);
-        alert(item);    
+    const clickItem = (event) => {
+        setSelectItem(event.target.value);
+    }
+
+    const moveResult = () => {
+        console.log(searchRef.current.value);
+        setSearchValue(searchRef.current.value);
+    }
+
+    useEffect(() => {
+        if (searchValue) {
+            console.log("zz")
+            move();
+        }
+    }, [searchValue]);
+
+    const move = () => {
+        console.log("z");
+        navigate('/', { replace: true });
+        setTimeout(() => {
+            navigate('/searchResult', { state: { type: selectItem, value: searchValue } });
+        }, 0);
     }
 
     // Showinfo.js 컴포넌트를 다른 곳에서 재사용하기 위해서 굳이 이렇게 사용.
@@ -100,13 +120,13 @@ function Header1(props) {
                 <Logo width={'15rem'} height={'6rem'} />
             </div>
             <div className={header1Css.searchBox} style={setSearchStyle}>
-                <select>
-                    <option onClick={() => clickItem('제목')}>제목</option>
-                    <option onClick={() => clickItem('저자')}>저자</option>
-                    <option onClick={() => clickItem('키워드')}>키워드</option>
+                <select onChange={(event) => clickItem(event)}>
+                    <option value={'제목'}>제목</option>
+                    <option value={'저자'}>저자</option>
+                    <option value={'키워드'}>키워드</option>
                 </select>
                 <input type={'text'} placeholder={'검색'} onFocus={focusSearch} onBlur={blurSearch} ref={searchRef}/>
-                <Search width={'1.2rem'} height={'1.2rem'} />
+                <Search width={'1.2rem'} height={'1.2rem'} onClick={moveResult} />
             </div>
             <div className={header1Css.namugeStyle}>
                 <div className={header1Css.jungangStyle} onClick={onClickCustomSearch}>

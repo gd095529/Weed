@@ -4,6 +4,7 @@ import ListView1 from "../components/ListView1";
 import {useEffect, useState, useRef} from "react";
 import axios from "axios";
 import {isBottom} from "../exportJS/scrollBottom";
+import {useLocation} from "react-router-dom";
 
 function Result() {
     const [bookname, setBookname] = useState("");
@@ -13,6 +14,7 @@ function Result() {
     const [bookList, setBookList] = useState([]);
     const [page, setPage] = useState(1);
     const contentRef = useRef(null);
+    const location = useLocation();
 
     // 내가 검색한 데이터임.
     const searchData = (bookname, authors, keyword) => {
@@ -27,6 +29,30 @@ function Result() {
 
     const updateResultText = () => {
         let result = "";
+
+        const gandanSearch = location.state.type;
+        const gandanSearchValue = location.state.value;
+        console.log(gandanSearch);
+        console.log(gandanSearchValue);
+        if (gandanSearchValue.length === 0) {
+
+        } else {
+            result = `${gandanSearch}(으)로 ${gandanSearchValue} 검색`;
+            switch (gandanSearch) {
+                case '제목':
+                    setBookname(gandanSearchValue);
+                    break;
+                case '저자':
+                    setAuthors(gandanSearchValue);
+                    break;
+                case '키워드':
+                    setKeyword(gandanSearchValue);
+                    break;
+            }
+            setResultText(result);
+            return;
+        }
+
         if (bookname.length > 0) {
             result = bookname;
         }
@@ -89,7 +115,7 @@ function Result() {
                 <Header1 searchData={searchData}  />
             </div>
             <div className={resultCss.resultBox} ref={contentRef}>
-                <div className={resultCss.resultName}>{resultText} 결과</div>
+                <div className={resultCss.resultName}>{resultText}</div>
                 {
                     bookList.map((book, index) => (
                         <div className={resultCss.listView}>
