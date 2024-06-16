@@ -58,13 +58,13 @@ public class BookController {
 
     @GetMapping("/history")
     public ResponseEntity<List<HistoryBookJoinDto>> getHistory(HttpSession session) throws Exception{
-        Integer member_id = (Integer) session.getAttribute("memeber_id");
+        Integer member_id = (Integer) session.getAttribute("member_id");
         return ResponseEntity.ok().body(bookService.selectAllHistoryByMemberId(member_id));
     }
 
     @DeleteMapping("/history/{seacrh_history_id}")
     public ResponseEntity<?> delHistory(@PathVariable Integer seacrh_history_id, HttpSession session) throws Exception{
-        Integer member_id = (Integer) session.getAttribute("memeber_id");
+        Integer member_id = (Integer) session.getAttribute("member_id");
         try{
             return ResponseEntity.ok().body(searchHistoryService.delete(seacrh_history_id, member_id));
         }catch (Exception e){
