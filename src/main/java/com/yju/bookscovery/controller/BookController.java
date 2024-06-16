@@ -62,11 +62,11 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.selectAllHistoryByMemberId(member_id));
     }
 
-    @DeleteMapping("/history/{seacrh_history_id}")
-    public ResponseEntity<?> delHistory(@PathVariable Integer seacrh_history_id, HttpSession session) throws Exception{
+    @DeleteMapping("/history/{search_history_id}")
+    public ResponseEntity<?> delHistory(@PathVariable Integer search_history_id, HttpSession session) throws Exception{
         Integer member_id = (Integer) session.getAttribute("member_id");
         try{
-            return ResponseEntity.ok().body(searchHistoryService.delete(seacrh_history_id, member_id));
+            return ResponseEntity.ok().body(searchHistoryService.delete(search_history_id, member_id));
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(500).body("기록 삭제 실패");
