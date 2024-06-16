@@ -29,28 +29,34 @@ function Result() {
 
     const updateResultText = () => {
         let result = "";
+        let gandanSearch;
 
+        try {
+            if (!location || !location.state) {
+                throw new Error('location or location.state is undefined');
+            }
+            const a = location.state.type; // 그냥 안들어가면 catch로 들어가라고 일부러 틀린 문장 줌
 
-        if (location.state.type === null) {
-            console.log("zz로케이션임");
-        } else {
-            const gandanSearch = location.state.type;
-            const gandanSearchValue = location.state.value;
+            gandanSearch = location?.state?.type;
+            const gandanSearchValue = location?.state?.value;
+            console.log(gandanSearchValue);
 
-            result = `${gandanSearch}(으)로 ${gandanSearchValue} 검색`;
+            result = `${gandanSearch === undefined ? '' : gandanSearch}(으)로 ${gandanSearchValue === undefined ? '' : gandanSearchValue} 검색`;
             switch (gandanSearch) {
                 case '제목':
-                    setBookname(gandanSearchValue);
+                    setBookname(gandanSearchValue === undefined ? '' : gandanSearchValue);
                     break;
                 case '저자':
-                    setAuthors(gandanSearchValue);
+                    setAuthors(gandanSearchValue === undefined ? '' : gandanSearchValue);
                     break;
                 case '키워드':
-                    setKeyword(gandanSearchValue);
+                    setKeyword(gandanSearchValue === undefined ? '' : gandanSearchValue);
                     break;
             }
             setResultText(result);
             return;
+        } catch (error) {
+
         }
 
         if (bookname.length > 0) {

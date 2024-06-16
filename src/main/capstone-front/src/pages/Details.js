@@ -17,14 +17,14 @@ import {fetchFavoriteDelAPI} from "../api/favoriteDelAPI";
 
 function Details() {
     const location = useLocation();
-    const [isMark, setMark] = useState(false);
+    const [isMark, setMark] = useState(null);
     const [bookData, setBookData] = useState(null);
     const [bookLoanData, setBookLoanData] = useState([]);
     const [bookKeyword, setBookKeyword] = useState([]);
     const [mania, setMania] = useState([]);
     const [reader, setReader] = useState([]);
     const [favorites_id, setFavorites_id] = useState('');
-    const [members_id, setMembers_id] = useState('');
+    const [books_id, setBooks_id] = useState('');
 
     useEffect(() => {
         const fetchDetail = async () => {
@@ -35,6 +35,7 @@ function Details() {
             };
             try {
                 const data = await detailAPI(isbn, config);
+                console.log("디테일불러오는 거");
                 console.log(data);
                 setBookData(data);
             } catch (error) {
@@ -64,7 +65,7 @@ function Details() {
             const fetchKeyword = () => {
                 const keyword = bookData.keywords.map(item => ({
                     text: item.keyword.word,
-                    value: item.keyword.weight * 10
+                    value: item.keyword.weight * 10 + 5
                 }));
                 setBookKeyword(keyword);
             };
@@ -135,12 +136,39 @@ function Details() {
         };
 
         if (isMark) {
-            addFavorite(12);
-        } else {
-            deleteFavorite(9, 12);
+            addFavorite(7);
+        } else if (!isMark) {
+            deleteFavorite(favorites_id, books_id);
         }
 
     }, [isMark]);
+
+    useEffect(() => {
+        const favoriteList = async () => {
+            try {
+                const data = await fetchFavoriteAPI();
+                const result = data.filter((item) => item.isbn === bookData.book.isbn13);
+                console.log(result);
+                setFavorites_id(result.favorite_id);
+                setBooks_id(result.book_id);
+
+                console.log(favorites_id + "id");
+                console.log(books_id + "bId");
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        favoriteList();
+    }, []);
+
+    // 동기적으로
+    useEffect(() => {
+        if (favorites_id !== null && books_id !== null) {
+            console.log(favorites_id + " id");
+            console.log(books_id + " bId");
+        }
+    }, [favorites_id, books_id]);
 
     return (
         <div className={detalisCss.body}>

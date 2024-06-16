@@ -378,7 +378,7 @@ function MainBook(props) {
                     <div>여성</div>
                     <div style={{position: 'absolute', width: '10rem', top: '20%'}}>
                         {
-                            womanBooks.length !== props.initIndex &&
+                            womanBooks.length !== 0 &&
                             <ViewBook2 bookname={womanBooks[props.index - 1].bookname}
                                        authors={womanBooks[props.index - 1].authors}
                                        isbn={womanBooks[props.index - 1].isbn}
