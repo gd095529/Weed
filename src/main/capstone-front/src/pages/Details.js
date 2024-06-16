@@ -10,6 +10,7 @@ import {useLocation} from "react-router-dom";
 import {detailAPI} from "../api/detailAPI";
 import {maniaAPI} from "../api/maniaAPI";
 import {readerAPI} from "../api/readerAPI";
+import axios from "axios";
 
 function Details() {
     const location = useLocation();
@@ -99,12 +100,56 @@ function Details() {
 
     const clickMark = () => {
         setMark(!isMark);
+        // 함수 부르는 거 한 박자씩 늦어서 이렇게 해 둠
         if (isMark) {
-            alert('즐겨찾기에 추가하였습니다!');
-        } else {
             alert('즐겨찾기에서 제거하였습니다!');
+        } else {
+            alert('즐겨찾기에 추가하였습니다!');
+
         }
     }
+
+    useEffect(() => {
+        const addFavorite = async (bookId) => {
+            try {
+                const response = await axios.post(`/favorite/${bookId}`, {}, { withCredentials: true });
+
+                if (response.status === 200) {
+                    console.log('즐겨찾기 추가 성공');
+                }
+            } catch (error) {
+                console.error('즐겨찾기 추가 실패', error);
+            }
+        };
+
+
+        const deleteFavorite = async (favoriteId, bookId) => {
+            try {
+                const response = await axios.delete(`/favorite/${favoriteId}`, {
+                    data: { book_id: bookId },
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    withCredentials: true
+                });
+
+                if (response.status === 200) {
+                    console.log('삭제 성공');
+                } else {
+                    console.error(response);
+                }
+            } catch (error) {
+                console.error('삭제 요청 중 오류 발생', error);
+            }
+        };
+
+        if (isMark) {
+            addFavorite(12);
+        } else {
+            deleteFavorite(9, 12);
+        }
+
+    }, [isMark]);
 
     return (
         <div className={detalisCss.body}>
@@ -115,7 +160,7 @@ function Details() {
                 <div className={detalisCss.context}>
                     <p>
                         {bookData.book.bookname}
-                        <img src={isMark ? noMark : yesMark} alt={'1'} onClick={clickMark} />
+                        <img src={isMark ? yesMark : noMark} alt={'1'} onClick={clickMark} />
                     </p>
 
                     <div>

@@ -5,7 +5,7 @@ import profile from '../images/mainImages/profile1.png';
 import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import ShowInfo from "./ShowInfo";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {setLogout} from "../redux/slice/loginSlice";
 import logout from "../images/mainImages/logout.png";
 import modify from '../images/mainImages/modify.png';
@@ -18,6 +18,8 @@ function Header1(props) {
     const [getLogin, setGetLogin] = useState(useSelector(state => state.login));
     const [searchFocus, setSearchFocus] = useState(false); // input text인거 클릭했냐 여부
     const [searchClick, setSearchClick] = useState(false);
+    const searchRef = useRef(null);
+    const [selectItem, setSelectItem] = useState("제목");
 
     const navigate = useNavigate();
     const onClickLogin = () => {
@@ -57,6 +59,11 @@ function Header1(props) {
         setSearchFocus(false);
     }
 
+    const clickItem = (item) => {
+        setSelectItem(item);
+        alert(item);    
+    }
+
     // Showinfo.js 컴포넌트를 다른 곳에서 재사용하기 위해서 굳이 이렇게 사용.
     const showInfoTag = () => {
         return (
@@ -94,11 +101,11 @@ function Header1(props) {
             </div>
             <div className={header1Css.searchBox} style={setSearchStyle}>
                 <select>
-                    <option>제목</option>
-                    <option>저자</option>
-                    <option>키워드</option>
+                    <option onClick={() => clickItem('제목')}>제목</option>
+                    <option onClick={() => clickItem('저자')}>저자</option>
+                    <option onClick={() => clickItem('키워드')}>키워드</option>
                 </select>
-                <input type={'text'} placeholder={'검색'} onFocus={focusSearch} onBlur={blurSearch}/>
+                <input type={'text'} placeholder={'검색'} onFocus={focusSearch} onBlur={blurSearch} ref={searchRef}/>
                 <Search width={'1.2rem'} height={'1.2rem'} />
             </div>
             <div className={header1Css.namugeStyle}>

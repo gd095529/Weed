@@ -40,6 +40,7 @@ function Main() {
     const [books, setBooks] = useState([]); // 오늘의 책
     const [booksDes, setBooksDes] = useState([]); // 오늘의 책 설명 가져오기
     const navigate = useNavigate();
+    const [render, setRender] = useState(false);
 
     // InitIndex를 넘어가 있는 상태에서 더 적은 InitIndex를 가진 List로 넘어가면 에러 발생하니 방지
     if (getIndex > getInitIndex) {
@@ -140,6 +141,11 @@ function Main() {
         });
     }
 
+    const rendering = () => {
+        setRender(!render);
+        console.log(render);
+    }
+
     return (
         <div className={mainCss.body}>
             <div>
@@ -164,7 +170,7 @@ function Main() {
                         <div className={mainCss.viewBox}
                              onMouseEnter={viewBoxEnter} onMouseLeave={viewBoxLeave}>
                             <MainBook type={getType} index={getIndex} initIndex={getInitIndex}
-                                      funtion={clickMainIndex}/>
+                                      funtion={clickMainIndex} render={rendering}/>
                             {isViewBoxEnter &&
                                 <>
                                     <img src={left} alt={'left'} className={mainCss.leftImg} onClick={moveLeft}/>

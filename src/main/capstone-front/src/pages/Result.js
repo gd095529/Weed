@@ -94,6 +94,7 @@ function Result() {
                     bookList.map((book, index) => (
                         <div className={resultCss.listView}>
                         <ListView1 bookname={book.bookname} bookImgURL={book.bookImageURL} author={book.authors}
+                                   isbn={book.isbn13}
                                    publisher={book.publisher} description={book.description}  key={index} />
                         </div>
                     ))

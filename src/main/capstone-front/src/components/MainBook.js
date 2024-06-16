@@ -47,6 +47,7 @@ function MainBook(props) {
                         books.push(bookList[i]);
                     }
                 }
+                console.log(books);
             } catch (err) {
                 console.log(err.message);
             }
@@ -54,6 +55,7 @@ function MainBook(props) {
             setAgeBooks(books);
         }
         fetchBooks();
+        props.render();
     }, [selectAge]);
 
     // 남성 도서 저장
@@ -113,7 +115,7 @@ function MainBook(props) {
             const year = new Date().getFullYear();
             const month = new Date().getMonth() + 1 < 10 ? "0"+(new Date().getMonth() + 1) : new Date().getMonth() + 1;
             const date = new Date().getDate() - 1  < 10 ? "0"+(new Date().getDate()) - 1 : new Date().getDate() - 1;
-            
+
             const config = {
                 searchDt : `${year}-${month}-${date}`,
             };
@@ -139,7 +141,7 @@ function MainBook(props) {
     useEffect(() => {
         const fetchBooks = async () => {
             const books = [];
-            const department_id = 1; // 임시
+            const department_id = selectDept + 1; // 임시
             try {
                 const bookList = await deptBooksAPI(department_id);
 
@@ -148,6 +150,7 @@ function MainBook(props) {
                         books.push(bookList[i]);
                     }
                 }
+                console.log(bookList);
             } catch (err) {
                 console.log(err.message);
             }
@@ -155,7 +158,8 @@ function MainBook(props) {
             setDeptBooks(books);
         }
         fetchBooks();
-    }, []);
+        props.render();
+    }, [selectDept]);
 
     // Index가 변경될 때 마다 보여주는 책 변경하기.
     useEffect(() => {
@@ -171,6 +175,7 @@ function MainBook(props) {
 
         updateViewBooks();
     }, [props.index, popularBooks, props.type]);
+    console.log(selectDept);
 
     // 학과 가져오기
     useEffect(() => {
@@ -330,7 +335,7 @@ function MainBook(props) {
                     viewBooks.length !== 0 &&
                     viewBooks.map((book, index) => (
                         <div key={index}>
-                            <ViewBook2 bookname={book.bookname} authors={book.authors}
+                            <ViewBook2 bookname={book.bookname} authors={book.authors} isbn={book.isbn}
                                        bookImgURL={book.book_image_URL}/>
                         </div>
                     ))
@@ -362,7 +367,7 @@ function MainBook(props) {
                         {
                             manBooks.length !== 0 &&
                             <ViewBook2 bookname={manBooks[props.index - 1].bookname} authors={manBooks[props.index - 1].authors}
-                                   bookImgURL={manBooks[props.index - 1].book_image_URL}/>
+                                   bookImgURL={manBooks[props.index - 1].book_image_URL} isbn={manBooks[props.index - 1].isbn}/>
                         }
                     </div>
                 </div>
@@ -376,6 +381,7 @@ function MainBook(props) {
                             womanBooks.length !== props.initIndex &&
                             <ViewBook2 bookname={womanBooks[props.index - 1].bookname}
                                        authors={womanBooks[props.index - 1].authors}
+                                       isbn={womanBooks[props.index - 1].isbn}
                                        bookImgURL={womanBooks[props.index - 1].book_image_URL}/>
                         }
                     </div>
@@ -397,7 +403,7 @@ function MainBook(props) {
                     viewBooks.length !== 0 &&
                     viewBooks.map((book, index) => (
                         <div key={index}>
-                            <ViewBook2 bookname={book.bookname} authors={book.authors}
+                            <ViewBook2 bookname={book.bookname} authors={book.authors} isbn={book.isbn}
                                        bookImgURL={book.bookImageURL}/>
                         </div>
                     ))
@@ -424,7 +430,7 @@ function MainBook(props) {
                     viewBooks.length !== 0 &&
                     viewBooks.map((book, index) => (
                         <div key={index}>
-                            <ViewBook2 bookname={book.bookname} authors={book.authors}
+                            <ViewBook2 bookname={book.bookname} authors={book.authors} isbn={book.isbn}
                                        bookImgURL={book.book_image_URL}/>
                         </div>
                     ))
