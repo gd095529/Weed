@@ -22,7 +22,7 @@ function Login() {
     const pwdValue = useRef(null);
 
     const navigate = useNavigate();
-    
+
     const clickJoin = () => {
         navigate("/join1");
     }
@@ -47,11 +47,13 @@ function Login() {
                 }
             });
 
+            if (response.status === 200) {
+                alert('로그인 성공');
 
-
-            navigate(response.data);
+                navigate(response.data);
+            }
         } catch (error) {
-            console.error(error);
+            alert('로그인에 실패하였습니다.');
         }
     }
 
