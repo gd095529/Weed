@@ -216,6 +216,10 @@ function MainBook(props) {
         console.log(loanBooks);
     }, [props.type]);
 
+    useEffect(() => {
+        console.log(selectAge, viewBooks, popularBooks, ageBooks, manBooks, womanBooks, loanBooks, deptBooks);
+    }, [selectAge, viewBooks, popularBooks, ageBooks, manBooks, womanBooks, loanBooks, deptBooks]);
+
     // type의 경우, Age인지 Dept인지 확인하는 용도. 코드를 이상하게 짜버려서 이게 필요해짐.
     // type이 true면
     // options는 말 그대로 드롭다운에 들어갈 것들 적으면 됨. 배열 형태로 넣기 필수
