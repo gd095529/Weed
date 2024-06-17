@@ -105,6 +105,9 @@ function Details() {
     }, []);
 
     const clickMark = () => {
+        if (isMark === null) {
+            setMark(true);
+        }
         setMark(!isMark);
         // 함수 부르는 거 한 박자씩 늦어서 이렇게 해 둠
         if (isMark) {
@@ -137,7 +140,7 @@ function Details() {
 
         if (isMark) {
             addFavorite(7);
-        } else if (!isMark) {
+        } else if (isMark === false) {
             deleteFavorite(favorites_id, books_id);
         }
 

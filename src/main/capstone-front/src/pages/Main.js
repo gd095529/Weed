@@ -146,6 +146,10 @@ function Main() {
         console.log(render);
     }
 
+    useEffect(() => {
+
+    }, [render]);
+
     return (
         <div className={mainCss.body}>
             <div>

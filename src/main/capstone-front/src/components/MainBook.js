@@ -51,11 +51,10 @@ function MainBook(props) {
             } catch (err) {
                 console.log(err.message);
             }
-
+            setPopularBooks(books);
             setAgeBooks(books);
         }
         fetchBooks();
-        props.render();
     }, [selectAge]);
 
     // 남성 도서 저장
@@ -141,7 +140,7 @@ function MainBook(props) {
     useEffect(() => {
         const fetchBooks = async () => {
             const books = [];
-            const department_id = selectDept + 1; // 임시
+            const department_id = selectDept + 1; // 임시(아님)
             try {
                 const bookList = await deptBooksAPI(department_id);
 
@@ -154,11 +153,11 @@ function MainBook(props) {
             } catch (err) {
                 console.log(err.message);
             }
-
+            setPopularBooks(books);
             setDeptBooks(books);
         }
+        setDeptBooks([]);
         fetchBooks();
-        props.render();
     }, [selectDept]);
 
     // Index가 변경될 때 마다 보여주는 책 변경하기.
@@ -217,7 +216,9 @@ function MainBook(props) {
     }, [props.type]);
 
     useEffect(() => {
-        console.log(selectAge, viewBooks, popularBooks, ageBooks, manBooks, womanBooks, loanBooks, deptBooks);
+        console.log(ageBooks);
+        console.log("이 위는 ageBooks입니다.")
+        setAgeBooks(ageBooks);
     }, [selectAge, viewBooks, popularBooks, ageBooks, manBooks, womanBooks, loanBooks, deptBooks]);
 
     // type의 경우, Age인지 Dept인지 확인하는 용도. 코드를 이상하게 짜버려서 이게 필요해짐.

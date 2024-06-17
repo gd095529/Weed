@@ -7,6 +7,7 @@ import * as lists from '../constants/exampleListOption';
 import Calendar from "../components/Calendar";
 import ModalPopup from "../components/ModalPopup";
 import {listsDtlKdc} from "../constants/exampleListOption";
+import {popularLoanBooks} from "../api/PopularLoanBooks";
 
 function CustomSearch() {
     const [styles, setStyles] = useState({});
@@ -20,6 +21,8 @@ function CustomSearch() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [selectDtlKdc, setSelectDtlKdc] = useState([]);
+    const [page, setPage] = useState(1);
+    const [viewBook, setViewBook] = useState([]);
 
     const menuMouseEnter = (index) => {
         setStyles((prevStyles) => ({
@@ -190,6 +193,24 @@ function CustomSearch() {
         bodyOnClick();
     }
 
+    useEffect(() => {
+        const config = {
+            age: selectAge[0] === undefined ? null : selectAge[0],
+            gender: selectGender[0] === undefined ? null : selectGender[0],
+            startDt: startDate,
+            endDt: endDate,
+            dtl_kdc: selectDtlKdc[0] === undefined ? null : selectDtlKdc[0],
+            pageNo: page
+        }
+
+        const fetchPop = async () => {
+            const data = await popularLoanBooks(config);
+            console.log(data);
+            setViewBook(data);
+        }
+        fetchPop();
+        console.log(viewBook);
+    }, [selectAge, selectDtlKdc, selectGender, startDate, endDate]);
 
 
     return (
@@ -219,8 +240,8 @@ function CustomSearch() {
                                 <p style={{backgroundColor: startDate.length !== 0 ? '#a4c1fc' : ''}}>{startDate}</p>
                             ) : menu.type === 'endDt' && endDate.length !== 0 ? (
                                 <p style={{backgroundColor: endDate.length !== 0 ? '#a4c1fc' : ''}}>{endDate}</p>
-                            ) : menu.type === 'dtl_kdc' && selectDtlKdc.length !== 0 ? (
-                                <p style={{backgroundColor: selectDtlKdc.length !== 0 ? '#a4c1fc' : ''}}>{selectDtlKdc[1]}</p>
+                            ) : menu.type === 'dtl_kdc' && selectDtlKdc.length !== 0 && selectDtlKdc[1] !== '취소'? (
+                                <p style={{backgroundColor: selectDtlKdc.length !== 0 && selectDtlKdc[1] !== '취소'? '#a4c1fc' : ''}}>{selectDtlKdc[1]}</p>
                             ) : (
                                 <p>{menu.name}</p>
                             )}
@@ -238,12 +259,13 @@ function CustomSearch() {
             <div className={customSearchCss.results}>
                 <div className={customSearchCss.resultName}>결과</div>
                 <div className={customSearchCss.resultList}>
-                    <ListView1/>
-                    <ListView1/>
-                    <ListView1/>
-                    <ListView1/>
-                    <ListView1/>
-                    <ListView1/>
+                    {
+                        viewBook.map((book, index) => (
+                            <ListView1 bookname={book.bookname} bookImgURL={book.book_image_URL} author={book.authors}
+                                       isbn={book.isbn13}
+                                       publisher={book.publisher} description={book.description}  key={index} />
+                        ))
+                    }
                 </div>
             </div>
         </div>

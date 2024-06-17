@@ -8,10 +8,6 @@ export const menuTypeConst = [
         type: 'gender'
     },
     {
-        name: '키워드',
-        type: 'keyword'
-    },
-    {
         name: '검색 시작 날짜',
         type: 'startDt'
     },
@@ -22,9 +18,5 @@ export const menuTypeConst = [
     {
         name: '세부 주제',
         type: 'dtl_kdc'
-    },
-    {
-        name: '지역',
-        type: 'region'
     },
 ]
