@@ -1,23 +1,16 @@
 import loginCss from '../styles/Login1.module.css';
-import { ReactComponent as Logo} from "../images/logo2.svg";
-import Input from '../components/Input';
-import {useNavigate} from "react-router-dom";
-import {useRef, useState} from "react";
+import { ReactComponent as Logo } from "../images/logo2.svg";
+import { TextField, IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
 import axios from "axios";
-import {useDispatch} from "react-redux";
-import {setLogin} from "../redux/slice/loginSlice";
-import {loginName} from "../redux/slice/loginName"
-
-/**
- * 아이디, 비밀번호로 로그인
- * 아이디 찾기, 비밀번호 찾기, 회원가입, 로그인 버튼
- * 로그인 상태 유지 넣을까 말까
- * 카카오톡 로그인, 네이버 로그인 넣을까 말까
- * input을 꾸미기 위해서 따로 컴포넌트로 만듦 (근데 생각해보니 거기 값을 어떻게 받아오지?..) (받아옴)
- * --> 넘길 값: type, placeholder, viewPlaceholder, url, url2
- */
+import { useDispatch } from "react-redux";
+import { setLogin } from "../redux/slice/loginSlice";
+import { loginName } from "../redux/slice/loginName";
 
 function Login() {
+    const [showPassword, setShowPassword] = useState(false);
     const [userID, setUserID] = useState(null);
     const [userPwd, setUserPwd] = useState(null);
 
@@ -29,23 +22,27 @@ function Login() {
 
     const clickJoin = () => {
         navigate("/join1");
-    }
+    };
     const clickFind = () => {
         navigate("/find/id");
-    }
+    };
     const clickLogo = () => {
         navigate("/");
-    }
+    };
     const clickLoginBtn = () => {
         loginAPI();
-    }
+    };
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
 
     async function loginAPI() {
         try {
             const response = await axios.post('/login', {
                 id: idValue.current.value,
                 password: pwdValue.current.value,
-            },{
+            }, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -63,34 +60,52 @@ function Login() {
         }
     }
 
-
-    return(
+    return (
         <div className={loginCss.body}>
             <div className={loginCss.box}>
                 <div className={loginCss.titleBox} onClick={clickLogo}>
                     <Logo width={'80%'} height={'80%'} />
-                    <div>LOGIN</div>
                 </div>
                 <div className={loginCss.loginBox}>
                     <div className={loginCss.id}>
-                        <Input type={'text'} placeholder={'아이디를 입력하세요'} viewPlaceholder={'아이디'}
-                                useRef={idValue}
-                               />
+                        <TextField
+                            label="아이디"
+                            variant="outlined"
+                            fullWidth
+                            inputRef={idValue}
+                        />
                     </div>
                     <div className={loginCss.pwd}>
-                        <Input type={'password'} placeholder={'비밀번호를 입력하세요'} viewPlaceholder={'비밀번호'}
-                               url={'https://cdn-icons-png.flaticon.com/512/6684/6684701.png'}
-                               url2={'https://cdn-icons-png.flaticon.com/512/6405/6405909.png'}
-                            useRef={pwdValue}
+                        <TextField
+                            label="비밀번호"
+                            type={showPassword ? 'text' : 'password'}
+                            variant="outlined"
+                            fullWidth
+                            inputRef={pwdValue}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
                         />
                     </div>
                 </div>
-                <div className={loginCss.loginBtnBox}>
-                    <div className={loginCss.loginBtn} onClick={clickLoginBtn}>로그인</div>
+                <div className={loginCss.loginBtnBox} onClick={clickLoginBtn}>
+                    <div className={loginCss.loginBtn}>로그인</div>
                 </div>
                 <div className={loginCss.optionBox}>
-                    <div className={loginCss.joinBtn} onClick={clickJoin}>회원가입</div>
-                    <div className={loginCss.findBtn} onClick={clickFind}>아이디/비밀번호 찾기</div>
+                    <div className={loginCss.findBtn} onClick={clickFind}>아이디 / 비밀번호 찾기</div>
+                </div>
+                <div className={loginCss.optionBox}>
+                    <div className={loginCss.joinBtn} onClick={clickJoin}>Bookscovery 처음이세요? 회원 가입</div>
                 </div>
             </div>
         </div>
