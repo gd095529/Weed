@@ -19,5 +19,5 @@ public interface MemberService {
 
     List<MemberDto> readAll() throws Exception;
 
-    public String getHashPwd(String salt, String pwd) throws Exception;
+    String getHashPwd(String salt, String pwd) throws Exception;
 }
