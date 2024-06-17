@@ -88,7 +88,7 @@ function Result() {
                 for (let i = 0; i < response.data.response.docs.length; i++) {
                     books.push(response.data.response.docs[i].doc);
                 }
-                setBookList(prevBooks => [...prevBooks, ...books]);
+                setBookList(books);
 
             } catch (error) {
                 console.log(error);
@@ -124,11 +124,11 @@ function Result() {
                 <div className={resultCss.resultName}>{resultText}</div>
                 {
                     bookList.map((book, index) => (
-                        <div className={resultCss.listView}>
+
                         <ListView1 bookname={book.bookname} bookImgURL={book.bookImageURL} author={book.authors}
                                    isbn={book.isbn13}
                                    publisher={book.publisher} description={book.description}  key={index} />
-                        </div>
+
                     ))
                 }
             </div>
