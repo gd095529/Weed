@@ -12,6 +12,7 @@ import modify from '../images/mainImages/modify.png';
 import star from '../images/mainImages/star.png';
 import header1Css from '../styles/component/Header1.module.css';
 import SearchComponent from "../components/Search";
+import {logoutAPI} from "../api/logoutAPI";
 
 function Header1(props) {
     const [isProfile, setIsProfile] = useState(false); // 프로파일을 클릭했는지 여부
@@ -22,8 +23,7 @@ function Header1(props) {
     const [selectItem, setSelectItem] = useState('제목');
     const [searchValue, setSearchValue] = useState('');
     const [ID, setID] = useState(useSelector(state => state.loginID.value));
-
-    console.log("ID는 이겁니다." + useSelector(state => state.loginID.value));
+    const divRef = useRef(null);
 
     const navigate = useNavigate();
     const onClickLogin = () => {
@@ -54,9 +54,12 @@ function Header1(props) {
 
     const dispatch = useDispatch(); // 리덕스 export한거 쓸라고
     // 로그아웃
-    const goLogout = () => {
+    const goLogout = async () => {
         dispatch(setLogout());
         setGetLogin(false);
+        await logoutAPI();
+        console.log("로그아웃함");
+        navigate("/");
     }
     // 검색창 눌렀을 때
     const focusSearch = () => {
@@ -89,6 +92,19 @@ function Header1(props) {
         setTimeout(() => {
             navigate('/searchResult', { state: { type: selectItem, value: searchValue } });
         }, 0);
+    }
+
+    const getDivWidth = () => {
+        return divRef.current?.getBoundingClientRect().width;
+    }
+
+    const getDivBottom = () => {
+
+        return divRef.current?.getBoundingClientRect().bottom;
+    }
+
+    const getDivLeft = () => {
+        return divRef.current?.getBoundingClientRect().left;
     }
 
     // Showinfo.js 컴포넌트를 다른 곳에서 재사용하기 위해서 굳이 이렇게 사용.
@@ -147,21 +163,23 @@ function Header1(props) {
                     <p>상세검색</p>
                 </div>
                 { !getLogin.value &&
-                    <div className={header1Css.jungangStyle} onClick={onClickLogin}>
+                    <div className={header1Css.jungangStyle} onClick={onClickLogin}
+                         ref={divRef}>
                         <Login width={'1.5rem'} height={"1.5rem"}/>
                         <p>로그인</p>
                     </div>
                 }
                 {
                     getLogin.value &&
-                    <div className={header1Css.jungangStyle} onClick={setProfile}>
+                    <div className={header1Css.jungangStyle} onClick={setProfile} ref={divRef}>
                         <img src={profile} alt={'pr'} style={{width: '1.5rem', height: '1.5rem'}}/>
                         <p>{ID}</p>
+
                     </div>
                 }
                 {
                     isProfile && getLogin.value &&
-                    <ShowInfo getTag = {showInfoTag}/>
+                    <ShowInfo getTag = {showInfoTag} top = {getDivBottom()} left = {getDivLeft() - 60}/>
                 }
             </div>
         </div>

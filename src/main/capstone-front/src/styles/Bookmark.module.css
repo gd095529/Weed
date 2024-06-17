@@ -12,7 +12,7 @@
 .content {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 items per row */
-    gap: 20px; /* Adjust the gap between items as needed */
+    gap: 60px; /* Adjust the gap between items as needed */
 }
 
 .content > p {

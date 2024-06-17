@@ -21,6 +21,7 @@ function Result() {
         setBookname(bookname);
         setAuthors(authors);
         setKeyword(keyword);
+        setPage(1);
     }
 
     useEffect(() => {
@@ -72,6 +73,22 @@ function Result() {
     }
 
     useEffect(() => {
+        const handleScroll = () => {
+            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight + 10) {
+                setPage(prevPage => prevPage + 1);
+                console.log("aa");
+                console.log("innerHeight:" + window.innerHeight);
+                console.log("scrollY:" + window.scrollY);
+                console.log("offsetHeight:" + document.body.offsetHeight);
+                console.log("document.scrollHeight: " + document.documentElement.scrollHeight);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    useEffect(() => {
         async function searchAPI() {
             const config = {
                 bookname: bookname,
@@ -88,8 +105,12 @@ function Result() {
                 for (let i = 0; i < response.data.response.docs.length; i++) {
                     books.push(response.data.response.docs[i].doc);
                 }
-                setBookList(books);
-
+                if (page === 1) {
+                    setBookList(books);
+                } else {
+                    setBookList((prev) => [...prev, ...books]);
+                    console.log(bookList);
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -98,22 +119,6 @@ function Result() {
             searchAPI();
         }
     }, [page, bookname, authors, keyword]);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight + 10) {
-                setPage(prevPage => prevPage + 1);
-                console.log("aa");
-                console.log("innerHeight:" + window.innerHeight);
-                console.log("scrollY:" + window.scrollY);
-                console.log("offsetHeight:" + document.body.offsetHeight);
-                console.log("document.scrollHeight: " + document.documentElement.scrollHeight);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     return (
         <div className={resultCss.body} >
@@ -131,6 +136,7 @@ function Result() {
 
                     ))
                 }
+
             </div>
         </div>
     )

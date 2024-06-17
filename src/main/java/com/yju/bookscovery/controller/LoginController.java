@@ -51,8 +51,8 @@ public class LoginController {
         HttpSession session = request.getSession();
         //  세션 객체에 id를 저장
         session.setAttribute("id", id);
-        session.setAttribute("member_id",member.getMember_id());
-        session.setAttribute("department_id",member.getDepartment_id());
+        session.setAttribute("member_id", member.getMember_id());
+        session.setAttribute("department_id", member.getDepartment_id());
 
         if(rememberId) {
             //     1. 쿠키를 생성

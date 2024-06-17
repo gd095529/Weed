@@ -23,6 +23,7 @@ function CustomSearch() {
     const [selectDtlKdc, setSelectDtlKdc] = useState([]);
     const [page, setPage] = useState(1);
     const [viewBook, setViewBook] = useState([]);
+    const contentRef = useRef(null);
 
     const menuMouseEnter = (index) => {
         setStyles((prevStyles) => ({
@@ -81,6 +82,22 @@ function CustomSearch() {
     const getDivLeft = (index) => {
         return divRef.current[index]?.getBoundingClientRect().left;
     }
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight + 10) {
+                setPage(prevPage => prevPage + 1);
+                console.log("aa");
+                console.log("innerHeight:" + window.innerHeight);
+                console.log("scrollY:" + window.scrollY);
+                console.log("offsetHeight:" + document.body.offsetHeight);
+                console.log("document.scrollHeight: " + document.documentElement.scrollHeight);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const listAge = () => {
         return (
@@ -200,7 +217,8 @@ function CustomSearch() {
             startDt: startDate,
             endDt: endDate,
             dtl_kdc: selectDtlKdc[0] === undefined ? null : selectDtlKdc[0],
-            pageNo: page
+            pageNo: page,
+            pageSize: 15
         }
 
         const fetchPop = async () => {
@@ -210,7 +228,7 @@ function CustomSearch() {
         }
         fetchPop();
         console.log(viewBook);
-    }, [selectAge, selectDtlKdc, selectGender, startDate, endDate]);
+    }, [selectAge, selectDtlKdc, selectGender, startDate, endDate, page]);
 
 
     return (

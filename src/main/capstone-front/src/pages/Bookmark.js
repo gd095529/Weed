@@ -31,7 +31,7 @@ function Bookmark() {
                 {
                     books.map((book, index) => (
                             <div key={index} className={bookmarkCss.bookBox}>
-                                <BookImg bookImg={book.book_image_URL}/>
+                                <BookImg bookImg={book.book_image_URL} title={book.bookname}/>
                             </div>
                     ))
                 }

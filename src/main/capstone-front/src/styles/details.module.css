@@ -90,12 +90,36 @@
     text-align: center;
 }
 
+.recommendText {
+    font-weight: bold;
+    font-size: 1.5rem;
+    width: 90%;
+    margin: 0 auto;
+}
+
 .recommendBox {
     width: 90%;
     margin: 0 auto;
     border: 1px solid black;
 }
 
-.recommendBox img {
-    border-radius: 100%;
+.recommendBox > .mania > .maniaBooks {
+    display: flex;
+    flex-direction: row;
+
 }
+
+.recommendBox img {
+    width: 5rem;
+    height: 15rem;
+
+}
+
+.colBooks {
+    width: 5rem;
+    height: 12rem;
+    border: 1px solid black;
+    overflow: hidden;
+    
+}
+

@@ -363,6 +363,7 @@ function MainBook(props) {
                     display: 'flex',
                     justifyContent: 'center',
                     gap: '0.5rem',
+
                 }}>
                     <img src={'https://cdn.icon-icons.com/icons2/2248/PNG/512/gender_male_icon_137554.png'} alt={''}
                          style={{width: '1.5rem', height: '1.5rem'}}

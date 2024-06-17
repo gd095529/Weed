@@ -6,7 +6,7 @@ import yesMark from '../images/mainImages/yesMark.png';
 import {useEffect, useState} from "react";
 import LineChart from "../exportJS/lineChart";
 import WordCloudComponent from "../exportJS/WordCloud";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {detailAPI} from "../api/detailAPI";
 import {maniaAPI} from "../api/maniaAPI";
 import {readerAPI} from "../api/readerAPI";
@@ -14,10 +14,13 @@ import axios from "axios";
 import {fetchFavoriteAPI} from "../api/favoriteAPI";
 import {fetchFavoriteAddAPI} from "../api/favoriteAddAPI";
 import {fetchFavoriteDelAPI} from "../api/favoriteDelAPI";
+import {booksAPI} from "../api/booksAPI";
+import {sessionMIDAPI} from "../api/sessionMIDAPI";
+import {sessionDIDAPI} from "../api/sessionDIDAPI";
 
 function Details() {
     const location = useLocation();
-    const [isMark, setMark] = useState(null);
+
     const [bookData, setBookData] = useState(null);
     const [bookLoanData, setBookLoanData] = useState([]);
     const [bookKeyword, setBookKeyword] = useState([]);
@@ -25,14 +28,35 @@ function Details() {
     const [reader, setReader] = useState([]);
     const [favorites_id, setFavorites_id] = useState('');
     const [books_id, setBooks_id] = useState('');
+    const [isMark, setMark] = useState(null);
+    const isbn = location.state.isbn;
+    const navigate = useNavigate();
+    const [sessionMID, setSessionMID] = useState('');
+    const [sessionDID, setSessionDID] = useState('');
+
+    useEffect(() => {
+        const fetchID = async () => {
+            try {
+                const mID = await sessionMIDAPI();
+                const dID = await sessionDIDAPI();
+
+                setSessionMID(mID);
+                setSessionDID(dID);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        fetchID()
+    }, []);
 
     useEffect(() => {
         const fetchDetail = async () => {
-            const isbn = location.state.isbn;
             const config = {
-                member_id: 1,
-                department_id: 1
+                member_id: sessionMID ? sessionMID : 1,
+                department_id: sessionDID ? sessionDID : 1 // 세션에서 가져오기
             };
+            console.log(sessionDID + "이것이 바로 세션 디펄트먼트 아이디");
             try {
                 const data = await detailAPI(isbn, config);
                 console.log("디테일불러오는 거");
@@ -41,10 +65,13 @@ function Details() {
             } catch (error) {
                 console.error("Error fetching book details:", error);
             }
+
         };
 
         fetchDetail();
-    }, [location.state.isbn]);
+    }, []);
+
+
 
     useEffect(() => {
         if (bookData) {
@@ -76,7 +103,6 @@ function Details() {
 
     useEffect(() => {
         const fetchMania = async () => {
-            const isbn = location.state.isbn;
 
             try {
                 const data = await maniaAPI(isbn);
@@ -91,7 +117,6 @@ function Details() {
 
     useEffect(() => {
         const fetchReader = async () => {
-            const isbn = location.state.isbn;
 
             try {
                 const data = await readerAPI(isbn);
@@ -114,7 +139,6 @@ function Details() {
             alert('즐겨찾기에서 제거하였습니다!');
         } else {
             alert('즐겨찾기에 추가하였습니다!');
-
         }
     }
 
@@ -139,7 +163,7 @@ function Details() {
         };
 
         if (isMark) {
-            addFavorite(7);
+            addFavorite(books_id);
         } else if (isMark === false) {
             deleteFavorite(favorites_id, books_id);
         }
@@ -147,13 +171,15 @@ function Details() {
     }, [isMark]);
 
     useEffect(() => {
-        const favoriteList = async () => {
+        const book = async () => {
             try {
-                const data = await fetchFavoriteAPI();
-                const result = data.filter((item) => item.isbn === bookData.book.isbn13);
-                console.log(result);
-                setFavorites_id(result.favorite_id);
-                setBooks_id(result.book_id);
+                const data = await booksAPI(isbn);
+
+                console.log(data);
+                setFavorites_id(data.favorite_id);
+                setBooks_id(data.book_id);
+
+                setMark(data.favorite_id === null ? null : true);
 
                 console.log(favorites_id + "id");
                 console.log(books_id + "bId");
@@ -162,7 +188,7 @@ function Details() {
             }
         };
 
-        favoriteList();
+        book();
     }, []);
 
     // 동기적으로
@@ -172,6 +198,14 @@ function Details() {
             console.log(books_id + " bId");
         }
     }, [favorites_id, books_id]);
+
+    const moveDetail = (isbn) => {
+        console.log(isbn + "isbn");
+        navigate('/', { replace: true });
+        setTimeout(() => {
+            navigate('/detail', { state: { isbn: isbn } });
+        }, 0);
+    }
 
     return (
         <div className={detalisCss.body}>
@@ -279,21 +313,25 @@ function Details() {
                 </div>
             )}
             {bookData && (
-                <div className={detalisCss.recommendBox}>
-                    <p>추천 도서</p>
-                    <div>
-                        <p>매니아 도서</p>
-                        {mania.map((book, index) => (
-                            <img key={index} src={book.bookImageURL} alt={''}/>
-                        ))}
+                <>
+                    <p className={detalisCss.recommendText}>추천 도서</p>
+                    <div className={detalisCss.recommendBox}>
+                        <div className={detalisCss.mania}>
+                            <p>매니아 도서</p>
+                            <div className={detalisCss.maniaBooks}>
+                            {mania.map((book, index) => (
+                                <img src={book.bookImageURL} alt={''} key={index} />
+                            ))}
+                            </div>
+                        </div>
+                        <div>
+                            <p>다독자 도서</p>
+                            {reader.map((book, index) => (
+                                <img src={book.bookImageURL} alt={''} key={index} onClick={() => {moveDetail(book.isbn13)}} />
+                            ))}
+                        </div>
                     </div>
-                    <div>
-                        <p>다독자 도서</p>
-                        {reader.map((book, index) => (
-                            <img src={book.bookImageURL} alt={''} key={index}/>
-                        ))}
-                    </div>
-                </div>
+                </>
             )}
         </div>
     );

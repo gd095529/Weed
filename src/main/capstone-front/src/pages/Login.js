@@ -7,6 +7,7 @@ import axios from "axios";
 import {useDispatch} from "react-redux";
 import {setLogin} from "../redux/slice/loginSlice";
 import {loginName} from "../redux/slice/loginName"
+import Session from "react-session-api/src";
 
 /**
  * 아이디, 비밀번호로 로그인
@@ -45,6 +46,7 @@ function Login() {
             const response = await axios.post('/login', {
                 id: idValue.current.value,
                 password: pwdValue.current.value,
+                rememberId: true,
             },{
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -53,10 +55,12 @@ function Login() {
 
             if (response.status === 200) {
                 alert('로그인 성공');
+                console.log(response);
                 dispatch(setLogin());
                 dispatch(loginName(idValue.current.value));
                 console.log(idValue.current.value);
                 navigate(response.data);
+                console.log("로그인 함 ㅎㅎ");
             }
         } catch (error) {
             alert('로그인에 실패하였습니다.');
