@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class BookController {
@@ -77,5 +79,13 @@ public class BookController {
         }
     }
 
-
+    @GetMapping("/books/{isbn}")
+    public ResponseEntity<Map> checkBookInfo(@PathVariable String isbn, HttpSession session) throws Exception{
+        Integer member_id = (Integer) session.getAttribute("member_id");
+        Map map = new HashMap();
+        Integer book_id = bookService.checkBookId(isbn);
+        map.put("book_id", book_id);
+        map.put("favorite_id",favoriteService.checkFavorite(member_id,book_id));
+        return ResponseEntity.ok().body(map);
+    }
 }

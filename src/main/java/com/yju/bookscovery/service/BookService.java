@@ -56,4 +56,8 @@ public class BookService {
         }
         return data;
     }
+
+    public Integer checkBookId(String isbn)throws Exception{
+        return bookDao.checkByISBN(isbn);
+    }
 }
