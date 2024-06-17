@@ -1,6 +1,9 @@
 import findCss from "../styles/FindIdPwd.module.css";
 
 function FindId() {
+
+
+
     return (
         <div>
             <div>

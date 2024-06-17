@@ -9,7 +9,7 @@ export function loginAPI(id, pwd, rememberId) {
     }
     try {
         const response = axios.post('/login', config);
-        console.log(response);
+        console.log(response + "로그인!!");
         return response;
     } catch (error) {
         console.log(error);
