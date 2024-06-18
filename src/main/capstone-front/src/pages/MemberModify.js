@@ -4,15 +4,47 @@ import { departmentList } from "../exportJS/departmentList";
 import { listsAge, listsGender } from "../constants/exampleListOption";
 import {useEffect, useState} from "react";
 import {departmentAPI} from "../api/department";
+import axios from "axios";
+import {sessionMIDAPI} from "../api/sessionMIDAPI";
+import PromptPW from "../components/PromptPW";
+import PromptPW2 from "../components/PromptPW2";
 
 function MemberModify() {
     const [departments, setDepartments] = useState([]);
+    const [password, setPassword] = useState('');
+    const [user, setUser] = useState([]);
 
-    useEffect(async () => {
-        const a = await departmentAPI();
-        setDepartments(a);
-        console.log(a);
+    useEffect(() => {
+        const fetchDepartments = async () => {
+            const a = await departmentAPI();
+            setDepartments(a);
+            console.log(a);
+        };
+        fetchDepartments();
     }, []);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (password.length > 0) {
+                try {
+                    const config = {
+                        password: password
+                    };
+                    const userData = await axios.get('/join/modify', { params: config, withCredentials: true });
+                    console.log(userData);
+                    setUser(userData.data);
+                    console.log(user);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        };
+        fetchUserData();
+    }, [password]);
+
+    const putPassword = (password) => {
+        setPassword(password);
+    };
 
     return (
         <div className={memberModifyCss.body}>
@@ -79,6 +111,7 @@ function MemberModify() {
                     </div>
                 </div>
             </div>
+            {password.length === 0 && <PromptPW2 putPassword={putPassword}/>}
         </div>
     )
 }
