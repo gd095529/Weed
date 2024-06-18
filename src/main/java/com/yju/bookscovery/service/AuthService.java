@@ -1,6 +1,7 @@
 package com.yju.bookscovery.service;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -8,6 +9,7 @@ import java.util.Base64;
 
 @Service
 public class AuthService {
+    @Autowired
     private EmailService emailService;
 
     public void sendVerificationCode(String email, HttpSession session) {
