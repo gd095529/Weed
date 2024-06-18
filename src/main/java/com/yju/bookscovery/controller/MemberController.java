@@ -1,7 +1,6 @@
 package com.yju.bookscovery.controller;
 
 import com.yju.bookscovery.dto.MemberDto;
-import com.yju.bookscovery.service.AuthService;
 import com.yju.bookscovery.service.EmailService;
 import com.yju.bookscovery.service.MemberService;
 import jakarta.servlet.http.HttpSession;
@@ -17,9 +16,6 @@ public class MemberController {
 
     @Autowired
     EmailService emailService;
-
-    @Autowired
-    AuthService authService;
 
     @PostMapping("/add")
     public ResponseEntity<String> addMember(@RequestBody MemberDto member) throws Exception {
@@ -72,25 +68,6 @@ public class MemberController {
     public  ResponseEntity<?> modifyMember(MemberDto memberDto) throws Exception {
         memberService.update(memberDto);
         return ResponseEntity.ok().body("수정되었습니다.");
-    }
-
-    @PostMapping("/send_code")
-    public  ResponseEntity<String> sendVerificationCode(String id,@RequestParam String email, String name, HttpSession session) throws Exception {
-        MemberDto member = memberService.readByEmail(email);
-        if(member.getName().equals(name) && member.getId().equals(id)) {
-            authService.sendVerificationCode(email, session); //인증 이메일 보냈음 인증번호랑
-            return ResponseEntity.ok().body("메일로 인증번호를 보냈습니다.");
-        }
-        return ResponseEntity.ok().body("상세정보가 다릅니다.");
-    }
-
-    @PostMapping("/verify_code")
-    public ResponseEntity<String> verifyCode(@RequestParam String code, HttpSession session) {
-        boolean isValid = authService.verifyCode(code, session);
-        if(isValid){
-            return ResponseEntity.ok().body("인증 완료되었습니다. 비밀번호를 설정해주세요.");
-        }else
-            return ResponseEntity.ok().body("인증번호 다릅니다.");
     }
 
     @GetMapping("/find_id")
