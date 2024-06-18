@@ -83,8 +83,9 @@ public class MemberController {
     public  ResponseEntity<?> findId(@RequestParam String email, String name) throws Exception {
         MemberDto member = memberService.readByEmail(email);
         if(member.getName().equals(name)) {
-            emailService.sendEmail(email, "Bookscovery 내 아이디 찾기 결과입니다.", "Bookscovery 아이디는 <" + memberService.readByEmail(email) + ">입니다.");
-            return ResponseEntity.ok().body("메일로 아이디를 보냈습니다.");
+//            emailService.sendEmail(email, "Bookscovery 내 아이디 찾기 결과입니다.", "Bookscovery 아이디는 <" + memberService.readByEmail(email) + ">입니다.");
+//            return ResponseEntity.ok().body("메일로 아이디를 보냈습니다.");
+            return ResponseEntity.ok().body(member.getId());
         }else{
             return ResponseEntity.badRequest().body("상세정보가 다릅니다.");
         }
