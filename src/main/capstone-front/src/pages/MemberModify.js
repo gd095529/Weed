@@ -2,9 +2,17 @@ import memberModifyCss from '../styles/MemberModify.module.css';
 import Header1 from "../components/Header1";
 import { departmentList } from "../exportJS/departmentList";
 import { listsAge, listsGender } from "../constants/exampleListOption";
+import {useEffect, useState} from "react";
+import {departmentAPI} from "../api/department";
 
 function MemberModify() {
-    const departments = departmentList(); // 함수 호출하여 배열 반환
+    const [departments, setDepartments] = useState([]);
+
+    useEffect(async () => {
+        const a = await departmentAPI();
+        setDepartments(a);
+        console.log(a);
+    }, []);
 
     return (
         <div className={memberModifyCss.body}>
@@ -60,7 +68,7 @@ function MemberModify() {
                         <select defaultValue={0}>
                             {
                                 departments.map((department, index) => (
-                                    <option key={index} value={department.id}>{department.name}</option>
+                                    <option key={index} value={department.department_id}>{department.department}</option>
                                 ))
                             }
                         </select>

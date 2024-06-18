@@ -3,25 +3,115 @@
     margin: 0 auto;
 }
 
-.header {
+.body > .header {
     width: 100%;
     height: 6rem;
     font-family: "Hak", serif;
 }
 
-.content {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 items per row */
-    gap: 60px; /* Adjust the gap between items as needed */
+.body > .content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.content > p {
-    font-size: 1.5rem;
+.body > .content > .bookMarkFullName {
     font-weight: bold;
+    font-size: 4em;
 }
 
-.bookBox {
-    width: 10rem;
-    height: 15rem;
+.body > .content > .bookListBox {
+    display: flex;
+    flex-direction: row;
 
 }
+
+.body > .content > .bookListBox > .bookList {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2rem 0.5rem;
+    border-bottom: 1px solid gray;
+    width: 100%;
+    box-shadow: 0 0 5px #000000;
+    border-radius: 1rem;
+    margin-top: 0.5rem;
+}
+
+.bookList > div {
+
+}
+
+.left {
+    width: 15rem;
+    height: 20rem;
+
+}
+
+.left > img {
+    width: 100%;
+    height: 100%;
+}
+
+.center {
+    display: flex;
+    width: calc(100% - 15rem - 10%);
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.center > .jungang {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.time {
+
+}
+
+.bookname {
+    font-weight: bold;
+    font-size: 2rem;
+
+}
+
+.juje {
+    font-size: 1.6rem;
+}
+
+.jungang {
+    font-size: 1.8rem;
+}
+
+.jungang > div:nth-child(1) {
+    padding-right: 1rem;
+}
+
+.jungang > div {
+    border-right: 1px solid black;
+}
+
+.jungang > div:nth-last-child(1) {
+    border-right: none;
+}
+
+.right {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+.right > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.right > div > img {
+    margin: 0 auto;
+    width: 2rem;
+    height: 2rem;
+}
+
