@@ -1,47 +1,110 @@
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 .body {
-    width: 70rem;
-    border: 1px solid black;
-    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f2f5;
+    padding-top: 2rem;
 }
 
 .header {
     width: 100%;
-    height: 6rem;
     font-family: "Hak", serif;
+    margin-bottom: 2rem;
+}
+
+.card {
+    width: 60%;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    animation: 0.5s ease-out 0s 1 slideInFromLeft;
 }
 
 .context {
     display: flex;
     flex-direction: column;
-    width: 30%;
+    width: 100%;
     align-items: center;
-    margin: 0 auto;
 }
 
-.context > div:nth-child(1) {
-    font-size: 2rem;
+.titleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1rem;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+}
+
+.title {
+    font-size: 1.5rem;
     font-weight: bold;
-    border-bottom: 1px solid black;
+    color: #333;
+    display: flex;
+    align-items: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 1px;
 }
 
-.context > div {
+.profileImage {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 10px;
+}
+
+.field {
     width: 100%;
     padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.context input {
+.label {
+    margin: 0;
+    font-weight: bold;
+    color: #6397ff; /* 파란색 */
+}
+
+.field > input, .field > select {
     width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
 }
 
-.context > div:nth-last-child(1) {
-    text-align: center;
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-}
-
-.context > div:nth-last-child(1) > div {
-    border: 1px solid black;
     margin-top: 1rem;
-    border-radius: 2rem;
+}
+
+.button {
+    width: 45%;
+    text-align: center;
     padding: 0.5rem 0;
+    border: 1px solid black;
+    border-radius: 2rem;
     cursor: pointer;
+    background-color: #6397ff;
+    color: white;
+    font-weight: bold;
 }
