@@ -282,17 +282,35 @@ function CustomSearch() {
                             ref={element => divRef.current[index] = element}
                         >
                             {menu.type === 'age' && selectAge.length !== 0 && selectAge[1] !== '취소' ? (
+                                <>
+                                    <p>연령</p>
                                 <p style={{backgroundColor: selectAge.length !== 0 ? '#a4c1fc' : ''}}>{selectAge[1]}</p>
+                                </>
                             ) : menu.type === 'gender' && selectGender.length !== 0 && selectGender[1] !== '취소' ? (
+                                <>
+                                    <p>성별</p>
                                 <p style={{backgroundColor: selectGender.length !== 0 ? '#a4c1fc' : ''}}>{selectGender[1]}</p>
+                                </>
                             ) : menu.type === 'region' && selectRegion.length !== 0 && selectRegion[1] !== '취소' ? (
+                                <>
+                                    <p>지역</p>
                                 <p style={{backgroundColor: selectRegion.length !== 0 ? '#a4c1fc' : ''}}>{selectRegion[1]}</p>
+                                </>
                             ) : menu.type === 'startDt' && startDate.length !== 0 ? (
+                                <>
+                                    <p>검색 시작 날짜</p>
                                 <p style={{backgroundColor: startDate.length !== 0 ? '#a4c1fc' : ''}}>{startDate}</p>
+                                </>
                             ) : menu.type === 'endDt' && endDate.length !== 0 ? (
+                                <>
+                                    <p>검색 종료 날짜</p>
                                 <p style={{backgroundColor: endDate.length !== 0 ? '#a4c1fc' : ''}}>{endDate}</p>
+                                </>
                             ) : menu.type === 'dtl_kdc' && selectDtlKdc.length !== 0 && selectDtlKdc[1] !== '취소'? (
+                                <>
+                                    <p>세부 주제</p>
                                 <p style={{backgroundColor: selectDtlKdc.length !== 0 && selectDtlKdc[1] !== '취소'? '#a4c1fc' : ''}}>{selectDtlKdc[1]}</p>
+                                </>
                             ) : (
                                 <p>{menu.name}</p>
                             )}
