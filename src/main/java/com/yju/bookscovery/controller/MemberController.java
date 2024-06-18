@@ -17,7 +17,7 @@ public class MemberController {
     @Autowired
     EmailService emailService;
 
-    @GetMapping("/check_id")
+    @PostMapping("/check_id")
     public ResponseEntity<String> checkId(String id) throws Exception {
         MemberDto memberDto = memberService.readById(id);
         if (memberDto == null) {
@@ -104,7 +104,7 @@ public class MemberController {
     }
 
     @PostMapping("/reset_password")
-    public  ResponseEntity<?> resetPassword(String email, String password) throws Exception {
+    public  ResponseEntity<?> resetPassword(@RequestParam String email, String password) throws Exception {
         MemberDto member = memberService.readByEmail(email);
 
         String salt = memberService.getSalt();
