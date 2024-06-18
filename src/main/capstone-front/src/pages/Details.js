@@ -34,6 +34,19 @@ function Details() {
     const [sessionMID, setSessionMID] = useState('');
     const [sessionDID, setSessionDID] = useState('');
 
+    const clickMark = () => {
+
+        if (sessionMID === '') {
+            return setMark(false);
+        }
+
+        if (isMark === null && sessionMID !== '') {
+            return setMark(true);
+        }
+
+        setMark(!isMark);
+    }
+
     useEffect(() => {
         const fetchID = async () => {
             try {
@@ -56,22 +69,18 @@ function Details() {
                 member_id: sessionMID ? sessionMID : 1,
                 department_id: sessionDID ? sessionDID : 1 // 세션에서 가져오기
             };
-            console.log(sessionDID + "이것이 바로 세션 디펄트먼트 아이디");
+
             try {
                 const data = await detailAPI(isbn, config);
-                console.log("디테일불러오는 거");
-                console.log(data);
                 setBookData(data);
             } catch (error) {
-                console.error("Error fetching book details:", error);
+                console.log(error);
             }
 
         };
 
         fetchDetail();
     }, []);
-
-
 
     useEffect(() => {
         if (bookData) {
@@ -128,19 +137,6 @@ function Details() {
 
         fetchReader();
     }, []);
-
-    const clickMark = () => {
-        if (isMark === null) {
-            setMark(true);
-        }
-        setMark(!isMark);
-        // 함수 부르는 거 한 박자씩 늦어서 이렇게 해 둠
-        if (isMark) {
-            alert('즐겨찾기에서 제거하였습니다!');
-        } else {
-            alert('즐겨찾기에 추가하였습니다!');
-        }
-    }
 
     useEffect(() => {
         const addFavorite = async (bookId) => {
@@ -206,6 +202,21 @@ function Details() {
             navigate('/detail', { state: { isbn: isbn } });
         }, 0);
     }
+
+    useEffect(() => {
+
+        if (isMark === null) {
+            return;
+        }
+
+        if (isMark) {
+            return alert('즐겨찾기에 추가하였습니다.');
+        }
+
+        if (!isMark) {
+            return alert('즐겨찾기에서 제거하였습니다');
+        }
+    }, [isMark]);
 
     return (
         <div className={detalisCss.body}>
@@ -320,7 +331,7 @@ function Details() {
                             <p>매니아 도서</p>
                             <div className={detalisCss.maniaBooks}>
                             {mania.map((book, index) => (
-                                <img src={book.bookImageURL} alt={''} key={index} />
+                                <img src={book.bookImageURL} alt={''} key={index} onClick={() => {moveDetail(book.isbn13)}} />
                             ))}
                             </div>
                         </div>

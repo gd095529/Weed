@@ -30,6 +30,10 @@ function Header1(props) {
         navigate('/login1');
     }
 
+    const goMember = () => {
+        navigate('/member');
+    }
+
     const onClickLogo = () => {
         navigate("/");
     }
@@ -115,7 +119,7 @@ function Header1(props) {
                     <img src={logout} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
                     <p>로그아웃</p>
                 </div>
-                <div className={header1Css.blockStyle} onClick={goLogout}>
+                <div className={header1Css.blockStyle} onClick={goMember}>
                     <img src={modify} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
                     <p>정보 수정</p>
                 </div>

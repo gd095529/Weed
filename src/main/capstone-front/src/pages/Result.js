@@ -108,7 +108,11 @@ function Result() {
                 if (page === 1) {
                     setBookList(books);
                 } else {
-                    setBookList((prev) => [...prev, ...books]);
+                    setBookList((prev) => {
+                        const newList = [...prev, ...books];
+                        console.log('Updated BookList:', newList);
+                        return newList;
+                    });
                     console.log(bookList);
                 }
             } catch (error) {

@@ -85,7 +85,7 @@ function CustomSearch() {
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight + 10) {
+            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 20) {
                 setPage(prevPage => prevPage + 1);
                 console.log("aa");
                 console.log("innerHeight:" + window.innerHeight);
@@ -94,7 +94,10 @@ function CustomSearch() {
                 console.log("document.scrollHeight: " + document.documentElement.scrollHeight);
             }
         };
-
+        console.log("innerHeight:" + window.innerHeight);
+        console.log("scrollY:" + window.scrollY);
+        console.log("offsetHeight:" + document.body.offsetHeight);
+        console.log("document.scrollHeight: " + document.documentElement.scrollHeight);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -211,6 +214,7 @@ function CustomSearch() {
     }
 
     useEffect(() => {
+        setPage(1);
         const config = {
             age: selectAge[0] === undefined ? null : selectAge[0],
             gender: selectGender[0] === undefined ? null : selectGender[0],
@@ -228,7 +232,35 @@ function CustomSearch() {
         }
         fetchPop();
         console.log(viewBook);
-    }, [selectAge, selectDtlKdc, selectGender, startDate, endDate, page]);
+    }, [selectAge, selectDtlKdc, selectGender, startDate, endDate]);
+
+    useEffect(() => {
+        const config = {
+            age: selectAge[0] === undefined ? null : selectAge[0],
+            gender: selectGender[0] === undefined ? null : selectGender[0],
+            startDt: startDate,
+            endDt: endDate,
+            dtl_kdc: selectDtlKdc[0] === undefined ? null : selectDtlKdc[0],
+            pageNo: page,
+            pageSize: 15
+        }
+
+        const fetchPop = async () => {
+            const data = await popularLoanBooks(config);
+            console.log(data);
+            if (page === 1) {
+                setViewBook(data);
+            } else {
+                setViewBook((prev) => {
+                    const newList = [...prev, ...data];
+                    console.log('Updated BookList:', newList);
+                    return newList;
+                });
+                console.log(viewBook);
+            }
+        }
+        fetchPop();
+    }, [page]);
 
 
     return (
