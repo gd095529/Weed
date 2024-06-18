@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -36,6 +38,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberDto read(Integer member_id) throws Exception{
         MemberDto member = memberDao.selectMember(member_id);
+        return  member;
+    }
+
+    @Override
+    public MemberDto readByEmail(String email) throws Exception{
+        MemberDto member = memberDao.selectByEmail(email);
         return  member;
     }
 
@@ -71,5 +79,14 @@ public class MemberServiceImpl implements MemberService {
         md.update(pwd.getBytes());
         //바이트 배열 양의 정수로 변환, 16진수 문자열로 포맷팅
         return String.format("%064x", new BigInteger(1, md.digest()));
+    }
+
+    @Override
+    public String getSalt() throws Exception{
+        //salt 랜덤 생성
+        SecureRandom random = SecureRandom.getInstanceStrong();
+        byte[] bytes = new byte[16];
+        random.nextBytes(bytes);
+        return new String(Base64.getEncoder().encode(bytes));
     }
 }

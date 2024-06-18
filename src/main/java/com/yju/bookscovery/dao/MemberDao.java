@@ -13,6 +13,8 @@ public interface MemberDao {
 
     MemberDto selectById(String id) throws Exception;
 
+    MemberDto selectByEmail(String email) throws Exception;
+
     List<MemberDto> selectAllByDepartment(Integer department_id) throws Exception;
 
     int insertMember(MemberDto member) throws Exception;

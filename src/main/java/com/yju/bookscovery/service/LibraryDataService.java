@@ -59,6 +59,7 @@ public class LibraryDataService {
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(baseUrl);
 
         String url = uriBuilder.toUriString();
+        System.out.println("url = " + url);
 
         return webClient.get()
                 .uri(url)
@@ -155,6 +156,7 @@ public class LibraryDataService {
         }
 
         String url = uriBuilder.toUriString();
+        System.out.println("url = " + url);
 
         return webClient.get()
                 .uri(url)
