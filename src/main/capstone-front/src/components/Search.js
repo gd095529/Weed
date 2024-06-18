@@ -39,7 +39,9 @@ function Search(props) {
 
     const handleKeywordChange = (event) => {
         setSelectKeyword(event.target.value);
+        if (event.key === 'Enter') {
         setPopup(false);
+        }
     };
 
     const clickItem = (item) => {
@@ -78,7 +80,7 @@ function Search(props) {
         }
 
         search();
-    }, [searchText, popup, keywords]);
+    }, [searchText]);
 
     const modalPopup = () => {
         return (

@@ -44,6 +44,14 @@ function Details() {
             return setMark(true);
         }
 
+        if (!isMark) {
+            alert('즐겨찾기에 추가하였습니다.');
+        }
+
+        if (isMark) {
+            alert('즐겨찾기에서 제거하였습니다');
+        }
+
         setMark(!isMark);
     }
 
@@ -209,13 +217,6 @@ function Details() {
             return;
         }
 
-        if (isMark) {
-            return alert('즐겨찾기에 추가하였습니다.');
-        }
-
-        if (!isMark) {
-            return alert('즐겨찾기에서 제거하였습니다');
-        }
     }, [isMark]);
 
     return (

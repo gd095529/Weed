@@ -5,9 +5,13 @@ import BookImg from "../components/BookImg";
 import axios from "axios";
 import {fetchFavoriteAPI} from "../api/favoriteAPI";
 import yesMark from '../images/mainImages/yesMark.png';
+import {useNavigate} from "react-router-dom";
+import {fetchFavoriteAddAPI} from "../api/favoriteAddAPI";
+import {fetchFavoriteDelAPI} from "../api/favoriteDelAPI";
 
 function Bookmark() {
     const [books, setBooks] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,6 +27,16 @@ function Bookmark() {
         fetchData();
     }, []);
 
+    const moveDetail = (indx) => {
+        navigate("/detail", {
+            state: {
+                isbn: books[indx].isbn
+            }
+        });
+    }
+
+
+
     return (
         <div className={bookmarkCss.body}>
             <div className={bookmarkCss.header}>
@@ -35,7 +49,7 @@ function Bookmark() {
                         {   books.map((book, index) => (
                             <>
                                 <div className={bookmarkCss.bookListBox}>
-                                    <div className={bookmarkCss.bookList}>
+                                    <div className={bookmarkCss.bookList} onClick={() => moveDetail(index)}>
                                         <div className={bookmarkCss.left}>
                                             <img src={book.book_image_URL}/>
                                         </div>
@@ -45,17 +59,17 @@ function Bookmark() {
                                                 <div className={bookmarkCss.authors}>{book.authors}</div>
                                                 <div className={bookmarkCss.publisher}>{book.publisher}</div>
                                                 <div className={bookmarkCss.time}>
-                                                    <div>{book.favorite_date}</div>
+                                                    <div>{book.favorite_date.substring(0, 10)}</div>
                                                 </div>
                                             </div>
                                             <div className={bookmarkCss.juje}>{book.class_no}</div>
                                         </div>
-
+                                        {/**
                                         <div className={bookmarkCss.right}>
                                             <div>
                                                 <img src={yesMark}/>
                                             </div>
-                                        </div>
+                                        </div>*/}
                                     </div>
                                 </div>
                             </>

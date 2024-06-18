@@ -13,6 +13,7 @@ import star from '../images/mainImages/star.png';
 import header1Css from '../styles/component/Header1.module.css';
 import SearchComponent from "../components/Search";
 import {logoutAPI} from "../api/logoutAPI";
+import axios from "axios";
 
 function Header1(props) {
     const [isProfile, setIsProfile] = useState(false); // 프로파일을 클릭했는지 여부
@@ -98,6 +99,7 @@ function Header1(props) {
         }, 0);
     }
 
+
     const getDivWidth = () => {
         return divRef.current?.getBoundingClientRect().width;
     }
@@ -138,6 +140,19 @@ function Header1(props) {
         border: searchFocus ? '1px solid #738AEB' : '1px solid black',
     }
 
+    const [query, setQuery] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
+
+    useEffect(() => {
+        if (query.length > 0) {
+            axios.get('/search/suggestions', { params: { query } })
+                .then(response => setSuggestions(response.data))
+                .catch(error => console.error('Error fetching suggestions:', error));
+        } else {
+            setSuggestions([]);
+        }
+    }, [query]);
+
     return (
         <div className={header1Css.bodyStyle} style={{marginTop: searchClick ? '20rem' : ''}}>
             {
@@ -152,7 +167,9 @@ function Header1(props) {
                     <option value={'저자'}>저자</option>
                     <option value={'키워드'}>키워드</option>
                 </select>
-                <input type={'text'} placeholder={'검색'} onFocus={focusSearch} onBlur={blurSearch} ref={searchRef}/>
+                <input type={'text'} placeholder={'검색'} onFocus={focusSearch} onBlur={blurSearch} ref={searchRef}
+                    onChange={(e => setQuery(e.target.value))}
+                />
                 <Search width={'1.2rem'} height={'1.2rem'} onClick={moveResult} />
             </div>
             <div className={header1Css.namugeStyle}>

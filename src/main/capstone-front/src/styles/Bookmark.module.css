@@ -17,7 +17,7 @@
 
 .body > .content > .bookMarkFullName {
     font-weight: bold;
-    font-size: 4em;
+    font-size: 2em;
 }
 
 .body > .content > .bookListBox {
@@ -55,7 +55,7 @@
 
 .center {
     display: flex;
-    width: calc(100% - 15rem - 10%);
+    width: calc(100% - 15rem - 5%);
     flex-direction: column;
     justify-content: space-between;
 }
@@ -84,8 +84,20 @@
     font-size: 1.8rem;
 }
 
+
 .jungang > div:nth-child(1) {
     padding-right: 1rem;
+    max-width: 17rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.jungang > div:nth-child(2) {
+    padding-right: 1rem;
+    max-width: 12rem;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .jungang > div {
