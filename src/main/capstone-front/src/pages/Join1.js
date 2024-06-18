@@ -3,7 +3,7 @@ import logo from '../images/logo2.png';
 import axios from 'axios';
 import { departmentList } from '../exportJS/departmentList';
 import { useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
+import {useRef, useState} from 'react';
 import { TextField, FormControl, InputAdornment, IconButton } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import {listsAge, listsGender} from "../constants/exampleListOption";
@@ -20,17 +20,17 @@ function Join1() {
     const name = useRef(null);
     const password = useRef(null);
     const re_password = useRef(null);
-    const gender = useRef(null);
-    const age = useRef(null);
-    const departmentRef = useRef(null);
+    const [gender, setGender] = useState(0);
+    const [age, setAge] = useState(0);
+    const [department, setDepartment] = useState(1);
 
     async function joinAPI() {
         try {
             const response = await axios.post('/join/add', {
                 name: name.current.value,
-                gender: gender.current.value,
-                age: age.current.value,
-                department_id: departmentRef.current.value,
+                gender: gender,
+                age: age,
+                department_id: department,
                 id: id.current.value,
                 password: password.current.value,
                 email: email.current.value,
@@ -44,6 +44,18 @@ function Join1() {
         } catch (error) {
             console.error(error);
         }
+    }
+
+    const genderChange = (event) => {
+        setGender(event.target.value);
+    }
+
+    const ageChange = (event) => {
+        setAge(event.target.value);
+    }
+
+    const departmentChange = (event) => {
+        setDepartment(event.target.value);
     }
 
     return (
@@ -113,17 +125,17 @@ function Join1() {
                     </div>
                     <div className={joinCss1.field}>
                         <p>성별</p>
-                        <select defaultValue={0}>
+                        <select defaultValue={0} onChange={(event) => genderChange(event)}>
                             {
                                 listsGender.slice(0, -1).map((gender, index) => (
-                                    <option key={index} value={gender.codeValue}>{gender.name}</option>
+                                    <option key={index} value={gender.name} >{gender.name}</option>
                                 ))
                             }
                         </select>
                     </div>
                     <div className={joinCss1.field}>
                         <p>연령</p>
-                        <select defaultValue={0}>
+                        <select defaultValue={0} onChange={(event) => ageChange(event)}>
                             {
                                 listsAge.slice(0, -1).map((age, index) => (
                                     <option key={index} value={age.codeValue}>{age.name}</option>
@@ -133,7 +145,7 @@ function Join1() {
                     </div>
                     <div className={joinCss1.field}>
                         <p>학과</p>
-                        <select defaultValue={0} ref={departmentRef}>
+                        <select defaultValue={0} onChange={(event) => departmentChange(event)}>
                             {
                                 departmentList().map((department, index) => (
                                     <option key={index} value={department.id}>{department.name}</option>

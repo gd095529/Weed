@@ -127,7 +127,7 @@ function CustomSearch() {
     }
 
     const listDate = (type) => {
-        const index = type === 'startDt' ? '3' : '4';
+        const index = type === 'startDt' ? '2' : '3';
 
         return (
             <div
@@ -145,7 +145,7 @@ function CustomSearch() {
         selectMonth = selectMonth < 10 ? "0"+selectMonth : selectMonth;
         selectDate = selectDate < 10 ? "0"+selectDate : selectDate;
         const selectedDate = `${selectYear}-${selectMonth}-${selectDate}`;
-        if (type === '3') {
+        if (type === '2') {
             setStartDate(selectedDate);
             // 상태 업데이트 후 날짜 비교
             if (new Date(selectedDate) > new Date(endDate)) {
@@ -160,6 +160,7 @@ function CustomSearch() {
                 setEndDate("");
             }
         }
+        bodyOnClick();
     };
 
 
