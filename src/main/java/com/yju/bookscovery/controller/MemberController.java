@@ -17,6 +17,15 @@ public class MemberController {
     @Autowired
     EmailService emailService;
 
+    @GetMapping("/check_id")
+    public ResponseEntity<String> checkId(String id) throws Exception {
+        MemberDto memberDto = memberService.readById(id);
+        if (memberDto == null) {
+            return ResponseEntity.ok().body("회원가입 가능한 아이디입니다.");
+        }else
+            return ResponseEntity.ok().body("이미 존재하는 아이디입니다.");
+    }
+
     @PostMapping("/add")
     public ResponseEntity<String> addMember(@RequestBody MemberDto member) throws Exception {
 
