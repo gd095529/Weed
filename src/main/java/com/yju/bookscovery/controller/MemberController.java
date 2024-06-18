@@ -70,14 +70,27 @@ public class MemberController {
         return ResponseEntity.ok().body("수정되었습니다.");
     }
 
-    @GetMapping("/find_id")
-    public  ResponseEntity<?> findId(String email, String name) throws Exception {
+    @PostMapping("/find_id")
+    public  ResponseEntity<?> findId(@RequestParam String email, String name) throws Exception {
         MemberDto member = memberService.readByEmail(email);
         if(member.getName().equals(name)) {
             emailService.sendEmail(email, "Bookscovery 내 아이디 찾기 결과입니다.", "Bookscovery 아이디는 <" + memberService.readByEmail(email) + ">입니다.");
             return ResponseEntity.ok().body("메일로 아이디를 보냈습니다.");
         }else{
             return ResponseEntity.badRequest().body("상세정보가 다릅니다.");
+        }
+    }
+
+    @PostMapping("/find_pwd")
+    public  ResponseEntity<?> findPwd(@RequestParam String email, String name, String id) throws Exception {
+        MemberDto member = memberService.readByEmail(email);
+        if (member == null) {
+            return ResponseEntity.badRequest().body("그런 계정 없습니다.");
+        }
+        if(member.getName().equals(name) && member.getId().equals(id)) {
+            return ResponseEntity.ok().body("계정확인 인증번호 전송페이지로 이동");
+        }else{
+            return ResponseEntity.ok().body("상세정보가 다릅니다.");
         }
     }
 
