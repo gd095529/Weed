@@ -1,6 +1,5 @@
 package com.yju.bookscovery.controller;
 
-import com.yju.bookscovery.dto.MemberDto;
 import com.yju.bookscovery.service.AuthService;
 import com.yju.bookscovery.service.MemberService;
 import jakarta.servlet.http.HttpSession;
@@ -20,14 +19,19 @@ public class MailController {
     @Autowired
     AuthService authService;
 
+
     @PostMapping("/send_code")
-    public ResponseEntity<String> sendVerificationCode(String id, @RequestParam String email, String name, HttpSession session) throws Exception {
-        MemberDto member = memberService.readByEmail(email);
-        if(member.getName().equals(name) && member.getId().equals(id)) {
+    public ResponseEntity<String> sendVerificationCode(@RequestParam String email, HttpSession session) throws Exception {
+//        MemberDto member = memberService.readByEmail(email);
+//        if (member == null) {
+//            return ResponseEntity.ok().body("그런 계정 없습니다.");
+//        }
+
+//        if(member.getName().equals(name) && member.getId().equals(id)) {
             authService.sendVerificationCode(email, session); //인증 이메일 보냈음 인증번호랑
             return ResponseEntity.ok().body("메일로 인증번호를 보냈습니다.");
-        }
-        return ResponseEntity.ok().body("상세정보가 다릅니다.");
+//        }
+//        return ResponseEntity.ok().body("상세정보가 다릅니다.");
     }
 
     @PostMapping("/verify_code")
