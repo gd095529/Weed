@@ -66,7 +66,7 @@ public class MemberController {
         String salt = member.getPassword_key();
 
         if(memberService.getHashPwd(salt, password).equals(member.getPassword())){
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(member);
             //수정 페이지 보여주기
         }else{
             return ResponseEntity.badRequest().body("비밀번호 오류");
