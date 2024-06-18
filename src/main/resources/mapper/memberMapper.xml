@@ -28,6 +28,11 @@
         where id = #{id}
     </select>
 
+    <select id="selectOneByEmail" parameterType="String" resultType="MemberDto">
+        select * from member_info
+        where email = #{email}
+    </select>
+
     <insert id="insert" parameterType="MemberDto">
         insert into member_info
         values (null,#{name},#{gender},#{age},#{department_id},#{id},#{password},#{password_key},#{email},"w")

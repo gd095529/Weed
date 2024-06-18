@@ -5,7 +5,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -33,6 +35,12 @@ public class MemberDaoImpl implements MemberDao {
     public MemberDto selectById(String id) throws Exception{
         return session.selectOne(namespace+"selectOneById",id);
     }
+
+    @Override
+    public MemberDto selectByEmail(String email) throws Exception{
+        return session.selectOne(namespace+"selectOneByEmail",email);
+    }
+
 
     @Override
     public List<MemberDto> selectAllByDepartment(Integer department_id) throws Exception{
