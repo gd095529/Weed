@@ -74,7 +74,7 @@ public class MemberController {
     }
 
     @PutMapping("/modify")
-    public  ResponseEntity<?> modifyMember(MemberDto memberDto) throws Exception {
+    public  ResponseEntity<?> modifyMember(@RequestParam MemberDto memberDto) throws Exception {
         memberService.update(memberDto);
         return ResponseEntity.ok().body("수정되었습니다.");
     }
