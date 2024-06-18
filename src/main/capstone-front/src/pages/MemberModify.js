@@ -9,6 +9,9 @@ import {sessionMIDAPI} from "../api/sessionMIDAPI";
 import PromptPW from "../components/PromptPW";
 import PromptPW2 from "../components/PromptPW2";
 import {useNavigate} from "react-router-dom";
+import {loginName} from "../redux/slice/loginName";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../redux/slice/loginSlice";
 
 function MemberModify() {
     const [departments, setDepartments] = useState([]);
@@ -19,6 +22,7 @@ function MemberModify() {
     const [age, setAge] = useState(0);
     const [department, setDepartment] = useState(0);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const genderChange = (event) => {
         setGender(event.target.value === 0 ? '남성' : '여성');
@@ -83,6 +87,7 @@ function MemberModify() {
         try {
             const response = await axios.put('/join/modify', member, );
             alert(response.data);
+            dispatch(loginName(nameRef.current.value)); // 추출한 데이터를 Redux로 디스패치합니다.
             navigate('/');
         } catch (e) {
             console.log(e);

@@ -53,6 +53,7 @@ public class LoginController {
         session.setAttribute("id", id);
         session.setAttribute("member_id", member.getMember_id());
         session.setAttribute("department_id", member.getDepartment_id());
+        session.setAttribute("name", member.getName());
 
         if(rememberId) {
             //     1. 쿠키를 생성

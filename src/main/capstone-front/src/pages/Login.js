@@ -49,10 +49,15 @@ function Login() {
             });
 
             if (response.status === 200) {
+                const nameResponse = await axios.get('/session/name', { withCredentials: true });
+                const nameData = nameResponse.data; // 필요한 데이터를 추출합니다.
+
+                console.log(response);
+
                 alert('로그인 성공');
                 dispatch(setLogin());
-                dispatch(loginName(idValue.current.value));
-                console.log(idValue.current.value);
+                dispatch(loginName(nameData)); // 추출한 데이터를 Redux로 디스패치합니다.
+                console.log(nameData);
                 navigate(response.data);
             }
         } catch (error) {

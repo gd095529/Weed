@@ -30,4 +30,12 @@ public class SessionController {
         }else
             return ResponseEntity.ok().body((Integer) session.getAttribute("id"));
     }
+
+    @GetMapping("/name")
+    public ResponseEntity<?> getName(HttpSession session) {
+        if(session == null){
+            return ResponseEntity.badRequest().body("로그인이 필요합니다.");
+        }else
+            return ResponseEntity.ok().body((String) session.getAttribute("name"));
+    }
 }
