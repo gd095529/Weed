@@ -1,32 +1,113 @@
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 .body {
-    width: 60rem;
-    margin: 0 auto;
+    width: 100%;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    background-color: #f0f2f5;
+}
+
+.container {
+    width: 40rem; /* 크기를 늘림 */
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    animation: 0.5s ease-out 0s 1 slideInFromLeft;
 }
 
 .head {
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 1rem;
+    justify-content: start;
+    font-family: "HY헤드라인M"
 }
 
 .head > img {
-    width: 20rem;
-    height: 10rem;
+    width: 10rem;
+    height: 5rem;
 }
 
 .head > p {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     font-weight: bold;
+    align-self: flex-start;
 }
 
 .context {
-    margin-top: 3rem;
     display: flex;
     flex-direction: column;
-    align-items: start;
-    gap: 1rem;
-    width: 15rem;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.field > p {
+    margin: 0;
+    font-weight: bold;
+    color: #6397ff; /* 파란색으로 변경 */
+}
+
+.field > input,
+.field > select {
+    height: 3.5rem;
+    padding: 0.3rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.fieldInline {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.fieldInline > input[type="email"] {
+    flex: 1;
+}
+
+.btnInline {
+    width: auto;
+    padding: 0 1rem;
+}
+
+.btn {
+    background-color: #6397ff;
+    margin-top: 0.5rem;
+    text-align: center;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    border: none; /* 테두리 제거 */
+}
+
+.btnGroup {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
