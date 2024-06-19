@@ -60,7 +60,8 @@ function MemberModify() {
                     setAge(userData.data.age);
                     setDepartment(userData.data.department_id);
                 } catch (error) {
-                    console.error(error);
+                    alert('잘못된 비밀번호입니다.');
+                    navigate('/');
                 }
             }
         };
@@ -90,7 +91,7 @@ function MemberModify() {
             dispatch(loginName(nameRef.current.value)); // 추출한 데이터를 Redux로 디스패치합니다.
             navigate('/');
         } catch (e) {
-            console.log(e);
+
         }
 
     }

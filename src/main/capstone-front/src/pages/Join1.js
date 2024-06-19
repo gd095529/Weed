@@ -3,7 +3,7 @@ import logo from '../images/logo2.png';
 import axios from 'axios';
 import { departmentList } from '../exportJS/departmentList';
 import { useNavigate } from 'react-router-dom';
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import { TextField, FormControl, InputAdornment, IconButton } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import {listsAge, listsGender} from "../constants/exampleListOption";
@@ -23,9 +23,20 @@ function Join1() {
     const [gender, setGender] = useState(0);
     const [age, setAge] = useState(0);
     const [department, setDepartment] = useState(1);
+    const [btnClick, setBtnClick] = useState(false);
 
     async function joinAPI() {
+
+        const email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+        const isEmailValid = email_regex.test(email.current.value);
+
+        if (!isEmailValid) {
+            alert('이메일 형식에 맞게 수정해주세요');
+            return;
+        }
+
         try {
+
             const response = await axios.post('/join/add', {
                 name: name.current.value,
                 gender: gender,
@@ -42,9 +53,10 @@ function Join1() {
 
             navigate('/login1');
         } catch (error) {
-            console.error(error);
+            alert('id 또는 이메일이 중복됩니다.');
         }
     }
+
 
     const genderChange = (event) => {
         setGender(event.target.value);
@@ -56,6 +68,11 @@ function Join1() {
 
     const departmentChange = (event) => {
         setDepartment(event.target.value);
+    }
+
+    const clickBtn = () => {
+        setBtnClick(!btnClick);
+        joinAPI();
     }
 
     return (
@@ -154,7 +171,7 @@ function Join1() {
                         </select>
                     </div>
                     <div className={joinCss1.btnGroup}>
-                        <input type="button" value="회원 가입" className={joinCss1.btn} onClick={joinAPI} />
+                        <input type="button" value="회원 가입" className={joinCss1.btn} onClick={clickBtn} />
                     </div>
                 </div>
             </div>
