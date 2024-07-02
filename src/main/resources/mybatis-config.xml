@@ -22,6 +22,6 @@
         <typeAlias alias="HBJDto" type="com.yju.bookscovery.dto.HistoryBookJoinDto"/>
         <typeAlias alias="DCBJDto" type="com.yju.bookscovery.dto.DepartmentCountBookJoinDto"/>
 <!--        <typeAlias alias="RBDto" type="com.yju.bookscovery.dto.RecommandBookDto"/>-->
-<!--        <typeAlias alias="KeywordDto" type="com.yju.bookscovery.dto.KeywordDto"/>-->
+        <typeAlias alias="KeywordDto" type="com.yju.bookscovery.dto.KeywordDto"/>
     </typeAliases>
 </configuration>

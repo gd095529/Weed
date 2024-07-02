@@ -2,15 +2,20 @@ package com.yju.bookscovery.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.yju.bookscovery.config.ApiConfig;
 import com.yju.bookscovery.dao.BookCountDao;
 import com.yju.bookscovery.dao.BookDao;
+import com.yju.bookscovery.dao.KeywordDao;
 import com.yju.bookscovery.dao.SearchHistoryDao;
 import com.yju.bookscovery.dto.BookCountDto;
 import com.yju.bookscovery.dto.BookDto;
+import com.yju.bookscovery.dto.KeywordDto;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
@@ -26,14 +31,16 @@ public class LibraryDataService {
     private final BookDao bookDao;
     private final SearchHistoryDao searchHistoryDao;
     private final BookCountDao bookCountDao;
+    private final KeywordService keywordService;
 
-    public LibraryDataService(BookCountDao bookCountDao, SearchHistoryDao searchHistoryDao, BookDao bookDao, ApiConfig apiConfig, WebClient.Builder webClientApiReq, ObjectMapper objectMapper) {
+    public LibraryDataService(BookCountDao bookCountDao, SearchHistoryDao searchHistoryDao, BookDao bookDao, ApiConfig apiConfig, WebClient.Builder webClientApiReq, ObjectMapper objectMapper, KeywordService keywordService) {
         this.apiConfig = apiConfig;
         this.webClient = webClientApiReq.build();
         this.objectMapper = objectMapper;
         this.bookDao = bookDao;
         this.searchHistoryDao = searchHistoryDao;
         this.bookCountDao = bookCountDao;
+        this.keywordService = keywordService;
     }
 
     private Mono<JsonNode> getJsonNodeMono(String url){
@@ -259,15 +266,42 @@ public class LibraryDataService {
         return getJsonNodeMono(url);
     }
     //키워드
-    public Mono<JsonNode> getKeyword(){
+    public void saveKeyword(){
         String url = apiConfig.getMONTH_KEYWORD_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY();
-        return getJsonNodeMono(url);
+        System.out.println("url이거맞나 = " + url);
+        Mono<JsonNode> once = getJsonNodeMono(url);
+        once.subscribe(jsonNode -> {
+            JsonNode response = jsonNode.path("response").path("keywords");
+
+            for(JsonNode keywordNode : response){
+                JsonNode keyword = keywordNode.path("keyword");
+                String word = keyword.path("word").asText();
+                int weight = keyword.path("weight").asInt();
+                System.out.println("word = " + word);
+                System.out.println("weight = " + weight);
+                KeywordDto keywordDto = new KeywordDto(word, weight);
+
+                try {
+                    keywordService.deleteAll();
+                    keywordService.insert(keywordDto);
+                }catch (Exception e){
+                    System.out.println("키워드 저장 에러 = " + e);
+                }
+            }
+        });
     }
 
-
-    //검색 기록
-
-    //검색추천기능
-
-
+    public Mono<List<KeywordDto>> getKeyword() {
+        try{
+            List<KeywordDto> keywords = keywordService.selectAll();
+            if (keywords.size() > 0) {
+                return Mono.just(keywords);
+            }else{
+                saveKeyword();
+                return Mono.just(keywordService.selectAll());
+            }
+        }catch (Exception e) {
+            return Mono.error(e);
+        }
+    }
 }

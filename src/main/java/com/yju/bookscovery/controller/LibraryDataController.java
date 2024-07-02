@@ -2,18 +2,24 @@ package com.yju.bookscovery.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.yju.bookscovery.dto.BookDto;
+import com.yju.bookscovery.dto.KeywordDto;
+import com.yju.bookscovery.service.KeywordService;
 import com.yju.bookscovery.service.LibraryDataService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class LibraryDataController {
     private final LibraryDataService libraryDataService;
+    @Autowired
+    private KeywordService keywordService;
 
     public LibraryDataController(LibraryDataService libraryDataService) {
 
@@ -57,7 +63,6 @@ public class LibraryDataController {
                                      @RequestParam(required = false) String order,
                                      @RequestParam(required = false) String sort) throws UnsupportedEncodingException {
 
-
         return libraryDataService.searchBook(bookname, authors, keyword, pageNo, pageSize, order, sort)
                 .map(ResponseEntity::ok)
                 .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
@@ -85,9 +90,16 @@ public class LibraryDataController {
     }
 
     @GetMapping("/keyword")
-    public Mono<ResponseEntity<JsonNode>> getKeyword(){
+    public Mono<ResponseEntity<List<KeywordDto>>> getKeyword() throws Exception {
+
         return libraryDataService.getKeyword()
-                .map(ResponseEntity::ok)
-                .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
-    }
+               .map(ResponseEntity::ok)
+               .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));
+
+    } //db에서 주는걸로 수정해야함
+
+//    @PostMapping("/testsave")
+//    public Mono<ResponseEntity<JsonNode>> saveKeyword() throws Exception{
+//
+//    }
 }
