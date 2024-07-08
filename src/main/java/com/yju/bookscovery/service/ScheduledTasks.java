@@ -14,7 +14,7 @@ public class ScheduledTasks {
 //    private final RestTemplate restTemplate = new RestTemplate();
 
     @Scheduled(cron = "0 0 0 1 * ?")
-    public void performApiRequest() {
+    public void performApiRequest() throws Exception {
         libraryDataService.saveKeyword();
     }
 }

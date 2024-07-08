@@ -266,9 +266,11 @@ public class LibraryDataService {
         return getJsonNodeMono(url);
     }
     //키워드
-    public void saveKeyword(){
+    public void saveKeyword() throws Exception{
+        keywordService.deleteAll();
         String url = apiConfig.getMONTH_KEYWORD_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY();
-        System.out.println("url이거맞나 = " + url);
+//        System.out.println("url이거맞나 = " + url);
+
         Mono<JsonNode> once = getJsonNodeMono(url);
         once.subscribe(jsonNode -> {
             JsonNode response = jsonNode.path("response").path("keywords");
@@ -282,7 +284,6 @@ public class LibraryDataService {
                 KeywordDto keywordDto = new KeywordDto(word, weight);
 
                 try {
-                    keywordService.deleteAll();
                     keywordService.insert(keywordDto);
                 }catch (Exception e){
                     System.out.println("키워드 저장 에러 = " + e);
@@ -294,6 +295,7 @@ public class LibraryDataService {
     public Mono<List<KeywordDto>> getKeyword() {
         try{
             List<KeywordDto> keywords = keywordService.selectAll();
+            System.out.println("keywords.size() = " + keywords.size());
             if (keywords.size() > 0) {
                 return Mono.just(keywords);
             }else{
