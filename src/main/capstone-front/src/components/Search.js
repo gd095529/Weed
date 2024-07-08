@@ -53,9 +53,10 @@ function Search(props) {
         async function fetchKeywords() {
             try {
                 const response = await axios.get('/api/keyword');
+                console.log("키워드")
                 console.log(response);
 
-                const fetchedKeywords = response.data.response.keywords.map(k => k.keyword.word);
+                const fetchedKeywords = response.data.map(k => k.word);
                 setKeywords(fetchedKeywords);
                 setKeywordList(fetchedKeywords);
             } catch (error) {
