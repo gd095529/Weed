@@ -100,9 +100,4 @@ public class LoginController {
         return ResponseEntity.ok().body(map);
     }
 
-    //추가 아이디 찾기
-
-    //추가 비밀번호 찾기
-
-
 }

@@ -46,6 +46,8 @@ dependencies {
     implementation 'org.apache.lucene:lucene-queryparser:8.10.1'
 
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'com.amazonaws:aws-java-sdk-ses:1.12.3'
+
 }
 
 tasks.named('bootBuildImage') {

@@ -73,6 +73,7 @@ public class MemberController {
         }
     }
 
+    //모바일회원수정
     @GetMapping("/m/modify")
     public  ResponseEntity<?> modifyMember(Integer member_id, String password) throws Exception {
         MemberDto member =memberService.read(member_id);

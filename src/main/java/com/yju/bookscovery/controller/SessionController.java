@@ -30,7 +30,6 @@ public class SessionController {
         }else
             return ResponseEntity.ok().body((Integer) session.getAttribute("id"));
     }
-
     @GetMapping("/name")
     public ResponseEntity<?> getName(HttpSession session) {
         if(session == null){
