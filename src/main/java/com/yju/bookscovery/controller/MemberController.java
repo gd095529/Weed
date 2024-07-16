@@ -1,8 +1,8 @@
 package com.yju.bookscovery.controller;
 
 import com.yju.bookscovery.dto.MemberDto;
-import com.yju.bookscovery.service.EmailService;
 import com.yju.bookscovery.service.MemberService;
+import com.yju.bookscovery.service.SendEmailService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +14,8 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-    @Autowired
-    EmailService emailService;
+//    @Autowired
+//    SendEmailService sendEmailService;
 
     @PostMapping("/check_id")
     public ResponseEntity<String> checkId(String id) throws Exception {
@@ -73,6 +73,20 @@ public class MemberController {
         }
     }
 
+    @GetMapping("/m/modify")
+    public  ResponseEntity<?> modifyMember(Integer member_id, String password) throws Exception {
+        MemberDto member =memberService.read(member_id);
+
+        String salt = member.getPassword_key();
+
+        if(memberService.getHashPwd(salt, password).equals(member.getPassword())){
+            return ResponseEntity.ok().body(member);
+            //수정 페이지 보여주기
+        }else{
+            return ResponseEntity.badRequest().body("비밀번호 오류");
+        }
+    }
+
     @PutMapping("/modify")
     public  ResponseEntity<?> modifyMember(@RequestBody MemberDto memberDto) throws Exception {
         memberService.update(memberDto);
@@ -98,7 +112,7 @@ public class MemberController {
             return ResponseEntity.badRequest().body("그런 계정 없습니다.");
         }
         if(member.getName().equals(name) && member.getId().equals(id)) {
-            return ResponseEntity.ok().body("계정확인 인증번호 전송페이지로 이동");
+            return ResponseEntity.ok().body("계정확인 비밀번호 새로 설정페이지로 이동");
         }else{
             return ResponseEntity.ok().body("상세정보가 다릅니다.");
         }
