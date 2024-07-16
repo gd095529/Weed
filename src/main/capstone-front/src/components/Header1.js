@@ -14,6 +14,7 @@ import header1Css from '../styles/component/Header1.module.css';
 import SearchComponent from "../components/Search";
 import {logoutAPI} from "../api/logoutAPI";
 import axios from "axios";
+import memberGetout from '../images/memberGetout.png'
 
 function Header1(props) {
     const [isProfile, setIsProfile] = useState(false); // 프로파일을 클릭했는지 여부
@@ -123,7 +124,7 @@ function Header1(props) {
                 </div>
                 <div className={header1Css.blockStyle} onClick={goMember}>
                     <img src={modify} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
-                    <p>정보 수정</p>
+                    <p>정보수정</p>
                 </div>
                 <div className={header1Css.blockStyle} onClick={moveBookmark}>
                     <img src={star} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
@@ -132,11 +133,15 @@ function Header1(props) {
                      그냥 메인에 "즐겨찾기"용으로 만들어 두고 거기로 이동시킬 지 고민
                      일단 나중에*/}
                 </div>
+                <div className={header1Css.blockStyle} onClick={goMember}>
+                    <img src={memberGetout} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
+                    <p>회원탈퇴</p>
+                </div>
             </>
         )
     }
 
-    const setSearchStyle =  {
+    const setSearchStyle = {
         border: searchFocus ? '1px solid #738AEB' : '1px solid black',
     }
 
