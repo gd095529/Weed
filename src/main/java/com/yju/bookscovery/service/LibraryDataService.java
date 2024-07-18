@@ -61,7 +61,7 @@ public class LibraryDataService {
 
     //책상세보기 완 http://data4library.kr/api/usageAnalysisList?format=json&
     public Mono<JsonNode> getLoanAnalyze(String isbn, Integer member_id, Integer department_id) {
-        String baseUrl = apiConfig.getLOAN_ANALYZE_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&isbn13=" + isbn;;
+        String baseUrl = apiConfig.getLOAN_ANALYZE_URL() + "&authKey=" + apiConfig.getLIBRARY_API_KEY() + "&isbn13=" + isbn;
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(baseUrl);
 
@@ -102,7 +102,7 @@ public class LibraryDataService {
                             bookCountDao.updateBook(dto);
                         }
 
-                        searchHistoryDao.countHistory();
+                        searchHistoryDao.countHistory(); // 왜했지?
                         searchHistoryDao.insertHistroy(member_id, book_id);
 
                         return Mono.just(jsonNode);
@@ -295,10 +295,11 @@ public class LibraryDataService {
     public Mono<List<KeywordDto>> getKeyword() {
         try{
             List<KeywordDto> keywords = keywordService.selectAll();
-            System.out.println("keywords.size() = " + keywords.size());
+//            System.out.println("keywords.size() = " + keywords.size());
             if (keywords.size() > 0) {
                 return Mono.just(keywords);
             }else{
+                keywordService.deleteAll();
                 saveKeyword();
                 return Mono.just(keywordService.selectAll());
             }

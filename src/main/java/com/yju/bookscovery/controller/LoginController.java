@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class LoginController {
@@ -73,8 +75,29 @@ public class LoginController {
         return ResponseEntity.ok().body(toURL);
     }
 
-    //추가 아이디 찾기
+    //모바일 로그인
+    @ResponseBody
+    @PostMapping("/m/login")
+    public ResponseEntity<?> login(String id, String password) throws Exception {
+        // 1. id와 pwd를 확인
+        MemberDto member = memberService.readById(id);
+        // 키로 해싱해서 pwd확인
+        if(!memberService.getHashPwd(member.getPassword_key(),password).equals(member.getPassword())) {
+            // 2-1   일치하지 않으면, loginForm으로 이동
+            String msg = URLEncoder.encode("id 또는 pwd가 일치하지 않습니다.", "UTF-8");
 
-    //추가 비밀번호 찾기
+            return ResponseEntity.badRequest().body(msg);
+        }
+        // 2-2. id와 pwd가 일치하면,
+        //
+        Map map = new HashMap();
+        //
+        map.put("id", id);
+        map.put("member_id", member.getMember_id());
+        map.put("department_id", member.getDepartment_id());
+        map.put("name", member.getName());
+
+        return ResponseEntity.ok().body(map);
+    }
 
 }

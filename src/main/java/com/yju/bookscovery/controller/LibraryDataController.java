@@ -28,10 +28,10 @@ public class LibraryDataController {
 
     //책 상세보기 완
     @GetMapping("/books/{isbn}")
-    public Mono<ResponseEntity<JsonNode>> loanAnalyze(@PathVariable String isbn, Integer member_id, Integer department_id) {
+    public Mono<ResponseEntity<Object>> loanAnalyze(@PathVariable String isbn, Integer member_id, Integer department_id) {
         return libraryDataService.getLoanAnalyze(isbn, member_id, department_id)
-                .map(ResponseEntity::ok)
-                .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body(null)));//e.getMessage()
+                .map(response -> ResponseEntity.ok((Object) response))
+                .onErrorResume(e -> Mono.just(ResponseEntity.status(500).body((Object) e.getMessage())));//e.getMessage()
     }
 
     //인기도서완
