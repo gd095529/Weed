@@ -115,7 +115,7 @@ public class MemberController {
         if(member.getName().equals(name) && member.getId().equals(id)) {
             return ResponseEntity.ok().body("계정확인 비밀번호 새로 설정페이지로 이동");
         }else{
-            return ResponseEntity.ok().body("상세정보가 다릅니다.");
+            return ResponseEntity.badRequest().body("상세정보가 다릅니다.");
         }
     }
 
