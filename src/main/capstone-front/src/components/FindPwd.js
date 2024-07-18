@@ -10,8 +10,9 @@ function FindPwd() {
     const [status, setStatus] = useState(0);
 
     const find = async () => {
-        const data = await findPW(email.current.value, name.current.value, id.current.value);
-        setStatus(data.status);
+        const data = await findPW(email.current.value, name.current.value, id.current.value)
+            .then((data) => {setStatus(data.status);})
+            .catch((error) => {alert("계정을 찾을 수 없습니다")});
     }
 
     return (

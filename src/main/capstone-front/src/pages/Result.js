@@ -6,6 +6,8 @@ import axios from "axios";
 import {isBottom} from "../exportJS/scrollBottom";
 import {useLocation} from "react-router-dom";
 
+
+
 function Result() {
     const [bookname, setBookname] = useState("");
     const [authors, setAuthors] = useState("");
@@ -17,10 +19,10 @@ function Result() {
     const location = useLocation();
 
     // 내가 검색한 데이터임.
-    const searchData = (bookname, authors, keyword) => {
-        setBookname(bookname);
-        setAuthors(authors);
-        setKeyword(keyword);
+    const searchData = () => {
+        setBookname(localStorage.getItem('bookname'));
+        setAuthors(localStorage.getItem('authors'));
+        setKeyword(localStorage.getItem('keyword'));
         setPage(1);
     }
 
@@ -90,13 +92,18 @@ function Result() {
 
     useEffect(() => {
         async function searchAPI() {
+            setBookname(localStorage.getItem('bookname'));
+            setAuthors(localStorage.getItem('authors'));
+            setKeyword(localStorage.getItem('keyword'));
+            setPage(1);
+
             const config = {
                 bookname: bookname,
                 authors: authors,
                 keyword: keyword,
                 pageNo: page
             }
-            console.log(bookname);
+            console.log(localStorage.getItem('bookname'));
 
             try {
                 const books = [];
@@ -119,11 +126,9 @@ function Result() {
                 console.log(error);
             }
         }
-        if (bookname || authors || keyword) {
-            searchAPI();
-        }
+        searchAPI();
     }, [page, bookname, authors, keyword]);
-
+    console.log(bookname);
     return (
         <div className={resultCss.body} >
             <div>
@@ -137,7 +142,6 @@ function Result() {
                         <ListView1 bookname={book.bookname} bookImgURL={book.bookImageURL} author={book.authors}
                                    isbn={book.isbn13}
                                    publisher={book.publisher} description={book.description}  key={index} />
-
                     ))
                 }
 

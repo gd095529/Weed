@@ -18,15 +18,14 @@ function Search(props) {
     const [selectKeyword, setSelectKeyword] = useState("");
 
     const onClickBtn = () => {
-        props.searchData(booknameR.current.value, authorsR.current.value, keywordR.current.value);
+        localStorage.setItem('bookname', booknameR.current.value);
+        localStorage.setItem('authors', authorsR.current.value);
+        localStorage.setItem('keyword', keywordR.current.value);
         navigate('/searchResult');
     }
 
-
-
     const search = (event) => {
         setSearchText(event.target.value);
-
     }
 
     const onKeyPressSearch = (event) => {

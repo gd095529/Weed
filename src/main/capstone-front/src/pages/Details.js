@@ -73,6 +73,10 @@ function Details() {
 
     useEffect(() => {
         const fetchDetail = async () => {
+            console.log(sessionMID);
+            console.log("aa");
+            console.log(sessionDID);
+            console.log("bb");
             const config = {
                 member_id: sessionMID ? sessionMID : 1,
                 department_id: sessionDID ? sessionDID : 1 // 세션에서 가져오기
@@ -115,6 +119,8 @@ function Details() {
             };
 
             fetchKeyword();
+            console.log("북데이터");
+            console.log(bookData);
         }
     }, [bookData]);
 
@@ -224,7 +230,7 @@ function Details() {
             <div className={detalisCss.header}>
                 <Header1 />
             </div>
-            {bookData && (
+            {bookData&& (
                 <div className={detalisCss.context}>
                     <p>
                         {bookData.book.bookname}

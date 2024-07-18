@@ -192,7 +192,7 @@ function Main() {
                         />
                         <div className={mainCss.todayRight}>
                             <p>오늘의 책</p>
-                            <div className={mainCss.todayTitle}>{books[getTodayIndex].bookname}</div>
+                            <div className={mainCss.todayTitle}>{books[getTodayIndex]?.bookname}</div>
                             <div className={mainCss.todayDescription}>{booksDes[getTodayIndex]}</div>
                             <div className={mainCss.tie}>
                                 <div className={mainCss.todayAuthor}>{books[getTodayIndex].authors}</div>

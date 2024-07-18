@@ -7,8 +7,11 @@ function FindId() {
     const name = useRef(null);
 
     const find = async () => {
-        const data = await findID(email.current.value, name.current.value);
-        alert("당신의 ID는 " + data.data + "입니다");
+        const data = await findID(email.current.value, name.current.value)
+            .then((data) => {alert("당신의 ID는 " + data.data + "입니다");})
+            .catch((error) => {
+                alert("다시 입력해주세요.")
+            });
     }
 
     return (

@@ -409,7 +409,8 @@ function MainBook(props) {
                     viewBooks.length !== 0 &&
                     viewBooks.map((book, index) => (
                         <div key={index}>
-                            <ViewBook2 bookname={book.bookname} authors={book.authors} isbn={book.isbn}
+                            {console.log(book)}
+                            <ViewBook2 bookname={book.bookname} authors={book.authors} isbn={book.isbn13}
                                        bookImgURL={book.bookImageURL}/>
                         </div>
                     ))
@@ -436,6 +437,7 @@ function MainBook(props) {
                     viewBooks.length !== 0 &&
                     viewBooks.map((book, index) => (
                         <div key={index}>
+
                             <ViewBook2 bookname={book.bookname} authors={book.authors} isbn={book.isbn}
                                        bookImgURL={book.book_image_URL}/>
                         </div>

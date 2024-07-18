@@ -43,7 +43,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/remove")
-    public  ResponseEntity<?> removeMember(String password, HttpSession session) throws Exception {
+    public ResponseEntity<?> removeMember(String password, HttpSession session) throws Exception {
         Integer member_id = (Integer) session.getAttribute("member_id");
         //세션에 멤버아디를 저장해도되는가?
         MemberDto member =memberService.read(member_id);
@@ -100,7 +100,7 @@ public class MemberController {
         if(member.getName().equals(name) && member.getId().equals(id)) {
             return ResponseEntity.ok().body("계정확인 인증번호 전송페이지로 이동");
         }else{
-            return ResponseEntity.ok().body("상세정보가 다릅니다.");
+            return ResponseEntity.badRequest().body("상세정보가 다릅니다.");
         }
     }
 

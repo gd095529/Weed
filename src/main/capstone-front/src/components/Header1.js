@@ -15,6 +15,7 @@ import SearchComponent from "../components/Search";
 import {logoutAPI} from "../api/logoutAPI";
 import axios from "axios";
 import memberGetout from '../images/memberGetout.png'
+import PromptPW2 from "./PromptPW2";
 
 function Header1(props) {
     const [isProfile, setIsProfile] = useState(false); // 프로파일을 클릭했는지 여부
@@ -26,6 +27,7 @@ function Header1(props) {
     const [searchValue, setSearchValue] = useState('');
     const [ID, setID] = useState(useSelector(state => state.loginID.value));
     const divRef = useRef(null);
+    const [pwd, setPwd] = useState(null);
 
     const navigate = useNavigate();
     const onClickLogin = () => {
@@ -50,7 +52,6 @@ function Header1(props) {
 
     const clickSearch = () => {
         setSearchClick(!searchClick);
-        navigate("/searchResult");
     }
 
     // profile을 클릭했는지 설정
@@ -67,6 +68,11 @@ function Header1(props) {
         console.log("로그아웃함");
         navigate("/");
     }
+
+    const goMemberOut = async () => {
+        navigate('/MemberOut');
+    }
+
     // 검색창 눌렀을 때
     const focusSearch = () => {
         setSearchFocus(true);
@@ -129,11 +135,8 @@ function Header1(props) {
                 <div className={header1Css.blockStyle} onClick={moveBookmark}>
                     <img src={star} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
                     <p>즐겨찾기</p>
-                    {/**굳이 즐겨찾기 페이지가 필요할까? 라는 고민
-                     그냥 메인에 "즐겨찾기"용으로 만들어 두고 거기로 이동시킬 지 고민
-                     일단 나중에*/}
                 </div>
-                <div className={header1Css.blockStyle} onClick={goMember}>
+                <div className={header1Css.blockStyle} onClick={goMemberOut}>
                     <img src={memberGetout} alt={'logout'} style={{width: '2rem', height: '2rem'}}/>
                     <p>회원탈퇴</p>
                 </div>
