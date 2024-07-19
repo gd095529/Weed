@@ -37,4 +37,11 @@ public class SessionController {
         }else
             return ResponseEntity.ok().body((String) session.getAttribute("name"));
     }
+    @GetMapping("/age")
+    public ResponseEntity<?> getGender(HttpSession session) {
+        if(session == null){
+            return ResponseEntity.badRequest().body("로그인이 필요합니다.");
+        }else
+            return ResponseEntity.ok().body((String) session.getAttribute("age"));
+    }
 }

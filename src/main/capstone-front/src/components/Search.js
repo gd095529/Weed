@@ -21,7 +21,10 @@ function Search(props) {
         localStorage.setItem('bookname', booknameR.current.value);
         localStorage.setItem('authors', authorsR.current.value);
         localStorage.setItem('keyword', keywordR.current.value);
-        navigate('/searchResult');
+        navigate('/');
+        setTimeout(() => {
+            navigate('/searchResult');
+        })
     }
 
     const search = (event) => {
@@ -51,13 +54,15 @@ function Search(props) {
     useEffect(() => {
         async function fetchKeywords() {
             try {
-                const response = await axios.get('/api/keyword');
+                const response = await axios.get('/api/keyword')
+                    .catch((err) => console.error(err));
                 console.log("키워드")
                 console.log(response);
 
                 const fetchedKeywords = response.data.map(k => k.word);
                 setKeywords(fetchedKeywords);
                 setKeywordList(fetchedKeywords);
+
             } catch (error) {
                 console.error('Error fetching keywords:', error);
             }
@@ -71,9 +76,14 @@ function Search(props) {
                     setKeywordList(keywords);
                 }
             } else {
-                const filter = keywords.filter(item =>
-                    item.toLowerCase().includes(searchText.toLowerCase())
-                );
+                let filter;
+                try{
+                    filter = keywords.filter(item =>
+                        item.toLowerCase().includes(searchText.toLowerCase())
+                    );
+                } catch(err) {
+                    console.error(err);
+                }
                 console.log(filter);
                 setKeywordList(filter);
             }
@@ -95,6 +105,7 @@ function Search(props) {
                     </div>
                     <div className={modalPopupCss.selectBox}>
                         {
+                            keywordList !== undefined &&
                             keywordList.map((item, index) => (
                                 <div key={index} onClick={() => clickItem(item)}>
                                     {item}

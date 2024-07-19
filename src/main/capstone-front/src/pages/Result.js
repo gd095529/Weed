@@ -6,8 +6,6 @@ import axios from "axios";
 import {isBottom} from "../exportJS/scrollBottom";
 import {useLocation} from "react-router-dom";
 
-
-
 function Result() {
     const [bookname, setBookname] = useState("");
     const [authors, setAuthors] = useState("");
