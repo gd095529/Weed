@@ -25,8 +25,8 @@ public class SearchHistoryDao {
         map.put("member_id",member_id);
         return session.selectOne(namespace+"selectOne",map);
     }
-    public List<SearchHistoryDto> searchAllHistory()throws Exception{
-        return session.selectList(namespace+"selectAll");
+    public List<SearchHistoryDto> searchAllHistory(Integer member_id)throws Exception{
+        return session.selectList(namespace+"selectAll", member_id);
     }
     public Integer insertHistroy(Integer member_id , Integer book_id) throws Exception{
         Map map = new HashMap();

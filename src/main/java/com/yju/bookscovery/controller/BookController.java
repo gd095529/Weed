@@ -60,11 +60,11 @@ public class BookController {
     }
 
     @GetMapping("/m/favorite")
-    public ResponseEntity<?> checkFavoriteForMobile(@RequestParam Integer memberId, @RequestParam Integer bookId) throws Exception {
-        if (memberId == null || bookId == null) {
+    public ResponseEntity<?> checkFavoriteForMobile(@RequestParam Integer member_id, @RequestParam Integer book_id) throws Exception {
+        if (member_id == null || book_id == null) {
             return ResponseEntity.badRequest().body("memberId와 bookId가 필요합니다."); // memberId 또는 bookId가 없을 경우 오류 처리
         }
-        Integer check_favorite_id = favoriteService.checkFavorite(memberId, bookId);
+        Integer check_favorite_id = favoriteService.checkFavorite(member_id, book_id);
         boolean isFavorite = (check_favorite_id != null && check_favorite_id > 0);
         Map<String, Boolean> response = new HashMap<>();
         response.put("isFavorite", isFavorite);
@@ -73,13 +73,13 @@ public class BookController {
 
     // 모바일 즐겨찾기 추가 엔드포인트
     @PostMapping("/m/favorite/{book_id}")
-    public ResponseEntity<?> addFavoriteForMobile(@RequestParam Integer memberId, @PathVariable Integer book_id) throws Exception {
-        if (memberId == null) {
+    public ResponseEntity<?> addFavoriteForMobile(@RequestParam Integer member_id, @PathVariable Integer book_id) throws Exception {
+        if (member_id == null) {
             return ResponseEntity.badRequest().body("memberId가 필요합니다."); // memberId가 없을 경우 오류 처리
         }
-        Integer check_favorite_id = favoriteService.checkFavorite(memberId, book_id);
+        Integer check_favorite_id = favoriteService.checkFavorite(member_id, book_id);
         if (check_favorite_id == null || check_favorite_id == 0) {
-            favoriteService.insert(memberId, book_id);
+            favoriteService.insert(member_id, book_id);
             return ResponseEntity.ok().body("즐겨찾기가 추가되었습니다.");
         } else {
             return ResponseEntity.status(500).body("이미 존재");
@@ -88,26 +88,25 @@ public class BookController {
 
     // 모바일 즐겨찾기 삭제 엔드포인트
     @DeleteMapping("/m/favorite")
-    public ResponseEntity<?> deleteFavoriteForMobile(@RequestParam Integer memberId, @RequestParam Integer bookId) throws Exception {
-        if (memberId == null || bookId == null) {
+    public ResponseEntity<?> deleteFavoriteForMobile(@RequestParam Integer member_id, @RequestParam Integer book_id) throws Exception {
+        if (member_id == null || book_id == null) {
             return ResponseEntity.badRequest().body("memberId와 bookId가 필요합니다."); // memberId 또는 bookId가 없을 경우 오류 처리
         }
 
         // 즐겨찾기 항목 확인을 위해 favoriteId를 가져오기
-        Integer favoriteId = favoriteService.checkFavorite(memberId, bookId);
-        if (favoriteId == null) {
+        Integer favorite_id = favoriteService.checkFavorite(member_id, book_id);
+        if (favorite_id == null) {
             return ResponseEntity.status(400).body("삭제 실패: 즐겨찾기 항목이 존재하지 않습니다.");
         }
 
         // 즐겨찾기 항목이 있으면 삭제
-        int deleteResult = favoriteService.delete(favoriteId);
+        int deleteResult = favoriteService.delete(favorite_id);
         if (deleteResult > 0) {
             return ResponseEntity.ok().body("즐겨찾기가 삭제되었습니다.");
         } else {
             return ResponseEntity.status(500).body("삭제 실패: 서버 오류");
         }
     }
-
 
     @GetMapping("/history")
     public ResponseEntity<List<HistoryBookJoinDto>> getHistory(HttpSession session) throws Exception {
@@ -124,6 +123,26 @@ public class BookController {
             e.printStackTrace();
             return ResponseEntity.status(500).body("기록 삭제 실패");
         }
+    }
+
+    // 검색 기록
+    @GetMapping("/m/history")
+    public ResponseEntity<List<HistoryBookJoinDto>> getHistoryForMobile(@RequestParam Integer member_id) throws Exception {
+        if (member_id == null) {
+            return ResponseEntity.badRequest().body(bookService.selectAllHistoryByMemberId(member_id));
+        }
+        List<HistoryBookJoinDto> history = bookService.selectAllHistoryByMemberId(member_id);
+        return ResponseEntity.ok().body(history);
+    }
+
+    // 즐겨찾기 기록
+    @GetMapping("/m/favorite/history")
+    public ResponseEntity<List<FavoriteBookJoinDto>> getFavoriteForMobile(@RequestParam Integer member_id) throws Exception {
+        if (member_id == null) {
+            return ResponseEntity.badRequest().body(bookService.selectAllFavoriteByMemberId(member_id));
+        }
+        List<FavoriteBookJoinDto> favorite = bookService.selectAllFavoriteByMemberId(member_id);
+        return ResponseEntity.ok().body(favorite);
     }
 
     @GetMapping("/books/{isbn}")
